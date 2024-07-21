@@ -1,0 +1,548 @@
+<dotmaker>
+  <h1>ドット絵作製</h1>
+
+
+  <div class="card">
+		<div class="card-header">
+			ドット絵エディタ
+		</div>
+    <div class="card-body">
+      <p>ドットをクリックしてON/OFFを切り替えてください</p>
+
+      <div id="currentImageDisplay"></div>
+      <!-- Display image number -->
+
+      <div>
+        <table><tr><th style="text-align: center;">
+          <div id="dotMatrix">
+            <!-- Generate the 8x16 dot matrix -->
+          </div>
+        </th></tr></table>
+      </div>
+
+      <div>
+      <!--  -->
+        <div>
+          <select class="select" id="miniImageSelector">
+            <!-- <option value="-" selected>New</option> -->
+            <!-- <option value="new" selected>New</option> -->
+          </select>
+          <button id="addButton" type="button" class="btn btn-primary">追加</button>
+          <button id="clearButton" type="button" class="btn btn-danger">消去</button>
+          <button id="startButton" type="button" class="btn btn-primary">テスト再生</button>
+          <input type="number" class="select"  id="switchTimeInput" placeholder="Switch Time (0-5 seconds, in 0.5 increments)" step="0.5" min="0" max="5"> 秒/枚
+        </div>
+        <div>
+          ドットマトリクスデータ番号
+          <select class="select" id="matrixDataNumber">
+            <option value="01">1</option>
+            <option value="02">2</option>
+            <option value="03">3</option>
+          </select>
+          <button id="submitButton" type="button" class="btn btn-success">転送</button>
+        </div>
+        
+      </div>
+
+      <hr>
+
+      <div id="miniImages">
+        <!-- DotImageData -->
+      </div>
+
+
+    </div>
+  </div>
+
+
+  <script>
+
+
+  export default {
+    onBeforeMount(props, state) {
+      console.log("-- dotmaker.riot onBeforeMount --");
+
+    },
+    onMounted(props, state){
+      let vmUI = props.vmUI;
+      let dotMatrixUI = props.dotMatrixUI;
+      this.vmDotMatorix = dotMatrixUI;
+      this.model = vmUI.model;
+
+      console.log("-- dotmaker.riot onMounted --");
+
+      this.rows = this.vmDotMatorix.rows;
+      this.cols = this.vmDotMatorix.cols;
+      this.dotcolor = this.vmDotMatorix.dotcolor;
+      this.bgcolor = this.vmDotMatorix.bgcolor;
+
+      // ドットマトリクス編集領域作成
+      this.createDotMatrix(dotMatrixUI.colorMatrix);
+      currentImageDisplay.textContent = `現在の画像: New Data`;
+      startButton.disabled = true;    // テスト再生ボタン不活性
+      submitButton.disabled = true;   // 転送ボタン不活性
+
+      this.imageCounter = 0;
+      this.animationInterval = null;
+      const switchTimeInput = document.getElementById('switchTimeInput');
+      const miniImageSelector = document.getElementById('miniImageSelector');
+      switchTimeInput.value = 0.5
+      this.updateMiniImagesIndexes = this.updateMiniImagesIndexes.bind(this);
+      this.updateMiniImageSelector = this.updateMiniImageSelector.bind(this);
+
+      // addButtonが追加か編集かを選択する。true:編集 false:追加
+      this.addButtonEditMode = 'false';
+
+      this.bindEvents();
+      this.updateMiniImageSelector();
+
+      dotMatrixUI.setDotcolor("rgb(255, 0, 0)");
+      vmUI.model.matrixDataIni();
+
+      // ドットマトリクスデータ番号 select初期値設定
+      var selectElement = document.getElementById('matrixDataNumber');
+      selectElement.value = '01'; // 01を選択肢の初期値に設定
+
+    },
+
+    bindEvents() {
+      document.getElementById('addButton').addEventListener('click', () => this.addMiniImage());
+      document.getElementById('clearButton').addEventListener('click', () => this.clearMatrix());
+      document.getElementById('startButton').addEventListener('click', () => this.animationTest());
+      document.getElementById('submitButton').addEventListener('click', () => this.animationDataSubmit());
+      // 他のイベントバインディングもここに追加...
+    },
+
+    /**
+     * ドットマトリクス編集領域作成
+     */
+    createDotMatrix(colorMatrix){
+      this.containerId = 'dotMatrix';
+      this.container = document.getElementById(this.containerId);
+      this.container.innerHTML = ''; // コンテナをクリア
+      for (let row = 0; row < this.rows; row++) {
+        for (let col = 0; col < this.cols; col++) {
+          const dotElement = document.createElement('div');
+          dotElement.className = 'dot';
+          dotElement.style.backgroundColor = colorMatrix[row][col] // 色情報を配列から取得して適用
+          dotElement.addEventListener('click', () => this.toggleDot(row, col, dotElement));
+          this.container.appendChild(dotElement);
+        }
+        this.container.appendChild(document.createElement('br'));
+      }
+    },
+
+    // ドットの色を切り替えるロジックを更新
+    toggleDot(row, col, dotElement) {
+      let newColor = this.vmDotMatorix.toggleDot(row, col);
+      dotElement.style.backgroundColor = newColor;    // 色を切り替え
+    },
+
+    // 編集領域の表示とデータを初期化する
+    clearMatrix() {
+      console.log("clearMatrix");
+      this.vmDotMatorix.clearMatrix();      // ドットマトリクス編集領域情報クリア
+      Array.from(document.getElementsByClassName('dot')).forEach(dot => {
+        dot.style.backgroundColor = this.bgcolor;
+      });
+    },
+    /**
+     * miniImage作成
+     * @returns 作成したminiImage
+     */
+    createMiniImageCanvas() {
+      const miniImageCanvas = document.createElement('canvas');
+      miniImageCanvas.className = 'miniImage';
+      miniImageCanvas.width = 128;
+      miniImageCanvas.height = 64;
+      const ctx = miniImageCanvas.getContext('2d');
+      for (let row = 0; row < 8; row++) {
+        for (let col = 0; col < 16; col++) {
+          const color = this.vmDotMatorix.colorMatrix[row][col]
+          ctx.fillStyle = color;
+          ctx.fillRect(col * 8, row * 8, 8, 8);
+        }
+      }
+      return miniImageCanvas;
+    },
+    /**
+     * miniImage画像をクリックしたときのイベントリスナを設定する。
+     * @param {canvas}        miniImage画像
+     * @param {miniImageDiv}  miniImageContainer
+     * @param {container}     miniImages
+     */
+    addClickEventToCanvas(canvas,miniImageDiv,container) {
+      const self = this;  // `this` を `self` に保存
+      canvas.addEventListener('click', function() {
+        // Logic to handle canvas click
+        const dataIndex = Array.from(container.children).indexOf(miniImageDiv);
+        const miniImageSelector = document.getElementById('miniImageSelector');
+        if(canvas.dataset.isRedBorder === 'false'){
+          currentImageDisplay.textContent = `現在の画像: #${dataIndex + 1}`;
+          console.log('選択された画像:',dataIndex);
+          self.setDotMatrix(dataIndex);                       // 編集画面にデータ設定
+          self.vmDotMatorix.setColorMatrix(dataIndex);        // ドットマトリクス編集領域情報に設定
+
+          self.deleteMiniImagesBorder();                      // miniImageの全ての赤枠表示を削除する
+          canvas.style.border = '3px solid red';     // クリックされたminiImageに赤枠を表示
+          canvas.dataset.isRedBorder = 'true';
+
+          addButton.innerText = "編集";
+          self.addButtonEditMode = 'true';    // ボタン編集モード
+
+          // 編集番号設定・選択した画像
+//          miniImageSelector.value = 'image' + (dataIndex + 1);
+           miniImageSelector.selectedIndex = dataIndex;
+        }
+        else{
+          currentImageDisplay.textContent = `現在の画像: New Data`;
+          canvas.style.border = '';                  // miniImageの赤枠表示を削除する
+          canvas.dataset.isRedBorder = 'false';
+
+          addButton.innerText = "追加";
+          self.addButtonEditMode = 'false';   // ボタン追加モード
+
+          // 編集番号設定・最後の画像
+          miniImageSelector.value = 'image' + ((container.children).length);
+        }
+
+      });
+    },
+    /**
+     * miniImage画像 削除ボタン追加
+     */
+    createDeleteButton(canvas,miniImageDiv,miniImagesContainer) {
+      const self = this;  // `this` を `self` に保存
+      const deleteButton = document.createElement('button');
+      deleteButton.type = 'button';
+      deleteButton.textContent = '削除';
+      deleteButton.classList.add('btn', 'btn-danger', 'delete-button');
+      deleteButton.addEventListener('click', function() {
+
+          // この画像のインデックスを取得し、コンソールに表示
+        const index = Array.from(miniImagesContainer.children).indexOf(miniImageDiv);
+        console.log('削除する画像の位置: ', index);
+        self.vmDotMatorix.deleteMiniImageData(index);   // データから削除
+
+        const miniImages = document.getElementsByClassName('miniImage');
+        if(miniImages[index].style.border != ''){
+          canvas.dataset.isRedBorder = 'false';
+          addButton.innerText = "追加";
+          self.addButtonEditMode = 'false';   // ボタン追加モード
+        }
+
+        // 画像をDOMから削除
+        miniImagesContainer.removeChild(miniImageDiv);
+        self.imageCounter--;
+        self.updateMiniImagesIndexes();
+        self.updateMiniImageSelector();
+      });
+      return deleteButton;
+    },
+
+    addMiniImage() {
+      const dotData = document.getElementsByClassName('dot');
+      const miniImagesContainer = document.getElementById('miniImages');
+
+      let selectedIndex = miniImageSelector.selectedIndex;
+      if (selectedIndex < 0) {
+        selectedIndex = 0;
+      }
+      console.log("selectedIndex")
+      console.log(selectedIndex)
+      const self = this;  // `this` を `self` に保存
+
+//      const miniImageIndex = selectedIndex - 1;
+      const miniImageIndex = selectedIndex;
+      const miniImageContainer = document.querySelectorAll('.miniImageContainer')[miniImageIndex];
+      console.log(miniImageContainer)
+
+      const miniImageDiv = document.createElement('div');
+      miniImageDiv.className = 'miniImageContainer';
+
+      const indexSpan = document.createElement('span');
+      this.imageCounter++;
+      indexSpan.textContent = `#${this.imageCounter}`;
+      miniImageDiv.appendChild(indexSpan);
+
+      const miniImageCanvas = this.createMiniImageCanvas();      // miniImage作成
+
+      // クリックで赤枠追加・削除
+      miniImageCanvas.dataset.isRedBorder = 'false';          // 赤枠表示情報を格納するカスタムデータ追加
+      this.addClickEventToCanvas(miniImageCanvas,miniImageDiv,miniImagesContainer);
+
+      miniImageDiv.appendChild(miniImageCanvas);              // miniImage追加処理
+
+      // 削除ボタン追加
+      const deleteButton = this.createDeleteButton(miniImageCanvas,miniImageDiv,miniImagesContainer);
+      miniImageDiv.appendChild(deleteButton);
+
+      // アニメーションデータ追加
+      this.vmDotMatorix.addMiniImageData(selectedIndex);
+
+      if(miniImagesContainer.childElementCount === 0){
+        miniImagesContainer.appendChild(miniImageDiv);  // データを要素に追加する
+      }
+      else{
+        miniImagesContainer.insertBefore(miniImageDiv, miniImageContainer.nextSibling);
+      }
+
+      this.updateMiniImagesIndexes();
+      this.updateMiniImageSelector();
+
+      if(this.addButtonEditMode === 'true'){
+        console.log("編集処理")
+        this.vmDotMatorix.deleteMiniImageData(selectedIndex);           // データから削除
+        this.removeElementAtIndex(miniImagesContainer,selectedIndex);   // DOMから削除
+        this.imageCounter--;
+        this.updateMiniImagesIndexes();
+        this.updateMiniImageSelector();
+
+        addButton.innerText = "追加";                   // ボタンキャンプション設定
+        self.addButtonEditMode = 'false';               // ボタン追加モード
+        miniImageCanvas.dataset.isRedBorder = 'false';  // 画像選択なし
+      }
+      else{
+        console.log("追加処理")
+        // ドロップダウンメニュー編集番号++
+        let nextIndex = miniImageSelector.selectedIndex + 1;
+        if (nextIndex < miniImageSelector.options.length) {
+          miniImageSelector.selectedIndex = nextIndex;
+        }
+      }
+
+    },
+    // 子要素の削除
+    removeElementAtIndex(container, index) {
+      // 子要素のリストを取得
+      const children = container.children;
+
+      // 指定されたインデックスが範囲内か確認
+      if (index >= 0 && index < children.length) {
+        // 子要素を削除
+        container.removeChild(children[index]);
+      } else {
+        console.log('指定されたインデックスは範囲外です。');
+      }
+    },
+    // miniImageの全ての赤枠表示を削除する
+    deleteMiniImagesBorder(){
+      // miniImageの全ての赤枠表示を削除する
+      const miniImages = document.getElementsByClassName('miniImage');
+      for(let i=0; i<miniImages.length; i++){
+        miniImages[i].style.border = '';  // 赤枠を非表示
+        miniImages[i].dataset.isRedBorder = 'false';
+      }
+    },
+    updateMiniImagesIndexes() {
+      console.log("updateMiniImagesIndexes");
+      const miniImageContainers = document.getElementsByClassName('miniImageContainer');
+      for (let i = 0; i < miniImageContainers.length; i++) {
+        miniImageContainers[i].querySelector('span').textContent = `#${i + 1}`;
+      }
+      console.log(miniImageContainers.length);
+
+      let mode;
+      if(miniImageContainers.length > 0){
+        mode = false;
+      }
+      else{
+        mode = true;
+      }
+      startButton.disabled = mode;
+      submitButton.disabled = mode;
+    },
+
+    updateMiniImageSelector() {
+      console.log("updateMiniImageSelector")
+      const miniImageSelector = document.getElementById('miniImageSelector');
+      
+      // 現在選択されている値を取得
+      const selectedValue = miniImageSelector.value;
+      let valueExists = false; // 選択された値が新しいオプションリストに存在するかどうかのフラグ
+      let collentImageNum = miniImageSelector.selectedIndex + 1;  // Current Image番号作成
+
+      // 既存のオプションを削除
+      Array.from(miniImageSelector.querySelectorAll('option[value^="image"]'))
+          .forEach(option => option.parentNode.removeChild(option));
+
+      const miniImageContainers = document.getElementsByClassName('miniImageContainer');
+
+      // 新しいオプションを追加
+      for (let i = 0; i < miniImageContainers.length; i++) {
+        const option = document.createElement('option');
+        option.value = `image${i + 1}`;
+        option.textContent = `#${i + 1}`;
+
+        // もし現在選択されている値が新しいオプションリストに存在する場合
+        if (selectedValue === option.value) {
+          option.selected = true;
+          valueExists = true;
+        }
+        
+        miniImageSelector.appendChild(option);
+      }
+
+      const miniImages = document.getElementsByClassName('miniImage');
+      // 選択された値が新しいリストに存在しない場合、最後を選択
+      if (!valueExists) {
+        miniImageSelector.selectedIndex = miniImageContainers.length-1;
+        console.log("最後を選択",miniImageContainers.length,miniImages.length);
+//        collentImageNum = miniImageContainers.length-1;   // Current Image番号作成
+      }
+//      currentImageDisplay.textContent = `Current Image: #${collentImageNum + 1}`;   // Current Image番号更新
+      if(this.addButtonEditMode == 'false'){
+        // 画像追加モード)
+        currentImageDisplay.textContent = `現在の画像: New Data`;   // Current Image番号更新
+      }
+      else{
+        // 画像編集モード
+        const miniImages = document.getElementsByClassName('miniImage');
+        for(let i=0; i<miniImages.length; i++){
+          if(miniImages[i].style.border != ''){
+//            console.log("選択中:",i);
+            currentImageDisplay.textContent = `現在の画像: #${i + 1}`;   // Current Image番号更新
+            miniImageSelector.selectedIndex = i;
+
+          }
+        }
+      }
+
+    },
+
+    /**
+     * ブラウザ上でアニメーションを再生する。再生中は停止ボタン以外の操作ボタンは非活性とする。
+     */
+    animationTest() {
+      console.log("animationTest");
+
+      const miniImagesContainer = document.getElementById('miniImages');
+      const deleteButtons = Array.from(miniImagesContainer.getElementsByClassName('delete-button'));
+      const datLen = this.vmDotMatorix.animationData.length;
+
+      if (!this.animationInterval) {
+        const switchTime = switchTimeInput.value * 1000;  // 表示切替時間設定
+        let currentIndex = 0;
+
+        this.animationInterval = setInterval(() => {
+          const dataIndex = currentIndex % datLen;
+          this.setDotMatrix(dataIndex)                  // 編集画面設定
+          this.stopIndex = dataIndex;
+          currentImageDisplay.textContent = `現在の画像: #${dataIndex + 1}`;
+          currentIndex++;
+        }, switchTime);
+
+        this.toggleButtonState(true, deleteButtons);    // ボタン操作不許可
+        startButton.innerText = "停止";
+      } else {
+        clearInterval(this.animationInterval);          // アニメーション停止
+        this.animationInterval = null;                  // アニメーション停止(この行必要)
+
+        this.vmDotMatorix.setColorMatrix(this.stopIndex)
+        this.toggleButtonState(false, deleteButtons);   // ボタン操作許可
+        startButton.innerText = "テスト再生";
+      }
+    },
+    // 編集画面にアニメーション情報の一枚を設定
+    setDotMatrix(dataIndex) {
+      const dots = Array.from(document.getElementsByClassName('dot'));
+      const dotData = this.vmDotMatorix.animationData[dataIndex];
+      dots.forEach((dot, i) => {
+        dot.style.backgroundColor = dotData[i];
+      });
+    },
+
+    toggleButtonState(mode, deleteButtons) {
+      miniImageSelector.disabled = mode;
+      addButton.disabled = mode;
+      clearButton.disabled = mode;
+      submitButton.disabled = mode;
+      deleteButtons.forEach(button => button.disabled = mode);  // 削除ボタンの活性・非活性設定
+    },
+
+    parseTextToObject(text) {
+      return JSON.parse(text);
+    },
+
+    /**
+     * アニメーションデータ送信
+     */
+    animationDataSubmit(){
+      console.log("animationDataSubmit");
+//      console.log("-- this.vmDotMatorix.animationData");
+//      console.log(this.vmDotMatorix.submitData);
+      // select要素を取得
+      const selectElement = document.getElementById('matrixDataNumber');
+  
+      // 選択されている値を取得
+      const selectedValue = selectElement.value;
+      const filename = "data" + selectedValue + ".json"
+      console.log(filename);
+
+      let dataToSend = {
+        "type" : "rgbData",
+        "maxRow" : 8,
+        "maxCol" : 16,
+        "filename" : filename,
+        "time" : switchTimeInput.value * 1000,    // msec単位に変換
+//        "dataArray" : this.vmDotMatorix.submitData
+      };
+      let dataArray = {
+        "dataArray" : this.vmDotMatorix.submitData
+      }
+      console.log(dataToSend)
+      console.log("---")
+      console.log(JSON.stringify(dataToSend))
+
+      this.model.websocketSend(JSON.stringify(dataToSend));     // データ送信
+      this.model.websocketSend(JSON.stringify(dataArray));      // データ送信
+      this.model.websocketSend("{\"command\":\"datasave\"}");   // データ送信
+    }
+
+  }
+
+  </script>
+<style>
+
+  table {
+    width: 390px;
+    border-collapse: collapse; /* テーブルの枠線を重ねる */
+  }
+  /* テーブルセルのスタイル */
+  td, th {
+    border: 1px solid black; /* 1pxの黒い実線の枠線を持つテーブルセル */
+    padding: 1px; /* テーブルセルの余白を設定 */
+  }
+
+  .dot {
+    width: 20px;
+    height: 20px;
+    margin: 1px;
+    padding: 0px;
+    border: 1px solid #000;
+    display: inline-block;
+    background-color:#000;
+    line-height: 0px;
+    vertical-align: top;
+  }
+  .miniImageContainer {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .miniImage {
+    margin-right: 10px;
+    border: 1px solid #000;
+  }
+  
+
+.select {
+  border-radius: 8px;  /* 角の丸みを追加 */
+  height: 38px;
+  width: 80px;
+  padding: 6px 12px;
+  position: relative;         /* 相対位置指定 */
+  top: 3px;    */               /* 位置を1px下に調整 */}
+
+</style>
+</dotmaker>

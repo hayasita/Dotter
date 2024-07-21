@@ -1,0 +1,610 @@
+<setting>
+<style>
+</style>
+
+<h1>設定</h1>
+
+<div class="card">
+  <div class="card-header">
+    LED表示設定
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">LED 表示輝度</h5>
+    <p class="card-text">
+      <div class="col-sm-11 offset-sm-1">
+        Bright : <span id="glowInTheBrightId">5</span>
+        <input type="range" class="form-range" id="glowInTheBright" min="1" max="15" step="1" value={glowBright} onchange={ glowChange.bind(this,"glowInTheBrightSet") }>
+      </div>
+    </p>
+
+    <h5 class="card-title">LED 表示方向</h5>
+    <p class="card-text">
+      <div class="col-sm-11 offset-sm-1">
+        <div class="form-check form-switch">
+          <input class="form-check-input" type="checkbox"
+            type="checkbox"
+            checked={ rotatePositionCheck }
+            onclick={ rotatePositionToggle } />
+            { tRotatePosition}
+        </div>
+      </div>
+    </p>
+
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    ドット絵エディタ 設定
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">色設定</h5>
+
+    <div class="card-text">
+      <div class="col-sm-11 offset-sm-1">
+        <!-- dot color select -->
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" id="redRadio" name="color" value=1>
+          <label class="form-check-label" for="redRadio">Red</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" id="blueRadio" name="color" value=4>
+          <label class="form-check-label" for="blueRadio">Blue</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" id="greenRadio" name="color" value=2>
+          <label class="form-check-label" for="greenRadio">Green</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" id="yellowRadio" name="color" value=3>
+          <label class="form-check-label" for="yellowRadio">Yellow</label>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    データファイル設定
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">サンプルファイル有効</h5>
+    <p class="card-text">
+      <div class="col-sm-11 offset-sm-1">
+        <div class="form-check form-switch">
+          <input class="form-check-input" type="checkbox"
+            type="checkbox"
+            checked={ sampleFileOnCheck }
+            onclick={ sampleFileOnToggle } />
+            { tSampleFileOn}
+        </div>
+      </div>
+    </p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="card h-100">
+			<div class="card-header">
+				ネットワーク接続設定
+			</div>
+      <div class="card-body">
+
+        <h5 class="card-title">Current Settings</h5>
+        <p class="card-text">
+          <div class="col-sm-11 offset-sm-1">
+          <table class="table">
+            <tr>
+              <td>STAモード SSID</td>
+              <td>{ stamodeSsid }</td>
+            </tr>
+            <tr>
+              <td>STAモード IP Adress</td>
+              <td>{ stamodeIp }</td>
+            </tr>
+            <tr>
+              <td>APモード SSID</td>
+              <td>{ apmodeSsid }</td>
+            </tr>
+            <tr>
+              <td>APモード IP Adress</td>
+              <td>{ apmodeIp }</td>
+            </tr>
+          </table>
+          </div>
+        </p>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="card h-100">
+			<div class="card-header">
+				WiFi Station 設定
+			</div>
+      <div class="card-body">
+				<h5 class="card-title">WiFi Station Setting</h5>
+        <p class="card-text">
+          <div class="col-sm-11 offset-sm-1">
+          <table class="table">
+            <tr>
+              <td class="itemname-width">
+                <div class="col-sm-4">
+                WiFi SSID 検索
+                </div>
+                <div class="col-sm-8" offset-sm-1>
+                  <button type="submit" id="getWiFiListButton" class="btn btn-outline-primary btn-sm" style="margin-top: 5px;" onclick={ getWifiStaList } >
+                  <span class="spinner-border spinner-border-sm visually-hidden" role="status" aria-hidden="true"></span>
+                  Scan SSID
+                  </button>
+                </div>
+<!--            <div if = {scanningNow}>[SSID SCAN NOW]</div>
+            <div if = {scanningConp}>[SSID SCAN Conplete]</div>
+-->
+              </td>
+            </tr>
+            <tr>
+              <td class="itemname-width">
+                <label for="selectSSID" class="form-label">SSID 選択</label>
+                <select class="form-select form-select-sm" aria-label="WiFiStationList" name="WiFiStationList" onchange={ changeWiFiStationList } id="WiFiStationList">
+                </select>
+                <label for="inputSSIDPassword" class="form-label">Password</label>
+                <input type="password" class="form-control" id="inputSSIDPassword" disabled="{wifiSsidPassDisable}">
+
+                <div class="form-check form-switch">
+                  <input class="form-check-input" type="checkbox"
+                  onclick={ wifiConectToggle } />
+                  { tWifiConectCheck }
+                </div>
+
+                <button type="submit" id="ssidSubmit" class="btn btn-outline-primary btn-sm" style="margin-top: 5px;" onclick={ wifiSetting } disabled="{!this.wifiConectCheck}">
+                  <span class="spinner-border spinner-border-sm visually-hidden" role="status" aria-hidden="true"></span>
+                  Connection
+                </button>
+<!--
+          <div>{ stamodeStatus }</div>
+-->          
+              </td>
+            </tr>
+          </table>
+        </p>
+
+        <h5 class="card-title">STA 自動接続</h5>
+        <p class="card-text">
+          <div class="col-sm-11 offset-sm-1 form-check form-switch">
+						<input class="form-check-input" type="checkbox"
+						type="checkbox"
+						checked={ wifiStaAutoUseCheck }
+						onclick={ wifiStaAutoUseToggle } />
+						{ tWifiStaAutoUseCheck }
+					</div>
+        </p>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-md-12">
+  <div class="card h-100">
+    <div class="card-header">
+      WiFi Log message
+    </div>
+    <div class="card-body">
+      <div id="logWiFi" style="overflow-y: scroll; height: 200px; border: 1px solid #ccc;padding: 10px;"></div>
+    </div>
+  </div>
+</div>
+
+  <script>
+//    import {vfdControllerUI} from '../viewmodel/vmapp.js'
+    import i18next from 'i18next'
+
+    export default{
+      onBeforeMount(props, state) {
+        console.log("-- wificonf.riot --")
+        let vmUI = props.vmUI;
+        let dotMatrixUI = props.dotMatrixUI;
+        let obs = props.obs;
+
+        this.setLanguage("en");
+//        this.scanningNow = false;
+//        this.scanningConp = false;
+
+        // WiFi Connect button EnableToggleSW 初期化
+        this.wifiConectCheck = false;
+        this.tWifiConectCheck = "接続ボタンが無効になっています。";
+        
+        // WiFi Station 接続情報更新 コールバック設定
+        vmUI.updateStaConnStsCallback(this.updateStaConnSts.bind(this));
+        // WiFi Station List 取得コールバック設定 --
+        vmUI.setWiFiStationListCallback(this.getWifiStationList.bind(this));
+        // WiFi EventLog 更新コールバック設定
+        vmUI.updateEventLogCallback(this.setEventLog.bind(this));
+        // WiFi STA接続更新完了コールバック設定
+        vmUI.clearStaReConnectionCallback(this.clearStaConnectionSpinner.bind(this));
+
+        // STA自動接続　チェックボックス初期値設定
+				if(vmUI.getNetworkSetting("staAutoConnect") == 1){
+					this.wifiStaAutoUseCheck ="checked";
+          this.tWifiStaAutoUseCheck = "自動接続有効";
+				}
+				else{
+					this.wifiStaAutoUseCheck ="";
+          this.tWifiStaAutoUseCheck = "自動接続無効";
+				}
+        // STA自動接続有効・無効処理
+        this.wifiStaAutoUseToggle = (e) => {
+          this.wifiStaAutoUseCheck = !this.wifiStaAutoUseCheck;
+          if(this.wifiStaAutoUseCheck){
+            this.tWifiStaAutoUseCheck = "自動接続有効";
+            vmUI.submitDisplaySetting("staAutoConnect", 1);
+          }
+          else{
+            this.tWifiStaAutoUseCheck = "自動接続無効";
+            vmUI.submitDisplaySetting("staAutoConnect", 0)
+          }
+          obs.trigger('wifiStaAutoConnect',this.wifiStaAutoUseCheck); //イベント送信
+          this.update();
+        }
+
+        // WiFi Connect button EnableToggleSW
+        this.wifiConectToggle = (e) => {
+          this.wifiConectCheck = !this.wifiConectCheck;
+          if(this.wifiConectCheck){
+            this.tWifiConectCheck = "接続ボタンが有効です。";
+          }
+          else{
+            this.tWifiConectCheck = "接続ボタンが無効になっています。";
+          }
+          console.log(this.wifiConectCheck);
+          this.update();
+        }
+        /*
+          WiFiアクセスポイントのリストを取得する
+        */
+        this.getWifiStaList = (e) => {
+          console.log("getWifiStaList");
+          // ボタン内スピナー表示
+          var Button = document.getElementById('getWiFiListButton');
+          var spinner = Button.querySelector('.spinner-border');
+          Button.classList.add('disabled'); // ボタンを無効化する（オプション）
+          spinner.classList.remove('visually-hidden'); // スピナーを表示する
+
+//          this.scanningNow = true;
+//          this.scanningConp = false;
+          this.update();
+
+          vmUI.getWifiStaList()
+        }
+        /*
+          WiFi SSIDとパスワードを設定する
+        */
+        this.wifiSetting = (e) => {
+          console.log("wifiSetting");
+          // ボタン内スピナー表示
+          var Button = document.getElementById('ssidSubmit');
+          var spinner = Button.querySelector('.spinner-border');
+          Button.classList.add('disabled'); // ボタンを無効化する（オプション）
+          spinner.classList.remove('visually-hidden'); // スピナーを表示する
+
+          let element = document.getElementById('WiFiStationList');
+//          console.log(element);
+//          console.log(element.length);
+          console.log(element.value);
+          let elementpass = document.getElementById('inputSSIDPassword');
+          console.log(elementpass.value);
+          // SSID,Password送信処理
+          if(element.length != 0){
+            vmUI.postSsidSetting(element.value,elementpass.value);
+          }
+          // ボタン内スピナー削除
+          // todo.以下の処理は非同期で再接続時に行うべき
+          setTimeout(function() {
+//            spinner.classList.add('visually-hidden');
+//            Button.classList.remove('disabled'); // ボタンを再度有効化する（オプション）
+          }, 2000); // 非同期処理の例として2秒の遅延を追加
+        }
+        /*
+          WiFiSSIDドロップダウンリスト操作
+        */
+        this.changeWiFiStationList = (e) =>{
+          console.log("-- changeWiFiStationList")
+          this.setSsidPasswordAreaEnable();   // SSID Password入力エリア許可設定
+          this.setSsidSubmitEnable();         // SSID,Password設定ボタン有効・無効設定　STA接続なしの場合、ドロップダウンリストの選択で有効・無効設定する。
+          this.update();
+        }
+
+        // LED表示設定
+        // 表示輝度設定スライダー値設定初期値取得
+        this.glowBright = vmUI.getDisplaySetting("glowInTheBright");
+        this.glowDark = vmUI.getDisplaySetting("glowInTheDark");
+        // 表示輝度設定スライダー値設定処理
+        this.glowChange = (item,e) =>{   // このタイミングでeerom書き込み
+          vmUI.setDisplaySetting(item, 1);
+          vmUI.submitDisplaySetting(item, 1);
+        }
+
+        // LED 表示方向設定
+        this.rotatePositionCheck = (vmUI.getDisplaySetting("rotatePosition") == 1);
+        this.tRotatePosition = this.rotatePositionCheck ? "正方向" : "逆方向";
+        console.log("vmUI.getDisplaySetting(rotatePosition)");
+        console.log(vmUI.getDisplaySetting("rotatePosition"));
+
+        // LED 表示方向設定処理
+        this.rotatePositionToggle = (e) => {
+          this.rotatePositionCheck = !this.rotatePositionCheck;
+          if(this.rotatePositionCheck){
+            this.tRotatePosition = "正方向";
+            vmUI.submitDisplaySetting("rotatePosition", 1);
+          }
+          else{
+            this.tRotatePosition = "逆方向";
+            vmUI.submitDisplaySetting("rotatePosition", 0)
+          }
+          this.update();
+        }
+
+        // データファイル設定表示
+        this.sampleFileOnCheck = (vmUI.getDisplaySetting("showSampleData") == 1);
+        this.tSampleFileOn = this.sampleFileOnCheck ? "サンプルファイル有効" : "サンプルファイル無効";
+        console.log("vmUI.getDisplaySetting(showSampleData)");
+        console.log(vmUI.getDisplaySetting("showSampleData"));
+
+        // データファイル設定
+        this.sampleFileOnToggle = (e) => {
+          this.sampleFileOnCheck = !this.sampleFileOnCheck;
+          if(this.sampleFileOnCheck){
+            this.tSampleFileOn = "サンプルファイル有効";
+            vmUI.submitDisplaySetting("showSampleData", 1);
+          }
+          else{
+            this.tSampleFileOn = "サンプルファイル無効";
+            vmUI.submitDisplaySetting("showSampleData", 0)
+          }
+          this.update();
+        }
+
+      },
+      onMounted(props, state){
+        let vmUI = props.vmUI;
+        let dotMatrixUI = props.dotMatrixUI;
+        let obs = props.obs;
+        this.model = vmUI.model;
+        const self = this;  // `this` を `self` に保存
+
+        console.log("-- logArea Init --");
+        const logArea = document.getElementById("logWiFi");
+        const logMessage = "ログメッセージ"; // ログに表示するメッセージ
+        // ログ領域に新しいログメッセージを追加
+        logArea.innerHTML += logMessage + "<br>";
+        console.log(logArea.innerHTML);
+        // ログ領域を最下部にスクロールする
+        logArea.scrollTop = logArea.scrollHeight;
+
+        console.log("-- LED Setting menu make");
+        // --- 表示輝度設定スライダー処理設定 ---
+        var rangeValue = function (elem, target) {
+          return function(evt){
+            target.innerHTML = elem.value;  // 設定値表示
+            console.log(target.id);
+            console.log(elem.value);
+            console.log(elem.id);
+            vmUI.setDisplaySetting(elem.id, elem.value);      // 設定値記憶
+            vmUI.submitDisplaySetting(elem.id, elem.value);   // 設定値送信
+          }
+        }
+        // --- 表示輝度設定スライダーイベント設定 ---
+        var sliderelem1 = document.getElementById('glowInTheBright');
+        var slidertarget1 = document.getElementById('glowInTheBrightId');
+        sliderelem1.addEventListener('input', rangeValue(sliderelem1, slidertarget1));
+        // --- 表示輝度設定スライダー設定値初期値表示 ---
+        slidertarget1.innerHTML = vmUI.getDisplaySetting("glowInTheBright");    // 初期値設定
+
+        console.log("-- DotEditor Coloe set menu make");
+        this.dotColor = vmUI.getDisplaySetting("dotColor");     // 初期値設定
+        this.selectDotColor(this.dotColor);                     // ラジオボタン設定
+        dotMatrixUI.setDotcolor(dotMatrixUI.convertCodeToString(this.dotColor));  // 色設定
+
+        // ラジオボタンの要素をすべて選択
+        const radios = document.querySelectorAll('input[type="radio"][name="color"]');
+        // 各ラジオボタンに対してイベントリスナーを設定
+        radios.forEach(radio => {
+          radio.addEventListener('change', function() {
+            if (this.checked) {
+              console.log("Selected Color:", this.value)
+              var color = dotMatrixUI.convertCodeToString(parseInt(this.value, 10));
+              dotMatrixUI.setDotcolor(color);
+              self.dotColorSubmit(color,dotMatrixUI);
+            }
+          });
+        });
+
+        console.log("-- WiFiStationList menu make");
+        this.getStaSsid(vmUI);              //  WiFiネットワーク情報設定（SSID,IPアドレス,設定ボタン）
+        this.wiFiStationList = [{ID: "0", TITLE: "this.stationListTopKey"}];
+        this.makeWiFiListElement();     // WiFiStation選択ドロップダウンリストの要素作成
+        this.setSsidPasswordAreaEnable();   // SSID Password入力エリア許可設定
+        this.setSsidSubmitEnable();         // SSID,Password設定ボタン有効・無効設定　STA有無で有効・無効設定する。
+        this.update();
+
+        // 言語切り替え
+        obs.on('changeLanguage',function(code){
+          this.language = code;
+          console.log("wifiConf.changeLanguage:"+code)
+          //  _this.setLanguage(code);  // .bind(this)しない場合は_this でthisにアクセスする
+                                          // ここのthisはイベント発生元のthis
+          this.setLanguage(code);
+          this.update();
+          this.makeWiFiListElement();     // WiFiStation選択ドロップダウンリストの要素作成
+        }.bind(this))
+
+      },
+      // ドット色設定送信
+      dotColorSubmit(color,dotMatrixUI){
+        console.log("dotColorSubmit");
+
+        // 色の文字列からRGB値を抽出する
+        let rgbArray = color.match(/\d+/g);
+        console.log(rgbArray);
+        let colorCode = 0;
+        if(rgbArray[0] != 0){colorCode += 1}
+        if(rgbArray[1] != 0){colorCode += 2}
+        if(rgbArray[2] != 0){colorCode += 4}
+
+        let dataArray = {
+          "dotColor" : colorCode
+        };
+        console.log(JSON.stringify(dataArray));
+        this.model.websocketSend(JSON.stringify(dataArray));      // データ送信
+      },
+      // ドット色設定値設定
+      selectDotColor(dotColor) {
+        var radioId = "";
+        switch(dotColor) {
+          case 1:
+            radioId = "redRadio";
+            break;
+          case 2:
+            radioId = "greenRadio";
+            break;
+          case 3:
+            radioId = "yellowRadio";
+            break;
+          case 4:
+            radioId = "blueRadio";
+            break;
+          default:
+            console.log("Invalid color code");
+            return; // 無効なdotColorの場合は何もしない
+        }
+
+        // 対応するラジオボタンを選択状態にする
+        if (radioId) {
+          document.getElementById(radioId).checked = true;
+        }
+      },
+      // WiFiネットワーク情報設定（SSID,IPアドレス,設定ボタン）
+      getStaSsid(vmUI){
+        this.stamodeSsid = vmUI.getNetworkSetting("stamodeSSID");
+        this.stamodeIp = vmUI.getNetworkSetting("stamodeIP");
+        this.apmodeSsid = vmUI.getNetworkSetting("atmodeSSID");
+        this.apmodeIp = vmUI.getNetworkSetting("atmodeIP");
+      },
+      // WiFi Station 接続情報更新
+      updateStaConnSts(objData){
+        this.stamodeSsid = objData.staSsid;     // SSID設定
+        this.stamodeIp = objData.staIpadr;      // IP Adress設定
+//        this.stamodeStatus = objData.staStatus  // Status設定
+        this.setSsidSubmitEnable();             // SSID,Password設定ボタン有効・無効設定
+        this.update();
+      },
+      makeWiFiListElement(){
+        this.setWiFiStationList("WiFiStationList",this.wiFiStationList);
+      },
+      getWifiStationList(stationList){
+        console.log("== getWifiStationList ==");
+        this.jsonWifiListObj = stationList;
+        console.log(this.jsonWifiListObj);
+        console.log(this.jsonWifiListObj.stationList);
+        console.log(this.jsonWifiListObj[0]);
+        this.jsonWifiListObj.push({ID: "0", TITLE: "this.stationListTopKey"})
+        console.log(this.jsonWifiListObj);
+
+        this.setWiFiStationList("WiFiStationList",this.jsonWifiListObj);
+        // WiFiStation選択ドロップダウンリストの要素作成
+        this.setSsidPasswordAreaEnable();   // SSID Password入力エリア許可設定
+//        this.scanningNow = false;
+//        this.scanningConp = true;
+        // ボタン内スピナー削除
+        var Button = document.getElementById('getWiFiListButton');
+        var spinner = Button.querySelector('.spinner-border');
+        spinner.classList.add('visually-hidden'); // スピナーを非表示にする
+        Button.classList.remove('disabled'); // ボタンを再度有効化する（オプション）
+        
+        this.update();
+
+      },
+      setWiFiStationList(id, datalist){
+//        console.log("-^- setWiFiStationList");
+        console.log(datalist);
+        console.log(datalist.length);
+        var select = document.getElementById(id);
+        while (select.firstChild) { // 子ノードoptionを全て削除
+          select.removeChild(select.firstChild);
+        }
+        for(let i=0; i<datalist.length; i++){
+          var option = document.createElement("option");
+          if(i == (datalist.length - 1)){
+            option.text = eval("{"+datalist[i].TITLE+"}");
+          }
+          else{
+            option.text = datalist[i].TITLE;
+          }
+          console.log(datalist[i])
+          console.log(option.text)
+          option.value = datalist[i].ID;
+          select.appendChild(option);
+        }
+        this.setSsidSubmitEnable();     // SSID,Password設定ボタン有効・無効設定　ドロップダウンリスト設定で選択変更されるので、有効・無効設定する。
+        this.update();
+      },
+      // SSID Password入力エリア許可設定
+      setSsidPasswordAreaEnable(){
+//        console.log("-~- setSsidPasswordAreaEnable");
+        let element = document.getElementById('WiFiStationList');
+        console.log(element.value);
+        if(element.value == "0"){         // ドロップダウンリストのID=0が選択されている
+          this.wifiSsidPassDisable = true;
+          console.log("true");
+        }
+        else{
+          this.wifiSsidPassDisable = false;
+          console.log("false");
+        }
+      },
+      // SSID,Password設定ボタン有効・無効設定
+      // SSID無し（APモード接続のみ）で、WiFiStation設定消去選択時には、設定ボタン無効とする。
+      setSsidSubmitEnable(){
+        const ssidStr = this.stamodeSsid;
+        let element = document.getElementById('WiFiStationList');
+        if(((element.value == "0") && (ssidStr.length == 0)) || (!this.wifiConectChec)){
+          document.getElementById("ssidSubmit").disabled = true;
+        }
+        else{
+          document.getElementById("ssidSubmit").disabled = false;
+        }
+      },
+      //STA Connection Button spinner clear
+      clearStaConnectionSpinner(){
+        // ボタン内スピナー削除
+        var Button = document.getElementById('ssidSubmit');
+        var spinner = Button.querySelector('.spinner-border');
+        spinner.classList.add('visually-hidden');
+        Button.classList.remove('disabled'); // ボタンを再度有効化する（オプション）
+        this.update();
+      },
+      // WiFi EventLog 取得・表示
+      setEventLog(logMessage){
+        console.log("-- setEventLog");
+        console.log(logMessage);
+        const logArea = document.getElementById("logWiFi");
+        // ログ領域にログメッセージを設定
+        logArea.innerHTML = logMessage;
+        // ログ領域を最下部にスクロールする
+        logArea.scrollTop = logArea.scrollHeight;
+      },
+      // 言語設定
+      setLanguage(code){
+        console.log("setLanguage")
+        this.stationListTopKey = i18next.t('wifiConf.stationListTopKey');
+      }
+
+    }
+  </script>
+
+</setting>

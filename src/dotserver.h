@@ -10,7 +10,6 @@
 #endif
 
 #include <Arduino.h>
-#include <AsyncElegantOTA.h>
 #include <AsyncTCP.h>
 
 #include <ArduinoJson.h>

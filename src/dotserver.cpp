@@ -11,11 +11,13 @@
 #include <SPIFFS.h>
 #include <WiFi.h>
 #include "ESPAsyncWebServer.h"
-#include <AsyncElegantOTA.h>
 #include "dotserver.h"
 #include "jsdata.h"
 
 #include "wifi_ctrl.h"
+
+#include "Update.h"
+#include "ota.h"
 
 void handleNotFound(AsyncWebServerRequest *request);  // ハンドル設定無し・要求ファイル取得
 void onWebSocketEvent(AsyncWebSocket *server, AsyncWebSocketClient *client, AwsEventType type, void *arg, uint8_t *data, size_t len);
@@ -77,8 +79,6 @@ void websocketSend(String sendData)
  */
 void startWebserver(void)
 {
-  AsyncElegantOTA.begin(&server); // httpServerはAsyncWebServerのインスタンス
-
   server.begin();
   Serial.println("HTTP server started");
 
@@ -101,6 +101,54 @@ void setWebhandle(void)
   // アクセスされた際に行う関数を登録する
   server.on("/setting.js", HTTP_GET, [](AsyncWebServerRequest *request) {
     request->send(200, "application/javascript", makeSettingjs());
+  });
+
+  //Returns update page
+  server.on("/update", HTTP_GET, [](AsyncWebServerRequest *request) {
+    request->send(200, "text/html", updateHtml);
+  });
+
+  // ファームウェアアップデートのエンドポイント設定
+  server.on("/update", HTTP_POST, [](AsyncWebServerRequest *request) {
+    // アップデート完了時のレスポンスを設定
+    request->send(200, "text/plain", Update.hasError() ? "FAIL" : "OK");
+    ESP.restart(); // アップデート後にESP32を再起動
+  }, [](AsyncWebServerRequest *request, String filename, size_t index, uint8_t *data, size_t len, bool final) {
+    // アップロードの開始処理
+    if (index == 0) {
+      Serial.printf("Update Start: %s\n", filename.c_str());
+
+      // ファームウェアのアップデートかSPIFFSのアップデートかを判定
+      if (filename.endsWith(".bin")) {
+        if (!Update.begin(UPDATE_SIZE_UNKNOWN)) {
+          Update.printError(Serial);
+        }
+      } else if (filename.endsWith(".spiffs")) {
+        if (!Update.begin(UPDATE_SIZE_UNKNOWN, U_SPIFFS)) { //SPIFFSのアップデート
+          Update.printError(Serial);
+        }
+      } else {
+        Serial.println("Unknown file type");
+        request->send(400, "text/plain", "Unknown file type");
+        return;
+      }
+    }
+
+    // ファームウェアの書き込み処理
+    if (len) {
+      if (Update.write(data, len) != len) {
+        Update.printError(Serial);
+      }
+    }
+
+    // アップロード完了処理
+    if (final) {
+      if (Update.end(true)) { // 成功した場合
+        Serial.printf("Update Success: %u\nRebooting...\n", index + len);
+      } else {
+        Update.printError(Serial);
+      }
+    }
   });
 
   // 未登録ハンドル処理

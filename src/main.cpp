@@ -23,6 +23,7 @@
 #include "filesys.h"
 #include "display_ctrl.h"
 #include "i2c_driver.h"
+#include "imu.h"
 #include "led_ctrl.h"
 #include "sdCard.h"
 #include "timeCtrl.h"
@@ -68,6 +69,9 @@ void taskDeviceCtrl(void *Parameters){
   // I2C Device Check
   DeviceChk deviceChk;
   deviceChk.i2cScan();
+
+  IMU _imu;
+  _imu.whoAmI(deviceChk.imu());
 
   // I2C OLED Display
   M5OLED m5Oled;
@@ -237,7 +241,8 @@ void taskDeviceCtrl(void *Parameters){
 
 
 // Soundのパラメータ設定
-const int soundPin = 44;
+//const int soundPin = 44;
+const int soundPin = 2;
 
 /**
  * @brief setup

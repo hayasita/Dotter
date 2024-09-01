@@ -268,6 +268,11 @@ void DeviceChk::init(void){
   String status = "";
 
   detection.datM5OLED = false;
+  detection.datSHT30 = false;
+  detection.imu = false;
+  detection.datQMP6988 = false;
+  detection.vk16k33 = false;
+
 
   for (int i = 0; i < i2cDevice.size(); i++) {
     if(i2cDevice[i] == I2C_ADDRESS_M5OLED){
@@ -279,7 +284,7 @@ void DeviceChk::init(void){
       status = status + "I2C_ADDRESS_SHT30 : True!\n";
     }
     else if(i2cDevice[i] == I2C_ADDRESS_RTC){
-      detection.imu = true;
+      detection.rtc = true;
       status = status + "I2C_ADDRESS_RTC : True!\n";
     }
     else if(i2cDevice[i] == I2C_ADDRESS_IMU){

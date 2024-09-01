@@ -255,7 +255,7 @@ void setup() {
   M5.In_I2C.release();
 
   Serial.begin(115200);
-  while (!Serial);
+//  while (!Serial);
 
   // Initialize SPIFFS
   if(!SPIFFS.begin()){

@@ -242,34 +242,35 @@ void onWebSocketEvent(AsyncWebSocket *server, AsyncWebSocketClient *client, AwsE
 
 /**
  * @brief WiFi STAモードの接続先検索
+ * WiFiネットワークのスキャンを行う
  * 
  */
 void wifiScanSta(void)
 {
-  static uint8_t getwifiListsqf = 0;
+  static uint8_t getwifiListsqf = 0;      // WiFiリスト取得シーケンスフラグ
 
-  if(getwifiStaListreq == 1){
-    int16_t ssidNum;
-    if(getwifiListsqf == 0){
+  if(getwifiStaListreq == 1){             // WiFiリスト取得要求
+    int16_t ssidNum;                      // WiFiリスト取得数
+    if(getwifiListsqf == 0){    
 //        vfdevent.setEventlogLoop(EVENT_WiFi_SSIDSCAN_START);
-      getwifiListsqf = 1;
+      getwifiListsqf = 1;                 // WiFiリスト取得シーケンスフラグ：スキャン開始
     }
-    else if(getwifiListsqf == 1){
+    else if(getwifiListsqf == 1){         // WiFiリスト取得シーケンスフラグ：スキャン開始
       Serial.println("scan done\r\n");
-      ssidNum = WiFi.scanNetworks(true);
-      getwifiListsqf = 2;
+      ssidNum = WiFi.scanNetworks(true);  // WiFiスキャン開始
+      getwifiListsqf = 2;                 // WiFiリスト取得シーケンスフラグ：スキャン結果取得
     }
-    else if(getwifiListsqf == 2){
-      ssidNum = WiFi.scanComplete();
-      if(ssidNum == WIFI_SCAN_RUNNING){
-        Serial.println("WIFI_SCAN_RUNNING\r\n");
+    else if(getwifiListsqf == 2){         // WiFiリスト取得シーケンスフラグ：スキャン結果取得
+      ssidNum = WiFi.scanComplete();      // WiFiスキャン完了確認
+      if(ssidNum == WIFI_SCAN_RUNNING){   // WiFiスキャン中
+        Serial.println("WIFI_SCAN_RUNNING\n");
       }
 //    else if(ssidNum == WiFi_SCAN_FAILED){
           // 失敗
 //    }
-      else{
+      else{                                // WiFiスキャン完了  
 //          vfdevent.setEventlogLoop(EVENT_WiFi_SSIDSCAN_COMP);     // WiFi SSID 検索完了
-        #define SSIDLIMIT 30
+        #define SSIDLIMIT 30              // SSIDリスト取得数制限 最大30
         String ssid_rssi_str[SSIDLIMIT];
         String ssid_str[SSIDLIMIT];
 //        String str = "\"stationList\":[\n";
@@ -278,12 +279,12 @@ void wifiScanSta(void)
           Serial.println("no networks found");
         } else {
           Serial.printf("%d networks found\r\n\r\n", ssidNum);
-          if (ssidNum > SSIDLIMIT) ssidNum = SSIDLIMIT;
-          for (int i = 0; i < ssidNum; ++i) {
+          if (ssidNum > SSIDLIMIT) ssidNum = SSIDLIMIT;   // SSIDリスト取得数制限
+          for (int i = 0; i < ssidNum; ++i) {             // WiFiリスト取得Loop
             ssid_str[i] = WiFi.SSID(i);
             String wifi_auth_open = ((WiFi.encryptionType(i) == WIFI_AUTH_OPEN)?" ":"*");
             ssid_rssi_str[i] = ssid_str[i] + " (" + WiFi.RSSI(i) + "dBm)" + wifi_auth_open;
-            if(i != 0){
+            if(i != 0){   // 2件目以降はカンマを付加
               str = str + ",\n";
             }
             str = str + "{\"ID\":\"" + ssid_str[i] + "\",\"TITLE\":\"" + ssid_rssi_str[i] + "\"}";

@@ -9,6 +9,9 @@ export class vfdControllerDomain{
         this.resetJsonTmpData();
 //        console.log(this.jsonObj);
 //        console.log("initialSetting");
+        this.ws = null;
+        this.reconnectInterval = 5000; // 5秒ごとに再接続を試みる
+
     }
 
     matrixDataIni(){
@@ -75,8 +78,8 @@ export class vfdControllerDomain{
 //        this.ws = new WebSocket('ws://' + window.location.hostname + ':81/');
         this.ws = new WebSocket('ws://' + window.location.hostname + '/ws');
         this.ws.onmessage = (evt) => {
-//            console.log("webSocket onmessage:");
-    //        console.log(evt.data);
+          console.log("webSocket onmessage:");
+          console.log(evt.data);
           let objData = JSON.parse(evt.data);
     //        console.log(objData.stationList);
 //            console.log(objData);
@@ -103,12 +106,14 @@ export class vfdControllerDomain{
         };
         this.ws.onclose = function(evt) {
           console.log("ws: onclose");
+    //      this._reconnectWebSocket();
 //          let objData = "{\"websocket\" : \"close\"}";
 //          this._callbackFuncWebsocketSend(objData);
         }
         this.ws.onerror = function(evt) {
           console.log("ws: onerror");
           console.log(evt);
+          this.ws.close(); // エラーが発生した場合に接続をクローズ
         }
         this.ws.onopen = (evt) => {
           console.log("ws: onopen");
@@ -116,6 +121,14 @@ export class vfdControllerDomain{
           this._callbackFuncWebsocketSend(objData);
         };
     }
+  // WebSocketの再接続を試みる
+  _reconnectWebSocket() {
+    setTimeout(() => {
+      console.log("Attempting to reconnect WebSocket...");
+      this.websocketInit();
+    }, this.reconnectInterval);
+  }
+
     // --  WebSocket データ送信 --
     websocketSend(sendData){
       console.log("--websocketSend");

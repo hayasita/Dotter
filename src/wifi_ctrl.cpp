@@ -13,6 +13,7 @@
 #include <algorithm>
 #include <cstring>
 #include "wifi_ctrl.h"
+#include "dotserver.h"
 
 #define WL_NO_SSID_AVAIL  1
 #define WL_CONNECTED      3
@@ -175,6 +176,8 @@ bool WiFiConnect::staConnect(char *ssid,char *pass,WiFiConSts nextSqf)
  */
 void WiFiConnect::staConnectionWait(WiFiConSts nextSqf,WiFiConSts errSqf)
 {
+  String str = "{\"eventLog\":[{\"event\":140,\"data\":[0,0,0,0]}]}";
+
   static uint8_t staConCount = 0;
   bool connectionFale = 0;
   if(pWiFi_->_status() == WL_NO_SSID_AVAIL){
@@ -191,8 +194,12 @@ void WiFiConnect::staConnectionWait(WiFiConSts nextSqf,WiFiConSts errSqf)
       pWiFi_->_print("-- 接続完了 : 手動 AP & STA --\n");
 //      vfdevent.setEventlogLoop(EVENT_WiFi_MANCON_STACOMP);   // 手動接続・WiFi STA接続完了
     }
+    else if(wifiConSts == WiFiConSts::STA_RECONNECT_CON){
+      pWiFi_->_print("-- 接続完了 : STA再接続 --\n");
+    }
     staConCount = 0;
 //    setStaStatus(STA_CONNECTED);  // STA接続情報設定：接続完了
+    websocketSend(str);           // WebSocket送信
     wifiConSts = nextSqf;         // 接続完了時シーケンスに移行
   }
   else{
@@ -219,6 +226,8 @@ void WiFiConnect::staConnectionWait(WiFiConSts nextSqf,WiFiConSts errSqf)
       pWiFi_->_print("自動接続完了\n");
       ntpAutoSetSqf = SntpAutoSts::SNTPAUTO_STANDBY;  // SSID無効で、自動接続は待機に遷移
     }
+
+    websocketSend(str);     // WebSocket送信
 
     staConCount = 0;
     wifiConSts = errSqf;    //接続失敗時シーケンスに移行

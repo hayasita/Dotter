@@ -227,7 +227,7 @@ export class vfdControllerUI{
             console.log(logTmp);
             this.logdata += logTmp;
             this._callbackFuncWiFiEventLog(this.logdata);
-            this._callbackFuncDashBordEventLog(this.logdata);
+        //    this._callbackFuncDashBordEventLog(this.logdata);
 
             // SNTP Log
             let sntpComp = false;
@@ -249,7 +249,7 @@ export class vfdControllerUI{
             });
             console.log(logTmp);
             this.sntpLogdata += logTmp;
-            this._callbackFuncSNTPEventLog(this.sntpLogdata);
+        //    this._callbackFuncSNTPEventLog(this.sntpLogdata);
             if(sntpComp){
                 this._callbackFuncClearSntpSpinner();
             }

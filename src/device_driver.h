@@ -19,6 +19,7 @@
 #elif defined (M5STAMP_S3)
   #define BUTTON_0 0
   #define BUTTON_1 1
+  #define SD_TRUE
 #endif
 
 class ITM{

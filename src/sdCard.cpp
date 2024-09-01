@@ -11,11 +11,12 @@
 
 #include "sdCard.h"
 
-const int SD_SCK_PIN = GPIO_NUM_7;        // SDカードのSCKピン
-const int SD_MISO_PIN = GPIO_NUM_39;      // SDカードのMISOピン
-const int SD_MOSI_PIN = GPIO_NUM_9;       // SDカードのMOSIピン
-const int SD_CS_PIN = GPIO_NUM_11;        // SDカードのCSピン
-const int SD_CARDCHK_PIN = GPIO_NUM_5;    // SDカードの検出ピン
+// SDカードのピン設定
+const int SD_SCK_PIN = GPIO_NUM_14;         // SDカードのSCKピン
+const int SD_MISO_PIN = GPIO_NUM_39;        // SDカードのMISOピン
+const int SD_MOSI_PIN = GPIO_NUM_12;        // SDカードのMOSIピン
+const int SD_CS_PIN = GPIO_NUM_11;          // SDカードのCSピン
+const int SD_CARDCHK_PIN = 40;              // SDカードの検出ピン
 
 /**
  * @brief Construct a new sd Card::sd Card object
@@ -33,7 +34,7 @@ sdCard::sdCard(void)
  */
 void sdCard::init(void)
 {
-
+#ifdef SD_TRUE
   pinMode(SD_CARDCHK_PIN, INPUT_PULLUP);  // SDカードの検出ピンをプルアップ設定
 
   // SDカードの初期化
@@ -50,7 +51,8 @@ void sdCard::init(void)
     Serial.println("SDカードのマウントに失敗しました");
     isSdMounted = false;
   }
-  
+
+#endif
   return;
 }
 
@@ -60,6 +62,7 @@ void sdCard::init(void)
  */
 void sdCard::cardChk(void)
 {
+#ifdef SD_TRUE
   int cardChk;    // SDカードの検出ピンの状態
   cardChk = digitalRead(SD_CARDCHK_PIN);;   // SDカードの検出ピンの状態を取得
 
@@ -85,6 +88,7 @@ void sdCard::cardChk(void)
   if (!(isSdMounted == true)) {
   }
 
+#endif
   return;
 }
 

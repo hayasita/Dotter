@@ -19,8 +19,11 @@
 #endif
 
 #include <cstdint>
+#include <vector>
 
 bool isHalfWidth(uint16_t utf16_code);  // 半角判定
+
+std::vector<uint8_t> makeFontData(char *str);  // フォントデータ作成
 
 #undef GLOBAL
 #endif

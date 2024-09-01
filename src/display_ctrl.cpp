@@ -72,58 +72,7 @@ std::vector<uint8_t> displayClock(tm timeInfo)
   char buffer[100];
 //  dispDateTime(buffer,oledData.timeInfo,"  ");
   dispDateTime(buffer,timeInfo,"  ");
-  std::vector<uint8_t> data;
-  uint8_t  fnt[8];
-  //      char msg_str[] = "埼玉1234";
-  //      char *str = msg_str;
-  //      char *str2 = msg_str;
-  char *str = buffer;
-  char *str2 = buffer;
-  uint16_t utf16dat;
-  data.clear();
-  while(*str) {
-  
-    uint8_t d1,d2;
-    bool baikakuf = true;  // 半角->全角変換フラグ
-
-    byte n = charUFT8toUTF16(&utf16dat, str2 );
-    str2+=n;
-    if(n != 0){
-      if(isHalfWidth(utf16dat)==false){
-        // 全角
-        d1 = 0;
-        d2 = 8;
-      }
-      else{
-        // 半角
-        d1 = 4;
-        d2 = 4;
-      }
-    }
-    if(baikakuf){
-      d1 = 0;
-      d2 = 8;
-    }
-
-    if (! (str = getFontData(fnt, str, baikakuf)) )  {
-      Serial.println("Error"); 
-      break;
-    }
-    else{
-      uint8_t rotatedData[8] = {0};
-      for(int i = 0; i < 8; ++i) {
-        for(int j = d1; j < 8; ++j) {
-          if(fnt[i] & (1 << j)) {
-            rotatedData[7 - j] |= (1 << i);
-          }
-        }
-      }
-      for(int i = 0; i < d2; i++) {
-        data.push_back(rotatedData[i]);
-      } 
-    }
-
-  }
+  std::vector<uint8_t> data = makeFontData(buffer);   // 表示データ作成
 
   // スクロール処理
   std::vector<uint8_t> newData = data;
@@ -137,7 +86,7 @@ std::vector<uint8_t> displayClock(tm timeInfo)
   }
   data.insert(data.end(), newData.begin(), newData.end());
 
-  // 横16ドットに調整
+  // 最低幅として横16ドットに調整
   if(data.size() > 16) {
     data.resize(16);
   }

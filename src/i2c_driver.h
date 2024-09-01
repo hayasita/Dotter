@@ -24,6 +24,7 @@ class I2CDeviceDetection{
     bool datM5OLED;       // M5 OLED Unit
     bool datSHT30;        // SHT30(Unit ENVIII)
     bool imu;             // IMU
+    bool rtc;             // RTC
     bool datQMP6988;      // QMP6988(Unit ENVIII)
     bool vk16k33;         // VK16K33
 };

@@ -291,6 +291,8 @@ void setup() {
  * 
  */
 void loop() {
-
+  // WebSocketのクライアントをクリーンアップ
+  wsCleanupClients();
+  
   delay(1);
 }

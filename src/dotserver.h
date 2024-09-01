@@ -19,6 +19,7 @@
 #include <sntp.h>
 
 //void startWiFi(void);
+void wsCleanupClients(void);
 void startWebserver(void);
 void setWiFiCallBack(void);     // WiFi接続 Callback設定
 void setWebhandle(void);        // Web handle setting

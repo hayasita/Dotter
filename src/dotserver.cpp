@@ -66,8 +66,16 @@ void startWiFi(void)
 }
 */
 
+void wsCleanupClients(void)
+{
+  // WebSocketのクライアントをクリーンアップ
+  ws.cleanupClients();
+}
+
 void websocketSend(String sendData)
 {
+  Serial.println("websocketSend");
+  Serial.println(sendData);
   ws.textAll(sendData.c_str());
 
   return;

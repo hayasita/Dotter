@@ -119,31 +119,30 @@ void taskDeviceCtrl(void *Parameters){
 
     // 端子入力・表示制御
     itmKeyCode = itm.man();
-    if(!jsData.dataFilePath.empty()){
-      displayCtrl(itmKeyCode,dataFile); // データファイルがある場合、表示データ制御を行う
-    }
 
-    // 表示モード変更
-    if(itmKeyCode == 0x01){
+    if(itmKeyCode == 0x01){   // 表示モード変更
       itmKeyCode = 0x00;
       Serial.println("表示モード変更");
       dispMode.modeChange(itmKeyCode);  // 表示モード変更
       Serial.println(dispMode.mode());
     }
-
-    // WiFi Ctrl
-    if(itmKeyCode == 0x81){
+    else if(itmKeyCode == 0x02){
+      if(!jsData.dataFilePath.empty()){
+        displayCtrl(itmKeyCode,dataFile); // データファイルがある場合、表示データ制御を行う
+      }
+    }
+    else if(itmKeyCode == 0x81){    // WiFi Ctrl
       itmKeyCode == 0x00;
       Serial.println("WiFi Contrl request.");
       wifiConnect.withItm();    // WiFi端子入力要求
     }
-
-    if(itmKeyCode == 0x82){
+    else if(itmKeyCode == 0x82){
       itmKeyCode == 0x00;
       // SD
       sdcard.listDir(SD, "/", 3);
 
       deviceChk.init();
+      _imu.whoAmI(deviceChk.imu());
 
     }
 

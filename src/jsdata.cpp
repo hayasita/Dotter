@@ -98,7 +98,7 @@ bool jsonData::parseJson(String readStr ,bool dataWrite)
       Serial.print("dataArray.size : ");
       Serial.println(jsonDataArray.size());
 
-      portENTER_CRITICAL(&jsonMutex);
+//      portENTER_CRITICAL(&jsonMutex);
 //      ledAllData.clear();
       for(int i=0;i<jsonDataArray.size();i++){
         std::vector<uint8_t> PageData;
@@ -116,11 +116,13 @@ bool jsonData::parseJson(String readStr ,bool dataWrite)
             PageData.push_back(cdat);
           }
         }
+        portENTER_CRITICAL(&jsonMutex);
         ledAllData.push_back(PageData);
+        portEXIT_CRITICAL(&jsonMutex);
 //        Serial.println(PageData[0]);
 //        Serial.println(ledAllData[i][0]);
       }
-      portEXIT_CRITICAL(&jsonMutex);
+//      portEXIT_CRITICAL(&jsonMutex);
 
     }
 

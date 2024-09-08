@@ -211,6 +211,21 @@ void M5OLED::printClockData(DisplayData dispDat)
 
 }
 
+/**
+ * @brief M5OLED IMUデータ表示
+ * 
+ * @param data 
+ */
+void M5OLED::printIMUData(IMU_RAW_DATA data)
+{
+  oled.setCursor(0, 16);
+  oled.printf("%06d,%06d,%06d", data.ax, data.ay, data.az);
+  oled.setCursor(0, 24);
+  oled.printf("%06d,%06d,%06d", data.gx, data.gy, data.gz);
+  oled.setCursor(0, 32);
+  oled.printf("%06d", data.temp);
+}
+
 //#ifdef DELETE
 /**
  * @brief M5OLEDセンサデータ表示

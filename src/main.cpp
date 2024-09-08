@@ -72,6 +72,7 @@ void taskDeviceCtrl(void *Parameters){
 
   IMU _imu;
   _imu.whoAmI(deviceChk.imu());
+  _imu.init();
 
   // I2C OLED Display
   M5OLED m5Oled;
@@ -160,9 +161,17 @@ void taskDeviceCtrl(void *Parameters){
       clockDisptLasttime = timetmp;
       // 時計データ更新
       oledData.timeInfo = clockCtrl.getTime();
+
+      // IMUデータ取得
+      IMU_RAW_DATA imuData;
+      IMU_RAW_DATA imuData2;
+      _imu.getRawData(&imuData);
+      imuData2 = _imu.calcIMUMovAvg(imuData);
+
       // M5OLED表示
       if(deviceChk.m5oled()){
         m5Oled.printClockData(oledData);
+        m5Oled.printIMUData(imuData2);
       }
 /*
       static constexpr const char* const wd[7] = {"Sun","Mon","Tue","Wed","Thr","Fri","Sat"};

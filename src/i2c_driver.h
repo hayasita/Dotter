@@ -10,6 +10,7 @@
 #include <M5UnitOLED.h>
 #include <cstdint>
 #include <vector>
+#include "imu.h"
 
 /*
 #include "Freenove_VK16K33_Lib.h"
@@ -90,6 +91,7 @@ class M5OLED{
     void clear(void);
     void printClockData(DisplayData);
     void printEnvSensorData(DisplayData);
+    void printIMUData(IMU_RAW_DATA);
   private:
     M5UnitOLED oled;
 

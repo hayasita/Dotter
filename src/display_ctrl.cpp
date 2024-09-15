@@ -62,67 +62,34 @@ void modeCtrl::modeChange(uint8_t keydata)
 }
 
 /**
+ * @brief Construct a new disp Clock::disp Clock object
+ * 
+ */
+dispClock::dispClock() {
+  return;
+}
+
+/**
  * @brief   時計表示データ作成
  * 
- * @param timeInfo  時刻データ
- * @return std::vector<uint8_t> 表示データ
+ * @param timeInfo 
+ * @return std::vector<uint8_t> 
  */
-std::vector<uint8_t> displayClock(tm timeInfo)
+std::vector<uint8_t> dispClock::makeData(tm timeInfo)
 {
   char buffer[100];
-//  dispDateTime(buffer,oledData.timeInfo,"  ");
-  dispDateTime(buffer,timeInfo,"  ");
+//  dispDateTime(buffer,timeInfo,"  ");
+  dispDateTime(buffer,timeInfo,"");
+
   std::vector<uint8_t> data;
-  uint8_t  fnt[8];
-  //      char msg_str[] = "埼玉1234";
-  //      char *str = msg_str;
-  //      char *str2 = msg_str;
-  char *str = buffer;
-  char *str2 = buffer;
-  uint16_t utf16dat;
-  data.clear();
-  while(*str) {
-  
-    uint8_t d1,d2;
-    bool baikakuf = true;  // 半角->全角変換フラグ
+  std::vector<uint8_t> dataTmp;
+  data.resize(16);
 
-    byte n = charUFT8toUTF16(&utf16dat, str2 );
-    str2+=n;
-    if(n != 0){
-      if(isHalfWidth(utf16dat)==false){
-        // 全角
-        d1 = 0;
-        d2 = 8;
-      }
-      else{
-        // 半角
-        d1 = 4;
-        d2 = 4;
-      }
-    }
-    if(baikakuf){
-      d1 = 0;
-      d2 = 8;
-    }
-
-    if (! (str = getFontData(fnt, str, baikakuf)) )  {
-      Serial.println("Error"); 
-      break;
-    }
-    else{
-      uint8_t rotatedData[8] = {0};
-      for(int i = 0; i < 8; ++i) {
-        for(int j = d1; j < 8; ++j) {
-          if(fnt[i] & (1 << j)) {
-            rotatedData[7 - j] |= (1 << i);
-          }
-        }
-      }
-      for(int i = 0; i < d2; i++) {
-        data.push_back(rotatedData[i]);
-      } 
-    }
-
+  // 時計表示フォントデータ作成
+  size_t length = strlen(buffer); // 文字列の長さを取得
+  for (size_t i = 0; i < length; ++i) {
+    dataTmp = clockFontData.getFontData(buffer[i]);
+    data.insert(data.end(), dataTmp.begin(), dataTmp.end());
   }
 
   // スクロール処理
@@ -137,10 +104,57 @@ std::vector<uint8_t> displayClock(tm timeInfo)
   }
   data.insert(data.end(), newData.begin(), newData.end());
 
-  // 横16ドットに調整
+  // 最低幅として横16ドットに調整
   if(data.size() > 16) {
     data.resize(16);
   }
 
   return data;
 }
+
+#ifdef DELETE
+/**
+ * @brief   時計表示データ作成
+ * 
+ * @param timeInfo  時刻データ
+ * @return std::vector<uint8_t> 表示データ
+ */
+std::vector<uint8_t> displayClock(tm timeInfo)
+{
+  char buffer[100];
+//  dispDateTime(buffer,oledData.timeInfo,"  ");
+  dispDateTime(buffer,timeInfo,"  ");
+
+  // 表示データ作成
+//  std::vector<uint8_t> data = makeFontData(buffer);   // 表示データ作成
+//  std::vector<uint8_t> data = makeClockFontData(buffer);   // 時計表示データ作成
+
+  clockFont clockFnt;
+
+  clockFnt.init();
+  std::vector<uint8_t> data;
+  data.resize(16);
+  std::vector<uint8_t> dataTmp = clockFnt.getFontData('1');
+  data.insert(data.end(), dataTmp.begin(), dataTmp.end());
+  dataTmp = clockFnt.getFontData('0');
+  data.insert(data.end(), dataTmp.begin(), dataTmp.end());
+  // スクロール処理
+  std::vector<uint8_t> newData = data;
+  static uint8_t datap = 0;
+  if(datap <= data.size()-1) {
+    data.erase(data.begin(), data.begin() + datap);
+    datap++;
+  }
+  else{
+    datap = 1;
+  }
+  data.insert(data.end(), newData.begin(), newData.end());
+
+  // 最低幅として横16ドットに調整
+  if(data.size() > 16) {
+    data.resize(16);
+  }
+
+  return data;
+}
+#endif

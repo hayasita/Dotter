@@ -110,6 +110,9 @@ void taskDeviceCtrl(void *Parameters){
   sprintf( bufc, "sizeof(time_t) : %d bytes (%d bits) \n", sizeof(time_t), sizeof(time_t)*8 );
   Serial.print(bufc);
 
+  // 時計表示データ生成
+  dispClock displayClock;
+
   while(1){
     static unsigned long ledLasttime = millis(); 
     static unsigned long clockDisptLasttime = millis(); 
@@ -194,7 +197,8 @@ void taskDeviceCtrl(void *Parameters){
         // 時計データ更新
       if(timetmp - ledLasttime > jsData.clockScrollTime){     // 更新時間確認
         ledLasttime = timetmp;  // 更新時間設定
-        std::vector<uint8_t> pageData = displayClock(oledData.timeInfo);
+        // 時計データ更新
+        std::vector<uint8_t> pageData = displayClock.makeData(oledData.timeInfo);
         // データ回転処理
         pageData = jsData.dataRotation(pageData);
         // LEDマトリクスデータ転送
@@ -250,7 +254,12 @@ void taskDeviceCtrl(void *Parameters){
 
 // Soundのパラメータ設定
 //const int soundPin = 44;
-const int soundPin = 2;
+//const int soundPin = 2;     // NG
+//const int soundPin = 3;     // NG
+//const int soundPin = 5;     // NG
+//const int soundPin = 7;     // NG
+const int soundPin = 9;     // OK
+//const int soundPin = 11;  // OK
 
 /**
  * @brief setup
@@ -264,6 +273,14 @@ void setup() {
 
   Serial.begin(115200);
 //  while (!Serial);
+
+  // sound init PiPo
+  setToneChannel(0);
+  tone(soundPin, 2000, 100);
+  tone(soundPin, 1000, 100);
+  tone(soundPin, 500, 100);
+  tone(soundPin, 250, 100);
+  noTone(soundPin);
 
   // Initialize SPIFFS
   if(!SPIFFS.begin()){
@@ -284,14 +301,6 @@ void setup() {
   // Core1で関数taskDeviceCtrlをstackサイズ4096,優先順位1で起動
   xTaskCreatePinnedToCore(taskDeviceCtrl, "taskDeviceCtrl", 4096, NULL, 1, NULL, 1);
 
-
-  // sound init PiPo
-  setToneChannel(0);
-  tone(soundPin, 2000, 100);
-  tone(soundPin, 1000, 100);
-  tone(soundPin, 500, 100);
-  tone(soundPin, 250, 100);
-  noTone(soundPin);
 }
 
 /**

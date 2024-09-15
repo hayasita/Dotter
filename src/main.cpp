@@ -257,7 +257,9 @@ void taskDeviceCtrl(void *Parameters){
 //const int soundPin = 2;     // NG
 //const int soundPin = 3;     // NG
 //const int soundPin = 5;     // NG
-//const int soundPin = 7;     // NG
+//const int soundPin = 6;     // ATOM NG
+//const int soundPin = 7;     // STAMP NG ATOMノイズ比較的OK
+//const int soundPin = 8;     // NG
 const int soundPin = 9;     // OK
 //const int soundPin = 11;  // OK
 

@@ -109,6 +109,9 @@ void taskDeviceCtrl(void *Parameters){
   sprintf( bufc, "sizeof(time_t) : %d bytes (%d bits) \n", sizeof(time_t), sizeof(time_t)*8 );
   Serial.print(bufc);
 
+  // 時計表示データ生成
+  dispClock displayClock;
+
   while(1){
     static unsigned long ledLasttime = millis(); 
     static unsigned long clockDisptLasttime = millis(); 
@@ -185,7 +188,8 @@ void taskDeviceCtrl(void *Parameters){
         // 時計データ更新
       if(timetmp - ledLasttime > jsData.clockScrollTime){     // 更新時間確認
         ledLasttime = timetmp;  // 更新時間設定
-        std::vector<uint8_t> pageData = displayClock(oledData.timeInfo);
+        // 時計データ更新
+        std::vector<uint8_t> pageData = displayClock.makeData(oledData.timeInfo);
         // データ回転処理
         pageData = jsData.dataRotation(pageData);
         // LEDマトリクスデータ転送

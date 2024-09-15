@@ -62,17 +62,35 @@ void modeCtrl::modeChange(uint8_t keydata)
 }
 
 /**
+ * @brief Construct a new disp Clock::disp Clock object
+ * 
+ */
+dispClock::dispClock() {
+  return;
+}
+
+/**
  * @brief   時計表示データ作成
  * 
- * @param timeInfo  時刻データ
- * @return std::vector<uint8_t> 表示データ
+ * @param timeInfo 
+ * @return std::vector<uint8_t> 
  */
-std::vector<uint8_t> displayClock(tm timeInfo)
+std::vector<uint8_t> dispClock::makeData(tm timeInfo)
 {
   char buffer[100];
-//  dispDateTime(buffer,oledData.timeInfo,"  ");
-  dispDateTime(buffer,timeInfo,"  ");
-  std::vector<uint8_t> data = makeFontData(buffer);   // 表示データ作成
+//  dispDateTime(buffer,timeInfo,"  ");
+  dispDateTime(buffer,timeInfo,"");
+
+  std::vector<uint8_t> data;
+  std::vector<uint8_t> dataTmp;
+  data.resize(16);
+
+  // 時計表示フォントデータ作成
+  size_t length = strlen(buffer); // 文字列の長さを取得
+  for (size_t i = 0; i < length; ++i) {
+    dataTmp = clockFontData.getFontData(buffer[i]);
+    data.insert(data.end(), dataTmp.begin(), dataTmp.end());
+  }
 
   // スクロール処理
   std::vector<uint8_t> newData = data;
@@ -93,3 +111,50 @@ std::vector<uint8_t> displayClock(tm timeInfo)
 
   return data;
 }
+
+#ifdef DELETE
+/**
+ * @brief   時計表示データ作成
+ * 
+ * @param timeInfo  時刻データ
+ * @return std::vector<uint8_t> 表示データ
+ */
+std::vector<uint8_t> displayClock(tm timeInfo)
+{
+  char buffer[100];
+//  dispDateTime(buffer,oledData.timeInfo,"  ");
+  dispDateTime(buffer,timeInfo,"  ");
+
+  // 表示データ作成
+//  std::vector<uint8_t> data = makeFontData(buffer);   // 表示データ作成
+//  std::vector<uint8_t> data = makeClockFontData(buffer);   // 時計表示データ作成
+
+  clockFont clockFnt;
+
+  clockFnt.init();
+  std::vector<uint8_t> data;
+  data.resize(16);
+  std::vector<uint8_t> dataTmp = clockFnt.getFontData('1');
+  data.insert(data.end(), dataTmp.begin(), dataTmp.end());
+  dataTmp = clockFnt.getFontData('0');
+  data.insert(data.end(), dataTmp.begin(), dataTmp.end());
+  // スクロール処理
+  std::vector<uint8_t> newData = data;
+  static uint8_t datap = 0;
+  if(datap <= data.size()-1) {
+    data.erase(data.begin(), data.begin() + datap);
+    datap++;
+  }
+  else{
+    datap = 1;
+  }
+  data.insert(data.end(), newData.begin(), newData.end());
+
+  // 最低幅として横16ドットに調整
+  if(data.size() > 16) {
+    data.resize(16);
+  }
+
+  return data;
+}
+#endif

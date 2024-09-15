@@ -86,3 +86,163 @@ std::vector<uint8_t> makeFontData(char *buffer)  //
 
   return data;
 }
+
+/**
+ * @brief Construct a new clock Font::clock Font object
+ * 
+ */
+clockFont::clockFont()
+{
+  init();
+  return;
+}
+
+/**
+ * @brief   時計フォントデータ初期化
+ * 
+ */
+void clockFont::init(void)
+{
+  std::vector<uint8_t> dispData;
+
+  dispData.push_back(0x00);
+  dispData.push_back(0x00);
+  dispData.push_back(0x00);
+  dispData.push_back(0x00);
+  dispData.push_back(0x00);
+  fontArray.push_back({' ',dispData});
+  dispData.clear();
+
+// 0
+  dispData.push_back(0x00);
+  dispData.push_back(0x3E);
+  dispData.push_back(0x49);
+  dispData.push_back(0x51);
+  dispData.push_back(0x3E);
+  fontArray.push_back({'0',dispData});
+  dispData.clear();
+
+// 1
+  dispData.push_back(0x00);
+  dispData.push_back(0x42);
+  dispData.push_back(0x7F);
+  dispData.push_back(0x40);
+  fontArray.push_back({'1',dispData});
+  dispData.clear();
+
+// 2
+  dispData.push_back(0x00);
+  dispData.push_back(0x62);
+  dispData.push_back(0x51);
+  dispData.push_back(0x49);
+  dispData.push_back(0x46);
+  fontArray.push_back({'2',dispData});
+  dispData.clear();
+
+// 3
+  dispData.push_back(0x00);
+  dispData.push_back(0x22);
+  dispData.push_back(0x49);
+  dispData.push_back(0x49);
+  dispData.push_back(0x36);
+  fontArray.push_back({'3',dispData});
+  dispData.clear();
+
+// 4
+  dispData.push_back(0x00);
+  dispData.push_back(0x1F);
+  dispData.push_back(0x10);
+  dispData.push_back(0x7F);
+  dispData.push_back(0x10);
+  fontArray.push_back({'4',dispData});
+  dispData.clear();
+
+// 5
+  dispData.push_back(0x00);
+  dispData.push_back(0x2F);
+  dispData.push_back(0x49);
+  dispData.push_back(0x49);
+  dispData.push_back(0x31);
+  fontArray.push_back({'5',dispData});
+  dispData.clear();
+
+// 6
+  dispData.push_back(0x00);
+  dispData.push_back(0x3E);
+  dispData.push_back(0x49);
+  dispData.push_back(0x49);
+  dispData.push_back(0x32);
+  fontArray.push_back({'6',dispData});
+  dispData.clear();
+
+// 7
+  dispData.push_back(0x00);
+  dispData.push_back(0x01);
+  dispData.push_back(0x71);
+  dispData.push_back(0x09);
+  dispData.push_back(0x07);
+  fontArray.push_back({'7',dispData});
+  dispData.clear();
+
+// 8
+  dispData.push_back(0x00);
+  dispData.push_back(0x36);
+  dispData.push_back(0x49);
+  dispData.push_back(0x49);
+  dispData.push_back(0x36);
+  fontArray.push_back({'8',dispData});
+  dispData.clear();
+
+// 9
+  dispData.push_back(0x00);
+  dispData.push_back(0x26);
+  dispData.push_back(0x49);
+  dispData.push_back(0x49);
+  dispData.push_back(0x3E);
+  fontArray.push_back({'9',dispData});
+  dispData.clear();
+
+// /
+  dispData.push_back(0x00);
+  dispData.push_back(0x60);
+  dispData.push_back(0x18);
+  dispData.push_back(0x06);
+//  dispData.push_back(0x03);
+  fontArray.push_back({'/',dispData});
+  dispData.clear();
+
+
+// :
+  dispData.push_back(0x00);
+  dispData.push_back(0x36);
+//  dispData.push_back(0x24);
+  fontArray.push_back({':',dispData});
+  dispData.clear();
+
+// .
+  dispData.push_back(0x00);
+  dispData.push_back(0x40);
+  fontArray.push_back({':',dispData});
+  dispData.clear();
+
+
+  return;
+}
+
+/**
+ * @brief   フォントデータ取得
+ * 
+ * @param str                     フォントデータ取得文字
+ * @return std::vector<uint8_t>   フォントデータ
+ */
+std::vector<uint8_t> clockFont::getFontData(char str)
+{
+
+  for(auto it = fontArray.begin(); it != fontArray.end(); ++it){
+    if(it->code == str){
+      return it->fontData;
+    }
+  }
+
+  return fontArray[0].fontData;
+}

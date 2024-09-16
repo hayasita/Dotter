@@ -56,8 +56,7 @@ void taskDeviceCtrl(void *Parameters){
   WiFi_real wifiReal;
   WiFiConnect wifiConnect(&wifiReal);
   setWiFihandle(&wifiConnect);          // Set WiFi Call Back.
-
-  wifiConnect.withTimer();              // SNTP接続要求
+  jsData.wifiPSet(&wifiConnect);        // WiFi接続情報設定
 
   // M5 LED Control
   LEDControl led;
@@ -97,6 +96,9 @@ void taskDeviceCtrl(void *Parameters){
     }
     jsData.readJsonFile(dataFile.jsonFilePath(dataNum));  // データファイルがある場合、最初のデータを読み込む
   }
+
+  // 起動時のWiFi接続処理要求設定
+  wifiConnect.withTimer();
 
   // 端子入力初期化
   unsigned char swList[] = {BUTTON_0,BUTTON_1};

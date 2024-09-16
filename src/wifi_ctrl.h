@@ -112,6 +112,8 @@ class WiFiConnect{
     void withTimer(void);           // 接続要求：タイマー
     void withStaReconnect(void);    // 接続要求：STA再接続要求
 
+    void setStaReconnectEnabled(uint8_t enabled); // 再接続要求を受け付けるかを設定する
+
     WiFiConSts getWiFiConSts(void);     // WiFi接続シーケンス取得
 
     // WiFi イベントハンドル
@@ -127,6 +129,8 @@ class WiFiConnect{
     bool wifiManuReqf;                  // WiFI 手動要求
     bool wifiStaReconnect;              // WiFi STA再接続要求
     SntpAutoSts ntpAutoSetSqf;          // NTP AutoConnection シーケンス
+
+    uint8_t wifiStaReconnectEnabled;    // 再接続要求を受け付けるか
 
     std::vector<WiFiSqtbl> wifiSqTbl;   // WiFi接続シーケンステーブル
     WiFiConSts wifiConSts;                 // WiFi接続シーケンス

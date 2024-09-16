@@ -42,6 +42,17 @@ jsonData::jsonData(void)
 }
 
 /**
+ * @brief WiFi接続設定ポインタ設定
+ * 
+ * @param pWifiCon WiFi接続設定ポインタ
+ */
+void jsonData::wifiPSet(WiFiConnect* pWifiCon)
+{
+  pWifiConnect_ = pWifiCon;
+  return;
+}
+
+/**
  * @brief JSONデータのパース
  * 
  * @param readStr パースデータ
@@ -265,6 +276,7 @@ bool jsonData::parseJson(String readStr ,bool dataWrite)
       if(dataWrite){writeJsonFile();}    // 設定値書き込み
       Serial.print("staStartupConnect Value: ");
       Serial.println(staStartupConnectValue); // 取得した値をシリアルモニターに出力
+      pWifiConnect_->setStaReconnectEnabled(staStartupConnectValue);    // 再接続要求を受け付けるかを設定する
     }
 
     // STA再接続間隔

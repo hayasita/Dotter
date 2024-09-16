@@ -1,6 +1,8 @@
 #ifndef jsdata_h
 #define jsdata_h
 
+#include "wifi_ctrl.h"
+
 #ifdef GLOBAL_VAL_DEF
 #define GLOBAL
 #else
@@ -62,6 +64,9 @@ class jsonData{
     uint8_t dataNumber;           // 表示データ番号
     uint8_t staStartupConnect;    // STA起動時接続設定
     uint8_t staReConnectInterval; // STA再接続間隔
+
+    void wifiPSet(WiFiConnect* pWifiCon);   // WiFi接続設定ポインタ設定
+    WiFiConnect *pWifiConnect_  = nullptr;  // WiFi接続制御ポインタ
 
   private:
     portMUX_TYPE jsonMutex;

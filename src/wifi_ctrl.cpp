@@ -75,6 +75,8 @@ void WiFiConnect::init(void)
   wifiSqTbl.push_back(  {WiFiConSts::AP_DISCONNECTION   ,[&](){return apDisconnection();}   } );  // AP切断
   wifiSqTbl.push_back(  {WiFiConSts::STA_DISCONNECTION  ,[&](){return staDisconnection();}  } );  // STA切断
 
+  wifiStaReconnectEnabled = false;    // 再接続要求を受け付けない
+
   return;
 }
 
@@ -97,7 +99,22 @@ void WiFiConnect::withItm(void)
  */
 void WiFiConnect::withTimer(void)           // 接続要求：タイマー
 {
-  ntpAutoSetSqf = SntpAutoSts::SNTPAUTO_CONNECTION; // NTP接続要求
+  if(wifiStaReconnectEnabled == 1){         // 再接続要求を受け付ける
+    ntpAutoSetSqf = SntpAutoSts::SNTPAUTO_CONNECTION; // NTP接続要求
+  }
+  return;
+}
+
+/**
+ * @brief 再接続要求を受け付けるかを設定する
+ * 
+ * bool enabled   再接続要求を受け付けるか
+ * 
+ */
+void WiFiConnect::setStaReconnectEnabled(uint8_t enabled)
+{
+  Serial.print("setStaReconnectEnabled");
+  wifiStaReconnectEnabled = enabled;
   return;
 }
 

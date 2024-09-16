@@ -16,6 +16,7 @@
 #include "SPIFFS.h"
 #include "dotserver.h"
 #include "jsdata.h"
+#include "timeCtrl.h"
 
 jsonData::jsonData(void)
 {
@@ -57,10 +58,11 @@ void jsonData::wifiPSet(WiFiConnect* pWifiCon)
  * 
  * @param readStr パースデータ
  * @param dataWrite 設定値書き込み有無
+ * @param online    オンライン接続かどうか
  * @return true 
  * @return false 
  */
-bool jsonData::parseJson(String readStr ,bool dataWrite)
+bool jsonData::parseJson(String readStr ,bool dataWrite ,bool online)
 {
   DynamicJsonDocument jsonDocument(6144);
 
@@ -277,6 +279,9 @@ bool jsonData::parseJson(String readStr ,bool dataWrite)
       Serial.print("staStartupConnect Value: ");
       Serial.println(staStartupConnectValue); // 取得した値をシリアルモニターに出力
       pWifiConnect_->setStaReconnectEnabled(staStartupConnectValue);    // 再接続要求を受け付けるかを設定する
+      if((staStartupConnectValue == 1) && (online == true) ){           // STA起動時接続設定が有効かつオンライン接続の場合実行
+        sntpInit();                       // SNTP初期化
+      }
     }
 
     // STA再接続間隔
@@ -377,7 +382,7 @@ void jsonData::readJsonFile(const char *path)
       readStr = file.readStringUntil('\n'); // 改行まで１行読み出し
       Serial.println(readStr.length());
 //      Serial.println(readStr);
-      jsData.parseJson(readStr,false);
+      jsData.parseJson(readStr,false,false);
     }
   }
   file.close();

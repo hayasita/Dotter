@@ -29,7 +29,7 @@ enum class DataType{
 class jsonData{
   public:
     jsonData(void);   // コンストラクタ
-    bool parseJson(String readStr, bool);       // Jsonデータのパース
+    bool parseJson(String readStr, bool, bool);       // Jsonデータのパース
     void readJsonFile(const char *path);  // JsonファイルからLEDデータ取得
     void saveJsonFile(const char *path);
     std::vector<uint8_t> getPageData(void);  // 任意のページのLEDデータ取得

@@ -34,5 +34,7 @@ class ClockCtrl{
 
 bool dispDateTime(char* buffer,tm timeinfo,const char* title);
 
+void sntpInit(void);    // SNTP初期化
+
 #undef GLOBAL
 #endif

@@ -109,10 +109,12 @@ class WiFiConnect{
     WiFiConnect(WiFi_*);            // コンストラクタ
     bool manager(void);             // WiFiシーケンスマネージャ
     void withItm(void);             // 接続要求：端子入力
-    void withTimer(void);           // 接続要求：タイマー
+    bool withTimer(void);           // 接続要求：タイマー
     void withStaReconnect(void);    // 接続要求：STA再接続要求
+    void forceConnect(void);        // 接続要求：無条件接続
 
     void setStaReconnectEnabled(uint8_t enabled); // 再接続要求を受け付けるかを設定する
+    void setReConnectInterval(uint8_t interval);  // 再接続間隔を設定する
 
     WiFiConSts getWiFiConSts(void);     // WiFi接続シーケンス取得
 
@@ -135,6 +137,9 @@ class WiFiConnect{
     std::vector<WiFiSqtbl> wifiSqTbl;   // WiFi接続シーケンステーブル
     WiFiConSts wifiConSts;                 // WiFi接続シーケンス
     uint8_t wifiMode;                   // WiFi接続モード     // 用途確認
+
+    unsigned long lastConnectionTime;   // 最終接続時間
+    unsigned long reConnectInterval;    // 再接続間隔
 
     void init(void);                    // 初期化処理
 

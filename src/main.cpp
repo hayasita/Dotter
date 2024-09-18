@@ -97,9 +97,6 @@ void taskDeviceCtrl(void *Parameters){
     jsData.readJsonFile(dataFile.jsonFilePath(dataNum));  // データファイルがある場合、最初のデータを読み込む
   }
 
-  // 起動時のWiFi接続処理要求設定
-  wifiConnect.withTimer();
-
   // 端子入力初期化
   unsigned char swList[] = {BUTTON_0,BUTTON_1};
   ITM itm(swList,sizeof(swList));
@@ -114,6 +111,9 @@ void taskDeviceCtrl(void *Parameters){
 
   // 時計表示データ生成
   dispClock displayClock;
+
+  // 起動時のWiFi接続処理要求設定
+  wifiConnect.forceConnect();
 
   while(1){
     static unsigned long ledLasttime = millis(); 
@@ -152,7 +152,14 @@ void taskDeviceCtrl(void *Parameters){
 
     }
 
+  // 接続要求：タイマー
+    wifiConnect.withTimer();
+
     wifiConnect.manager();
+
+    if(wifiConnect.getWiFiConSts() == WiFiConSts::STA_DISCONNECTION){    // STA切断
+      oledData.lastConnectTime = clockCtrl.getTime();
+    }
 
     // WiFiStationList取得要求
     wifiScanSta();

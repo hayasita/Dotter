@@ -208,6 +208,9 @@ void M5OLED::printClockData(DisplayData dispDat)
   dispDateTime(buffer,dispDat.timeInfo,"");
   oled.setCursor(0, 0);
   oled.print(buffer);
+  dispDateTime(buffer,dispDat.lastConnectTime,"");  // 最終接続時刻
+  oled.setCursor(0, 8);
+  oled.print(buffer);
 
 }
 

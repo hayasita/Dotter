@@ -293,6 +293,8 @@ bool jsonData::parseJson(String readStr ,bool dataWrite ,bool online)
       if(dataWrite){writeJsonFile();}    // 設定値書き込み
       Serial.print("staReConnectInterval Value: ");
       Serial.println(staReConnectIntervalValue); // 取得した値をシリアルモニターに出力
+
+      pWifiConnect_->setReConnectInterval(staReConnectIntervalValue);    // 再接続間隔を設定する
     }
 
     return true;

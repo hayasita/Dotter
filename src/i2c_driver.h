@@ -75,6 +75,7 @@ class i2cCtrl{
 class DisplayData{
   public:
     struct tm timeInfo;
+    struct tm lastConnectTime;    // 最終接続時刻
 //    struct tm rtcTimeInfo;
 //    DeviceData deviceDat;
 };

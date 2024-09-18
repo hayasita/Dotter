@@ -75,6 +75,8 @@ void WiFiConnect::init(void)
   wifiSqTbl.push_back(  {WiFiConSts::AP_DISCONNECTION   ,[&](){return apDisconnection();}   } );  // AP切断
   wifiSqTbl.push_back(  {WiFiConSts::STA_DISCONNECTION  ,[&](){return staDisconnection();}  } );  // STA切断
 
+  wifiStaReconnectEnabled = false;    // 再接続要求を受け付けない
+
   return;
 }
 
@@ -92,12 +94,58 @@ void WiFiConnect::withItm(void)
 }
 
 /**
+ * @brief 接続要求：無条件接続
+ * 
+ */
+void WiFiConnect::forceConnect(void) {
+  if(wifiStaReconnectEnabled == 1){                   // 再接続要求を受け付ける
+    ntpAutoSetSqf = SntpAutoSts::SNTPAUTO_CONNECTION; // NTP接続要求
+    lastConnectionTime = pWiFi_->_millis();           // 接続した時間を保存
+  }
+}
+
+/**
  * @brief 接続要求：タイマー
  * SNTP接続要求を行う。
  */
-void WiFiConnect::withTimer(void)           // 接続要求：タイマー
+bool WiFiConnect::withTimer(void)           // 接続要求：タイマー
 {
-  ntpAutoSetSqf = SntpAutoSts::SNTPAUTO_CONNECTION; // NTP接続要求
+  bool ret = false;
+  unsigned long currentMillis = pWiFi_->_millis();
+
+  if( (wifiConSts == WiFiConSts::NOCONNECTION)
+   && (wifiStaReconnectEnabled == 1) && (reConnectInterval != 0)){  // 再接続要求を受け付ける
+    if (currentMillis - lastConnectionTime >= reConnectInterval){   // 設定時間経過
+      ntpAutoSetSqf = SntpAutoSts::SNTPAUTO_CONNECTION;             // NTP接続要求
+      lastConnectionTime = currentMillis;
+      ret = true;
+    }
+  }
+  return ret;
+}
+
+/**
+ * @brief 再接続要求を受け付けるかを設定する
+ * 
+ * bool enabled   再接続要求を受け付けるか
+ * 
+ */
+void WiFiConnect::setStaReconnectEnabled(uint8_t enabled)
+{
+  Serial.print("setStaReconnectEnabled");
+  wifiStaReconnectEnabled = enabled;
+  return;
+}
+
+/**
+ * @brief   再接続間隔を設定する
+ * 
+ * @param interval  再接続間隔(時間)
+ */
+void WiFiConnect::setReConnectInterval(uint8_t interval)
+{
+  reConnectInterval = (unsigned long)interval * 3600 * 1000;
+//  reConnectInterval = (unsigned long)interval * 60 * 1000;      // testmode min
   return;
 }
 
@@ -815,6 +863,7 @@ bool WiFiConnect::staDisconnection(void)
       pWiFi_->_print(str.c_str());
 //      vfdevent.setEventlogLoop(EVENT_WiFi_DISCON);    // WiFI切断
       wifiConSts = WiFiConSts::NOCONNECTION;
+      lastConnectionTime = pWiFi_->_millis();           // 接続した時間を保存
     }
     else{
       pWiFi_->_print(",");

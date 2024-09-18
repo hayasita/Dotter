@@ -16,17 +16,22 @@
 #include "SPIFFS.h"
 #include "dotserver.h"
 #include "jsdata.h"
+#include "timeCtrl.h"
 
 jsonData::jsonData(void)
 {
   _row = 8;
   _col = 16;
   dataType = DataType::Undefined;   // データフォーマット
+
+  // setting.json 設定パラメータ
   glowInTheBright = 4;              // 表示輝度
   rotatePosition = 0;               // 表示方向
   dotColor = 1;                     // WebIFマトリクスエディタ表示色設定
   showSampleData = true;            // サンプルデータ表示
   dataNumber = 0;                   // 表示データ番号
+  staStartupConnect = 1;            // STA起動時接続設定
+  staReConnectInterval = 4;         // STA再接続間隔
 
   animationTime = 500;              // アニメーション間隔
   clockScrollTime = 100;            // 時計スクロール時間
@@ -38,14 +43,26 @@ jsonData::jsonData(void)
 }
 
 /**
+ * @brief WiFi接続設定ポインタ設定
+ * 
+ * @param pWifiCon WiFi接続設定ポインタ
+ */
+void jsonData::wifiPSet(WiFiConnect* pWifiCon)
+{
+  pWifiConnect_ = pWifiCon;
+  return;
+}
+
+/**
  * @brief JSONデータのパース
  * 
  * @param readStr パースデータ
  * @param dataWrite 設定値書き込み有無
+ * @param online    オンライン接続かどうか
  * @return true 
  * @return false 
  */
-bool jsonData::parseJson(String readStr ,bool dataWrite)
+bool jsonData::parseJson(String readStr ,bool dataWrite ,bool online)
 {
   DynamicJsonDocument jsonDocument(6144);
 
@@ -252,6 +269,33 @@ bool jsonData::parseJson(String readStr ,bool dataWrite)
       wifiStaReconnect = 1;
     }
 
+    // STA起動時接続設定
+    jsondata = jsonDocument["staStartupConnect"];
+    if(!jsondata.isNull()){
+      Serial.println("staStartupConnect");
+      uint8_t staStartupConnectValue = jsondata.as<uint8_t>(); // キーの値を uint8_t 型で取得
+      staStartupConnect = staStartupConnectValue;
+      if(dataWrite){writeJsonFile();}    // 設定値書き込み
+      Serial.print("staStartupConnect Value: ");
+      Serial.println(staStartupConnectValue); // 取得した値をシリアルモニターに出力
+      pWifiConnect_->setStaReconnectEnabled(staStartupConnectValue);    // 再接続要求を受け付けるかを設定する
+      if((staStartupConnectValue == 1) && (online == true) ){           // STA起動時接続設定が有効かつオンライン接続の場合実行
+        sntpInit();                       // SNTP初期化
+      }
+    }
+
+    // STA再接続間隔
+    jsondata = jsonDocument["staReConnectInterval"];
+    if(!jsondata.isNull()){
+      Serial.println("staReConnectInterval");
+      uint8_t staReConnectIntervalValue = jsondata.as<uint8_t>(); // キーの値を uint8_t 型で取得
+      staReConnectInterval = staReConnectIntervalValue;
+      if(dataWrite){writeJsonFile();}    // 設定値書き込み
+      Serial.print("staReConnectInterval Value: ");
+      Serial.println(staReConnectIntervalValue); // 取得した値をシリアルモニターに出力
+
+      pWifiConnect_->setReConnectInterval(staReConnectIntervalValue);    // 再接続間隔を設定する
+    }
 
     return true;
   }
@@ -340,7 +384,7 @@ void jsonData::readJsonFile(const char *path)
       readStr = file.readStringUntil('\n'); // 改行まで１行読み出し
       Serial.println(readStr.length());
 //      Serial.println(readStr);
-      jsData.parseJson(readStr,false);
+      jsData.parseJson(readStr,false,false);
     }
   }
   file.close();
@@ -602,7 +646,9 @@ void jsonData::writeJsonFile(void){
   configData = configData + makeJsonPiece("rotatePosition", jsData.rotatePosition, true);
   configData = configData + makeJsonPiece("dotColor", dotColor, true);
   configData = configData + makeJsonPiece("showSampleData", showSampleData, true);
-  configData = configData + makeJsonPiece("dataNumber", dataNumber, false);
+  configData = configData + makeJsonPiece("dataNumber", dataNumber, true);
+  configData = configData + makeJsonPiece("staStartupConnect", staStartupConnect, true);
+  configData = configData + makeJsonPiece("staReConnectInterval", staReConnectInterval, false);
 
   Serial.println(configData);
 
@@ -716,7 +762,13 @@ String makeSettingjs(void){
   html_tmp = html_tmp + (String)"\"showSampleData\" : " + jsData.showSampleData + ",\\\n";
 
   // 表示データ番号設定
-  html_tmp = html_tmp + (String)"\"dataNumber\" : " + jsData.dataNumber + "\\\n";
+  html_tmp = html_tmp + (String)"\"dataNumber\" : " + jsData.dataNumber + ",\\\n";
+
+  // STA起動時接続設定
+  html_tmp = html_tmp + (String)"\"staStartupConnect\" : " + jsData.staStartupConnect + ",\\\n";
+
+  // STA再接続間隔
+  html_tmp = html_tmp + (String)"\"staReConnectInterval\" : " + jsData.staReConnectInterval + "\\\n";
 
   html_tmp = html_tmp + String("}\';");
 

@@ -1,6 +1,8 @@
 #ifndef jsdata_h
 #define jsdata_h
 
+#include "wifi_ctrl.h"
+
 #ifdef GLOBAL_VAL_DEF
 #define GLOBAL
 #else
@@ -27,7 +29,7 @@ enum class DataType{
 class jsonData{
   public:
     jsonData(void);   // コンストラクタ
-    bool parseJson(String readStr, bool);       // Jsonデータのパース
+    bool parseJson(String readStr, bool, bool);       // Jsonデータのパース
     void readJsonFile(const char *path);  // JsonファイルからLEDデータ取得
     void saveJsonFile(const char *path);
     std::vector<uint8_t> getPageData(void);  // 任意のページのLEDデータ取得
@@ -53,11 +55,18 @@ class jsonData{
     uint8_t _row;                 // LED行数
     uint8_t _col;                 // LED列数
     DataType dataType;            // データフォーマット
+
+    // setting.json 設定パラメータ
     uint8_t glowInTheBright;      // 表示輝度
     uint8_t rotatePosition;       // 表示方向
     uint8_t dotColor;             // WebIFマトリクスエディタ表示色設定
     bool showSampleData;          // サンプルデータ表示・非表示設定
     uint8_t dataNumber;           // 表示データ番号
+    uint8_t staStartupConnect;    // STA起動時接続設定
+    uint8_t staReConnectInterval; // STA再接続間隔
+
+    void wifiPSet(WiFiConnect* pWifiCon);   // WiFi接続設定ポインタ設定
+    WiFiConnect *pWifiConnect_  = nullptr;  // WiFi接続制御ポインタ
 
   private:
     portMUX_TYPE jsonMutex;

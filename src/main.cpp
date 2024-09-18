@@ -56,8 +56,7 @@ void taskDeviceCtrl(void *Parameters){
   WiFi_real wifiReal;
   WiFiConnect wifiConnect(&wifiReal);
   setWiFihandle(&wifiConnect);          // Set WiFi Call Back.
-
-  wifiConnect.withTimer();              // SNTP接続要求
+  jsData.wifiPSet(&wifiConnect);        // WiFi接続情報設定
 
   // M5 LED Control
   LEDControl led;
@@ -113,6 +112,9 @@ void taskDeviceCtrl(void *Parameters){
   // 時計表示データ生成
   dispClock displayClock;
 
+  // 起動時のWiFi接続処理要求設定
+  wifiConnect.forceConnect();
+
   while(1){
     static unsigned long ledLasttime = millis(); 
     static unsigned long clockDisptLasttime = millis(); 
@@ -150,7 +152,14 @@ void taskDeviceCtrl(void *Parameters){
 
     }
 
+  // 接続要求：タイマー
+    wifiConnect.withTimer();
+
     wifiConnect.manager();
+
+    if(wifiConnect.getWiFiConSts() == WiFiConSts::STA_DISCONNECTION){    // STA切断
+      oledData.lastConnectTime = clockCtrl.getTime();
+    }
 
     // WiFiStationList取得要求
     wifiScanSta();

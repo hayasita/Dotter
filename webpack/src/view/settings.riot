@@ -117,6 +117,29 @@
           </div>
         </p>
 
+        <h5 class="card-title">ネットワーク時刻同期</h5>
+        <p class="card-text">
+          <div class="col-sm-11 offset-sm-1 form-check form-switch form-label">
+						<input class="form-check-input" type="checkbox"
+						type="checkbox"
+						checked={ staStartupConnectCheck }
+						onclick={ wifiStaAutoUseToggle } />
+						{ tstaStartupConnectCheck }
+					</div>
+          <div class="col-sm-11 offset-sm-1">
+            <label for="autoConnectInterval" class="form-label">自動接続間隔 (時間)</label>
+            <select class="form-select form-select-sm"  id="autoConnectInterval" onchange={ updateAutoConnectInterval } disabled="{!this.staStartupConnectCheck}">
+              <option value="0">No Reconnect</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="4">4</option>
+              <option value="8">8</option>
+              <option value="12">12</option>
+              <option value="24">24</option>
+            </select>
+          </div>
+        </p>
+
       </div>
     </div>
   </div>
@@ -173,17 +196,6 @@
           </table>
         </p>
 
-        <h5 class="card-title">STA 自動接続</h5>
-        <p class="card-text">
-          <div class="col-sm-11 offset-sm-1 form-check form-switch">
-						<input class="form-check-input" type="checkbox"
-						type="checkbox"
-						checked={ wifiStaAutoUseCheck }
-						onclick={ wifiStaAutoUseToggle } />
-						{ tWifiStaAutoUseCheck }
-					</div>
-        </p>
-
       </div>
     </div>
   </div>
@@ -230,25 +242,25 @@
 
         // STA自動接続　チェックボックス初期値設定
 				if(vmUI.getNetworkSetting("staAutoConnect") == 1){
-					this.wifiStaAutoUseCheck ="checked";
-          this.tWifiStaAutoUseCheck = "自動接続有効";
+					this.staStartupConnectCheck ="checked";
+          this.tstaStartupConnectCheck = "自動接続有効";
 				}
 				else{
-					this.wifiStaAutoUseCheck ="";
-          this.tWifiStaAutoUseCheck = "自動接続無効";
+					this.staStartupConnectCheck ="";
+          this.tstaStartupConnectCheck = "自動接続無効";
 				}
         // STA自動接続有効・無効処理
         this.wifiStaAutoUseToggle = (e) => {
-          this.wifiStaAutoUseCheck = !this.wifiStaAutoUseCheck;
-          if(this.wifiStaAutoUseCheck){
-            this.tWifiStaAutoUseCheck = "自動接続有効";
-            vmUI.submitDisplaySetting("staAutoConnect", 1);
+          this.staStartupConnectCheck = !this.staStartupConnectCheck;
+          if(this.staStartupConnectCheck){
+            this.tstaStartupConnectCheck = "自動接続有効";
+            vmUI.submitDisplaySetting("staStartupConnect", 1);
           }
           else{
-            this.tWifiStaAutoUseCheck = "自動接続無効";
-            vmUI.submitDisplaySetting("staAutoConnect", 0)
+            this.tstaStartupConnectCheck = "自動接続無効";
+            vmUI.submitDisplaySetting("staStartupConnect", 0);
           }
-          obs.trigger('wifiStaAutoConnect',this.wifiStaAutoUseCheck); //イベント送信
+          obs.trigger('wifiStaAutoConnect',this.staStartupConnectCheck); //イベント送信
           this.update();
         }
 
@@ -317,6 +329,13 @@
           this.setSsidPasswordAreaEnable();   // SSID Password入力エリア許可設定
           this.setSsidSubmitEnable();         // SSID,Password設定ボタン有効・無効設定　STA接続なしの場合、ドロップダウンリストの選択で有効・無効設定する。
           this.update();
+        }
+
+        // 自動接続間隔設定
+        this.updateAutoConnectInterval = (e) =>{
+          const value = e.target.value;
+          this.autoConnectInterval = parseInt(value, 10);
+          vmUI.submitDisplaySetting("staReConnectInterval", this.autoConnectInterval);
         }
 
         // LED表示設定
@@ -430,6 +449,14 @@
         this.makeWiFiListElement();     // WiFiStation選択ドロップダウンリストの要素作成
         this.setSsidPasswordAreaEnable();   // SSID Password入力エリア許可設定
         this.setSsidSubmitEnable();         // SSID,Password設定ボタン有効・無効設定　STA有無で有効・無効設定する。
+        
+        // 起動時自動接続設定
+        this.staStartupConnectCheck = (vmUI.getNetworkSetting("staStartupConnect") == 1);
+
+        // 自動接続間隔設定
+        this.autoConnectInterval = vmUI.getNetworkSetting("staReConnectInterval");
+        document.getElementById('autoConnectInterval').value = this.autoConnectInterval;
+
         this.update();
 
         // 言語切り替え

@@ -235,7 +235,7 @@ void onWebSocketEvent(AsyncWebSocket *server, AsyncWebSocketClient *client, AwsE
       receivedData += String((char*)data, len);
       if (info->final) {  // 最後のフレームであれば処理する
 //        Serial.println(receivedData);
-        if( jsData.parseJson(receivedData,true) ){
+        if( jsData.parseJson(receivedData,true,true) ){
           receivedData = "";  // JSONのパースに成功した場合データリセット。失敗した場合データを繋げて再度パース試みる。データの総量に注意。
         }
       }

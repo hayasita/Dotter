@@ -10,6 +10,7 @@
  */
 
 #include "sdCard.h"
+#include "device_driver.h"
 
 // SDカードのピン設定
 const int SD_SCK_PIN = GPIO_NUM_14;         // SDカードのSCKピン

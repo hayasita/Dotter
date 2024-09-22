@@ -38,14 +38,17 @@ struct IMU_RAW_DATA{
  */
 class IMU{
   public:
-    IMU(void);          // コンストラクタ
-    void whoAmI(bool);  // IMUの識別情報作製
+    IMU(bool ready);    // コンストラクタ
+    void whoAmI(void);  // IMUの識別情報作製
     IMU_TYPE imuType;   // IMUの識別情報
 
     void init(void);                                // IMU初期化  
 
-    void getRawData(IMU_RAW_DATA *data);            // IMUデータ取得
+    bool getRawData(IMU_RAW_DATA *data);            // IMUデータ取得
     IMU_RAW_DATA calcIMUMovAvg(IMU_RAW_DATA data);  // IMUデータ移動平均計算
+
+  private:
+    bool ready;       // IMUデバイスの有無
 };
 
 #undef GLOBAL

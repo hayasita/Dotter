@@ -7,11 +7,13 @@
 #define MPU6050_WHO_AM_I 0x75
 
 /**
- * @brief IMUのコンストラクタ
+ * @brief Construct a new IMU::IMU object
  * 
+ * @param imuDeviceChk  IMUデバイスの有無
  */
-IMU::IMU(void)
+IMU::IMU(bool imuDeviceChk)
 {
+  ready = imuDeviceChk;
   return;
 }
 
@@ -21,12 +23,13 @@ IMU::IMU(void)
  */
 void IMU::init(void)
 {
-  Serial.println("IMU init");
-  Wire.beginTransmission(0x68);//送信処理を開始する(0x68がセンサーのアドレス)
-  Wire.write(0x6b);            //レジスタ「0x6b」(動作状変数)を指定
-  Wire.write(0x00);            //0x00を指定(ON)
-  Wire.endTransmission();      //送信を終了する
-
+  if(ready == true){
+    Serial.println("IMU init");
+    Wire.beginTransmission(0x68);//送信処理を開始する(0x68がセンサーのアドレス)
+    Wire.write(0x6b);            //レジスタ「0x6b」(動作状変数)を指定
+    Wire.write(0x00);            //0x00を指定(ON)
+    Wire.endTransmission();      //送信を終了する
+  }
   return;
 }
 
@@ -34,34 +37,41 @@ void IMU::init(void)
  * @brief   IMUのデータ取得
  * 
  * @param data  IMUデータ
+ * @return bool true:データ取得成功 false:データ取得失敗
  */
-void IMU::getRawData(IMU_RAW_DATA *data)
+bool IMU::getRawData(IMU_RAW_DATA *data)
 {
-  uint8_t i2c_data[14]; //センサからのデータ格納用配列
-  int16_t ax = 0;
+  bool ret = false;
+  if(ready == true){
 
-  Wire.beginTransmission(0x68); //送信処理を開始する
-  Wire.write(0x3b);             //(取得値の先頭を指定)
-  Wire.endTransmission();       //送信を終了する
-  Wire.requestFrom(0x68, 14);   //データを要求する(0x3bから14バイトが6軸の値)
+    uint8_t i2c_data[14]; //センサからのデータ格納用配列
+    int16_t ax = 0;
 
-  uint8_t i = 0;
-  while (Wire.available()) {
-    i2c_data[i] = Wire.read();//データを読み込む
-//    Serial.printf("%d:",i);
-//    Serial.println(data[i]);
-    i++;
+    Wire.beginTransmission(0x68); //送信処理を開始する
+    Wire.write(0x3b);             //(取得値の先頭を指定)
+    Wire.endTransmission();       //送信を終了する
+    Wire.requestFrom(0x68, 14);   //データを要求する(0x3bから14バイトが6軸の値)
+
+    uint8_t i = 0;
+    while (Wire.available()) {
+      i2c_data[i] = Wire.read();//データを読み込む
+  //    Serial.printf("%d:",i);
+  //    Serial.println(data[i]);
+      i++;
+    }
+    
+    data->ax = (i2c_data[0] << 8) | i2c_data[1];
+    data->ay = (i2c_data[2] << 8) | i2c_data[3];
+    data->az = (i2c_data[4] << 8) | i2c_data[5];
+    data->temp = (i2c_data[6] << 8) | i2c_data[7];
+    data->gx = (i2c_data[8] << 8) | i2c_data[9];
+    data->gy = (i2c_data[10] << 8) | i2c_data[11];
+    data->gz = (i2c_data[12] << 8) | i2c_data[13];
+
+    ret = true;
   }
-  
-  data->ax = (i2c_data[0] << 8) | i2c_data[1];
-  data->ay = (i2c_data[2] << 8) | i2c_data[3];
-  data->az = (i2c_data[4] << 8) | i2c_data[5];
-  data->temp = (i2c_data[6] << 8) | i2c_data[7];
-  data->gx = (i2c_data[8] << 8) | i2c_data[9];
-  data->gy = (i2c_data[10] << 8) | i2c_data[11];
-  data->gz = (i2c_data[12] << 8) | i2c_data[13];
 
-  return;
+  return ret;
 }
 
 /**
@@ -92,12 +102,11 @@ IMU_RAW_DATA IMU::calcIMUMovAvg(IMU_RAW_DATA data) {
 /**
  * @brief IMUの識別情報判定
  * 
- * @param imuChk 
  * @return * void 
  */
-void IMU::whoAmI(bool imuChk)
+void IMU::whoAmI(void)
 {
-  if(imuChk == true){
+  if(ready == true){
     Wire.beginTransmission(MPU6050_ADDR);
     Wire.write(MPU6050_WHO_AM_I);
     Wire.endTransmission();

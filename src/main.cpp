@@ -69,8 +69,8 @@ void taskDeviceCtrl(void *Parameters){
   DeviceChk deviceChk;
   deviceChk.i2cScan();
 
-  IMU _imu;
-  _imu.whoAmI(deviceChk.imu());
+  IMU _imu(deviceChk.imu());
+  _imu.whoAmI();
   _imu.init();
 
   // I2C OLED Display
@@ -148,7 +148,7 @@ void taskDeviceCtrl(void *Parameters){
       sdcard.listDir(SD, "/", 3);
 
       deviceChk.init();
-      _imu.whoAmI(deviceChk.imu());
+      _imu.whoAmI();
 
     }
 

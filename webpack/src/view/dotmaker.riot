@@ -479,24 +479,32 @@
       const filename = "data" + selectedValue + ".json"
       console.log(filename);
 
+      // 送信データ：ヘッダ作製
       let dataToSend = {
         "type" : "rgbData",
         "maxRow" : 8,
         "maxCol" : 16,
         "filename" : filename,
         "time" : switchTimeInput.value * 1000,    // msec単位に変換
-//        "dataArray" : this.vmDotMatorix.submitData
       };
-      let dataArray = {
-        "dataArray" : this.vmDotMatorix.submitData
-      }
       console.log(dataToSend)
       console.log("---")
       console.log(JSON.stringify(dataToSend))
 
-      this.model.websocketSend(JSON.stringify(dataToSend));     // データ送信
-      this.model.websocketSend(JSON.stringify(dataArray));      // データ送信
-      this.model.websocketSend("{\"command\":\"datasave\"}");   // データ送信
+      this.model.websocketSend(JSON.stringify(dataToSend));     // データ送信：データヘッダ
+
+      // 送信データ：アニメーションデータ作製・送信
+      for(let i=0; i<this.vmDotMatorix.submitData.length; i++){
+        let sendDat = [];
+        sendDat.push(this.vmDotMatorix.submitData[i]);          // 1ページずつ送信データ作成する
+        console.log(sendDat);
+        let dataArray = {
+          "dataArray" : sendDat
+        }
+        this.model.websocketSend(JSON.stringify(dataArray));    // データ送信：アニメーションデータ
+      }
+
+      this.model.websocketSend("{\"command\":\"datasave\"}");   // データ送信：ファイル保存コマンド
     }
 
   }

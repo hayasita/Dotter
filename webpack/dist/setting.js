@@ -10,6 +10,8 @@ const _initial_setting_ = '{\
 "dataNumber" : 0,\
 "staStartupConnect" : 1,\
 "staReConnectInterval" : 12,\
+"soundEnable" : 1,\
+"clockScrollTime" : 1000,\
 \
     "end" : ""\
 }';

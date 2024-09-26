@@ -41,7 +41,6 @@ class jsonData{
     void pageCountAdd(void);                  // ページ位置進める
     void paseCountClear(void);                // ページ位置クリア
     uint16_t animationTime;                   // アニメーション間隔
-    uint16_t clockScrollTime;                 // 時計スクロール時間
 
     std::vector<std::string> dataFilePath;
     void filepathAdd(std::string);
@@ -60,10 +59,12 @@ class jsonData{
     uint8_t glowInTheBright;      // 表示輝度
     uint8_t rotatePosition;       // 表示方向
     uint8_t dotColor;             // WebIFマトリクスエディタ表示色設定
-    bool showSampleData;          // サンプルデータ表示・非表示設定
+    uint8_t showSampleData;       // サンプルデータ表示・非表示設定
     uint8_t dataNumber;           // 表示データ番号
     uint8_t staStartupConnect;    // STA起動時接続設定
     uint8_t staReConnectInterval; // STA再接続間隔
+    uint8_t soundEnable;          // サウンド有効設定
+    uint16_t clockScrollTime;     // 時計スクロール時間
 
     void wifiPSet(WiFiConnect* pWifiCon);   // WiFi接続設定ポインタ設定
     WiFiConnect *pWifiConnect_  = nullptr;  // WiFi接続制御ポインタ
@@ -78,6 +79,7 @@ class jsonData{
 
     String makeJsonPiece(String key, String value ,bool connma);    // jsonデータ作成:String
     String makeJsonPiece(String key, uint8_t value ,bool connma);   // jsonデータ作成:uint8_t
+    String makeJsonPiece(String key, uint16_t value ,bool connma);  // jsonデータ作成:uint16_t
 
     bool containsSample(const std::string& path);     // ファイル名に "sample" を含むかどうかを判定する関数
     void removeSampleFiles(void);                     // "sample" を含むパスを削除するメンバ関数

@@ -3,3 +3,7 @@
 {"dotColor":1},
 {"showSampleData":1},
 {"dataNumber":0}
+{"staStartupConnect":1},
+{"staReConnectInterval":4},
+{"soundEnable":1},
+{"clockScrollTime":100}

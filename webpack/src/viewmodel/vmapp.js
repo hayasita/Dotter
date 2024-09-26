@@ -315,6 +315,7 @@ export class vfdControllerUI{
         return this.model.getSettingJsonItem(item,num);
     }
     setDisplaySetting(item, data, ...[num]){
+        console.log("setDisplaySetting:"+data+":"+item);
         return this.model.setSettingJsonItem(item, data, num);
     }
 

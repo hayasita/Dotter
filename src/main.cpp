@@ -115,6 +115,17 @@ void taskDeviceCtrl(void *Parameters){
   // 起動時のWiFi接続処理要求設定
   wifiConnect.forceConnect();
 
+  setToneChannel(0);
+  const int soundPin = SOUND_PIN;
+  if(jsData.soundEnable == 1){
+    // sound init PiPo
+    tone(soundPin, 2000, 100);
+    tone(soundPin, 1000, 100);
+  //  tone(soundPin, 500, 100);
+  //  tone(soundPin, 250, 100);
+    noTone(soundPin);
+  }
+
   while(1){
     static unsigned long ledLasttime = millis(); 
     static unsigned long clockDisptLasttime = millis(); 
@@ -261,17 +272,6 @@ void taskDeviceCtrl(void *Parameters){
 }
 
 
-// Soundのパラメータ設定
-//const int soundPin = 44;
-//const int soundPin = 2;     // NG
-//const int soundPin = 3;     // NG
-//const int soundPin = 5;     // NG
-//const int soundPin = 6;     // ATOM NG
-//const int soundPin = 7;     // STAMP NG ATOMノイズ比較的OK
-//const int soundPin = 8;     // NG
-//const int soundPin = 9;     // OK
-//const int soundPin = 11;  // OK
-const int soundPin = SOUND_PIN;
 /**
  * @brief setup
  * 
@@ -284,14 +284,6 @@ void setup() {
 
   Serial.begin(115200);
 //  while (!Serial);
-
-  // sound init PiPo
-  setToneChannel(0);
-  tone(soundPin, 2000, 100);
-  tone(soundPin, 1000, 100);
-  tone(soundPin, 500, 100);
-  tone(soundPin, 250, 100);
-  noTone(soundPin);
 
   // Initialize SPIFFS
   if(!SPIFFS.begin()){

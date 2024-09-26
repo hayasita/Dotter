@@ -28,13 +28,14 @@ jsonData::jsonData(void)
   glowInTheBright = 4;              // 表示輝度
   rotatePosition = 0;               // 表示方向
   dotColor = 1;                     // WebIFマトリクスエディタ表示色設定
-  showSampleData = true;            // サンプルデータ表示
+  showSampleData = 1;               // サンプルデータ表示
   dataNumber = 0;                   // 表示データ番号
   staStartupConnect = 1;            // STA起動時接続設定
   staReConnectInterval = 4;         // STA再接続間隔
+  soundEnable = 1;                  // サウンド有効設定
+  clockScrollTime = 100;            // 時計スクロール時間
 
   animationTime = 500;              // アニメーション間隔
-  clockScrollTime = 100;            // 時計スクロール時間
 
   pageCount =0;                     // ページ位置
 
@@ -134,7 +135,7 @@ bool jsonData::parseJson(String readStr ,bool dataWrite ,bool online)
           }
         }
         portENTER_CRITICAL(&jsonMutex);
-        ledAllData.push_back(PageData);
+        ledAllData.push_back(PageData);     // 表示データ追加
         portEXIT_CRITICAL(&jsonMutex);
 //        Serial.println(PageData[0]);
 //        Serial.println(ledAllData[i][0]);
@@ -295,6 +296,43 @@ bool jsonData::parseJson(String readStr ,bool dataWrite ,bool online)
       Serial.println(staReConnectIntervalValue); // 取得した値をシリアルモニターに出力
 
       pWifiConnect_->setReConnectInterval(staReConnectIntervalValue);    // 再接続間隔を設定する
+    }
+
+    // サウンド有効設定
+    jsondata = jsonDocument["soundEnable"];
+    if(!jsondata.isNull()){
+      Serial.println("soundEnable");
+      uint8_t soundEnableValue = jsondata.as<uint8_t>(); // キーの値を uint8_t 型で取得
+      soundEnable = soundEnableValue;
+      if(dataWrite){writeJsonFile();}       // 設定値書き込み
+      Serial.print("soundEnable Value: ");
+      Serial.println(soundEnableValue);     // 取得した値をシリアルモニターに出力
+    }
+
+    // 時計スクロール時間
+    jsondata = jsonDocument["clockScrollTime"];
+    if(!jsondata.isNull()){
+      Serial.println("clockScrollTime");
+      uint16_t clockScrollTimeValue = jsondata.as<uint16_t>(); // キーの値を uint16_t 型で取得
+      clockScrollTime = clockScrollTimeValue;
+      if(dataWrite){writeJsonFile();}       // 設定値書き込み
+      Serial.print("clockScrollTime Value: ");
+      Serial.println(clockScrollTimeValue); // 取得した値をシリアルモニターに出力
+    }
+    // 時計スクロール時間スライダー更新
+    jsondata = jsonDocument["clockScrollTimeSet"];
+    if(!jsondata.isNull()){
+      Serial.println("clockScrollTimeSet");
+      uint16_t clockScrollTimeValue = jsondata.as<uint16_t>(); // キーの値を uint16_t 型で取得
+      clockScrollTime = clockScrollTimeValue;
+      Serial.print("clockScrollTime Value: ");
+      Serial.println(clockScrollTimeValue); // 取得した値をシリアルモニターに出力
+    }
+    // 時計スクロール時間確定
+    jsondata = jsonDocument["clockScrollTimeChangeSet"];
+    if(!jsondata.isNull()){
+      if(dataWrite){writeJsonFile();}       // 設定値書き込み
+      Serial.println("clockScrollTimeChangeSet");
     }
 
     return true;
@@ -613,7 +651,7 @@ bool jsonData::filepathIni(void)
   }
 
   // "sample" を含むパスを削除
-  if(showSampleData == false){
+  if(showSampleData == 0){
     removeSampleFiles();
   }
 
@@ -642,13 +680,15 @@ void jsonData::writeJsonFile(void){
 
   String configData = "";
 
-  configData = configData + makeJsonPiece("glowInTheBright", jsData.glowInTheBright, true);
-  configData = configData + makeJsonPiece("rotatePosition", jsData.rotatePosition, true);
-  configData = configData + makeJsonPiece("dotColor", dotColor, true);
-  configData = configData + makeJsonPiece("showSampleData", showSampleData, true);
-  configData = configData + makeJsonPiece("dataNumber", dataNumber, true);
-  configData = configData + makeJsonPiece("staStartupConnect", staStartupConnect, true);
-  configData = configData + makeJsonPiece("staReConnectInterval", staReConnectInterval, false);
+  configData = configData + makeJsonPiece("glowInTheBright", jsData.glowInTheBright, true);       // 表示輝度
+  configData = configData + makeJsonPiece("rotatePosition", jsData.rotatePosition, true);         // 表示方向
+  configData = configData + makeJsonPiece("dotColor", dotColor, true);                            // WebIFマトリクスエディタ表示色設定
+  configData = configData + makeJsonPiece("showSampleData", showSampleData, true);                // サンプルデータ表示
+  configData = configData + makeJsonPiece("dataNumber", dataNumber, true);                        // 表示データ番号
+  configData = configData + makeJsonPiece("staStartupConnect", staStartupConnect, true);          // STA起動時接続設定
+  configData = configData + makeJsonPiece("staReConnectInterval", staReConnectInterval, true);    // STA再接続間隔
+  configData = configData + makeJsonPiece("soundEnable", soundEnable, true);                      // サウンド有効設定
+  configData = configData + makeJsonPiece("clockScrollTime", clockScrollTime, false);             // 時計スクロール時間
 
   Serial.println(configData);
 
@@ -694,6 +734,25 @@ String jsonData::makeJsonPiece(String key, String value ,bool connma)
  * @return String 
  */
 String jsonData::makeJsonPiece(String key, uint8_t value ,bool connma)
+{
+  String ret = "{\"" + key + "\":" + value + "}";
+  if(connma == true){
+    ret = ret + ",";
+  }
+  ret = ret + "\n";
+  return ret;
+}
+
+/**
+ * @brief jsonデータ作成:uint16_t
+ * 
+ * @param key     jsonのキー
+ * @param value   jsonの値
+ * @param connma  true:データの最後に「.」を追加する
+ *                false:追加しない
+ * @return String 
+ */
+String jsonData::makeJsonPiece(String key, uint16_t value ,bool connma)
 {
   String ret = "{\"" + key + "\":" + value + "}";
   if(connma == true){
@@ -768,7 +827,13 @@ String makeSettingjs(void){
   html_tmp = html_tmp + (String)"\"staStartupConnect\" : " + jsData.staStartupConnect + ",\\\n";
 
   // STA再接続間隔
-  html_tmp = html_tmp + (String)"\"staReConnectInterval\" : " + jsData.staReConnectInterval + "\\\n";
+  html_tmp = html_tmp + (String)"\"staReConnectInterval\" : " + jsData.staReConnectInterval + ",\\\n";
+
+  // サウンド有効設定
+  html_tmp = html_tmp + (String)"\"soundEnable\" : " + jsData.soundEnable + ",\\\n";
+
+  // 時計スクロール時間
+  html_tmp = html_tmp + (String)"\"clockScrollTime\" : " + jsData.clockScrollTime + "\\\n";
 
   html_tmp = html_tmp + String("}\';");
 

@@ -85,6 +85,65 @@
   </div>
 </div>
 
+<div class="card">
+  <div class="card-header">
+    サウンド設定
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">サウンド出力有効</h5>
+    <p class="card-text">
+      <div class="col-sm-11 offset-sm-1">
+        <div class="form-check form-switch">
+          <input class="form-check-input" type="checkbox"
+            type="checkbox"
+            checked={ soundOutOnCheck }
+            onclick={ soundOutOnToggle } />
+            { tsoundOutOn}
+        </div>
+      </div>
+    </p>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    時計設定
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">スクロール表示</h5>
+    <p class="card-text">
+      <div class="col-sm-11 offset-sm-1">
+        Scroll speed : <span id="clockScrollTimeSetId">10</span>
+        <input type="range" class="form-range" id="clockScrollTimeSet" min="10" max="1000" step="10" value={clockScrollTime} onchange={ clockScrollTimeChange.bind(this,"clockScrollTimeChangeSet") }>
+      </div>
+    </p>
+    
+    <h5 class="card-title">ネットワーク時刻同期</h5>
+    <p class="card-text">
+      <div class="col-sm-11 offset-sm-1 form-check form-switch form-label">
+		  <input class="form-check-input" type="checkbox"
+		  	type="checkbox"
+				checked={ staStartupConnectCheck }
+				onclick={ wifiStaAutoUseToggle } />
+				{ tstaStartupConnectCheck }
+			</div>
+      <div class="col-sm-11 offset-sm-1">
+        <label for="autoConnectInterval" class="form-label">自動接続間隔 (時間)</label>
+        <select class="form-select form-select-sm"  id="autoConnectInterval" onchange={ updateAutoConnectInterval } disabled="{!this.staStartupConnectCheck}">
+          <option value="0">No Reconnect</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="4">4</option>
+          <option value="8">8</option>
+          <option value="12">12</option>
+          <option value="24">24</option>
+        </select>
+      </div>
+    </p>
+
+  </div>
+</div>
+
 <div class="row">
   <div class="col-md-6">
     <div class="card h-100">
@@ -114,29 +173,6 @@
               <td>{ apmodeIp }</td>
             </tr>
           </table>
-          </div>
-        </p>
-
-        <h5 class="card-title">ネットワーク時刻同期</h5>
-        <p class="card-text">
-          <div class="col-sm-11 offset-sm-1 form-check form-switch form-label">
-						<input class="form-check-input" type="checkbox"
-						type="checkbox"
-						checked={ staStartupConnectCheck }
-						onclick={ wifiStaAutoUseToggle } />
-						{ tstaStartupConnectCheck }
-					</div>
-          <div class="col-sm-11 offset-sm-1">
-            <label for="autoConnectInterval" class="form-label">自動接続間隔 (時間)</label>
-            <select class="form-select form-select-sm"  id="autoConnectInterval" onchange={ updateAutoConnectInterval } disabled="{!this.staStartupConnectCheck}">
-              <option value="0">No Reconnect</option>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="4">4</option>
-              <option value="8">8</option>
-              <option value="12">12</option>
-              <option value="24">24</option>
-            </select>
           </div>
         </p>
 
@@ -388,6 +424,36 @@
           this.update();
         }
 
+        // サウンド出力設定表示
+        this.soundOutOnCheck = (vmUI.getDisplaySetting("soundEnable") == 1);
+        this.tsoundOutOn = this.soundOutOnCheck ? "サウンド出力有効" : "サウンド出力無効";
+        console.log("vmUI.getDisplaySetting(soundEnable)");
+        console.log(vmUI.getDisplaySetting("soundEnable"));
+
+        this.soundOutOnToggle = (e) => {
+          this.soundOutOnCheck = !this.soundOutOnCheck;
+          if(this.soundOutOnCheck){
+            this.tsoundOutOn = "サウンド出力有効";
+            vmUI.submitDisplaySetting("soundEnable", 1);
+          }
+          else{
+            this.tsoundOutOn = "サウンド出力無効";
+            vmUI.submitDisplaySetting("soundEnable", 0)
+          }
+          this.update();
+        }
+
+        // 時計スクロール表示速度設定
+        this.clockScrollTime = vmUI.getDisplaySetting("clockScrollTime");
+        console.log("vmUI.getDisplaySetting(clockScrollTime)");
+        console.log(vmUI.getDisplaySetting("clockScrollTime"));
+        // 表示輝度設定スライダー値設定処理
+        this.clockScrollTimeChange = (item,e) =>{   // このタイミングでeerom書き込み
+          console.log(item);
+          vmUI.setDisplaySetting(item, 1);
+          vmUI.submitDisplaySetting(item, 1);
+        }
+
       },
       onMounted(props, state){
         let vmUI = props.vmUI;
@@ -423,6 +489,13 @@
         sliderelem1.addEventListener('input', rangeValue(sliderelem1, slidertarget1));
         // --- 表示輝度設定スライダー設定値初期値表示 ---
         slidertarget1.innerHTML = vmUI.getDisplaySetting("glowInTheBright");    // 初期値設定
+
+        // --- 時計スクロール表示速度設定スライダー処理設定 ---
+        let sliderelem2 = document.getElementById('clockScrollTimeSet');
+        let slidertarget2 = document.getElementById('clockScrollTimeSetId');
+        sliderelem2.addEventListener('input', rangeValue(sliderelem2, slidertarget2));
+        // --- 時計スクロール表示速度設定スライダー初期値設定 ---
+        slidertarget2.innerHTML = vmUI.getDisplaySetting("clockScrollTime");    // 初期値設定
 
         console.log("-- DotEditor Coloe set menu make");
         this.dotColor = vmUI.getDisplaySetting("dotColor");     // 初期値設定

@@ -74,12 +74,8 @@ void taskDeviceCtrl(void *Parameters){
   _imu.init();
 
   // I2C OLED Display
-  M5OLED m5Oled;
+  M5OLED m5Oled(deviceChk.m5oled());
   DisplayData oledData;
-  if(deviceChk.m5oled()){
-    m5Oled.init();
-    m5Oled.clear();
-  }
 
   // JSONファイルデータ読み込み
   jsData.readJsonFile("/setting.json"); // 設定ファイル読み込み
@@ -181,10 +177,9 @@ void taskDeviceCtrl(void *Parameters){
       imuData2 = _imu.calcIMUMovAvg(imuData);
 
       // M5OLED表示
-      if(deviceChk.m5oled()){
-        m5Oled.printClockData(oledData);
-        m5Oled.printIMUData(imuData2);
-      }
+      m5Oled.printClockData(oledData);
+      m5Oled.printIMUData(imuData2);
+
 /*
       static constexpr const char* const wd[7] = {"Sun","Mon","Tue","Wed","Thr","Fri","Sat"};
       auto dt = M5.Rtc.getDateTime();
@@ -245,10 +240,6 @@ void taskDeviceCtrl(void *Parameters){
     }
     led.man();
 
-    // M5OLED表示
-    if(deviceChk.m5oled()){
-//      m5Oled.printEnvSensorData(oledData);
-    }
     // シリアルモニタ処理
     serialMonitor.exec();
 

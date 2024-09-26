@@ -87,13 +87,14 @@ class DisplayData{
  */
 class M5OLED{
   public:
-//    M5OLED(void);
+    M5OLED(bool ready);   // コンストラクタ
     void init(void);
     void clear(void);
     void printClockData(DisplayData);
     void printEnvSensorData(DisplayData);
     void printIMUData(IMU_RAW_DATA);
   private:
+    bool ready;       // M5OLEDデバイスの有無
     M5UnitOLED oled;
 
 };

@@ -169,6 +169,23 @@ void i2cCtrl::matrixsetHexdata(std::vector<uint8_t> data)
  // M5OLED Control
 
 /**
+ * @brief Construct a new M5OLED::M5OLED object
+ * 
+ * @param m5OledDeviceChk   M5OLEDデバイスの有無
+ */
+M5OLED::M5OLED(bool m5OledDeviceChk)
+{
+  ready = m5OledDeviceChk;
+
+  if(ready){
+    init();
+    clear();
+  }
+
+  return;
+}
+
+/**
  * @brief M5OLED初期化
  * @details 表示文字サイズ、表示向き等を設定する。
  */
@@ -203,15 +220,17 @@ void M5OLED::clear(void)
  */
 void M5OLED::printClockData(DisplayData dispDat)
 {
-  char buffer[100];
+  if(ready){
+    char buffer[100];
 
-  dispDateTime(buffer,dispDat.timeInfo,"");
-  oled.setCursor(0, 0);
-  oled.print(buffer);
-  dispDateTime(buffer,dispDat.lastConnectTime,"");  // 最終接続時刻
-  oled.setCursor(0, 8);
-  oled.print(buffer);
-
+    dispDateTime(buffer,dispDat.timeInfo,"");
+    oled.setCursor(0, 0);
+    oled.print(buffer);
+    dispDateTime(buffer,dispDat.lastConnectTime,"");  // 最終接続時刻
+    oled.setCursor(0, 8);
+    oled.print(buffer);
+  }
+  return;
 }
 
 /**
@@ -221,12 +240,15 @@ void M5OLED::printClockData(DisplayData dispDat)
  */
 void M5OLED::printIMUData(IMU_RAW_DATA data)
 {
-  oled.setCursor(0, 16);
-  oled.printf("%06d,%06d,%06d", data.ax, data.ay, data.az);
-  oled.setCursor(0, 24);
-  oled.printf("%06d,%06d,%06d", data.gx, data.gy, data.gz);
-  oled.setCursor(0, 32);
-  oled.printf("%06d", data.temp);
+  if(ready){
+    oled.setCursor(0, 16);
+    oled.printf("%06d,%06d,%06d", data.ax, data.ay, data.az);
+    oled.setCursor(0, 24);
+    oled.printf("%06d,%06d,%06d", data.gx, data.gy, data.gz);
+    oled.setCursor(0, 32);
+    oled.printf("%06d", data.temp);
+  }
+  return;
 }
 
 //#ifdef DELETE

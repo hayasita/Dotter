@@ -21,7 +21,6 @@
 #include "matrix_driver.h"
 #include "device_driver.h"
 #include "filesys.h"
-#include "display_ctrl.h"
 #include "i2c_driver.h"
 #include "imu.h"
 #include "led_ctrl.h"
@@ -87,7 +86,7 @@ void taskDeviceCtrl(void *Parameters){
   ITM itm(swList,sizeof(swList));
 
   // 表示モード設定
-  modeCtrl dispMode;
+  modeCtrl *_dispMode = &jsData.dispMode;
 
   char bufc[100];
   // time_t のバイト数、ビット数
@@ -125,8 +124,8 @@ void taskDeviceCtrl(void *Parameters){
     if(itmKeyCode == 0x01){   // 表示モード変更
       itmKeyCode = 0x00;
       Serial.println("表示モード変更");
-      dispMode.modeChange(itmKeyCode);  // 表示モード変更
-      Serial.println(dispMode.mode());
+      _dispMode->modeChange(itmKeyCode);  // 表示モード変更
+      Serial.println(_dispMode->mode());
     }
     else if(itmKeyCode == 0x02){
       if(!jsData.dataFilePath.empty()){
@@ -197,7 +196,7 @@ void taskDeviceCtrl(void *Parameters){
     }
 
     // Matrix Display Control
-    if(dispMode.mode() == 0){  // 表示モード0(時計表示
+    if(_dispMode->mode() == 0){  // 表示モード0(時計表示
         // 時計データ更新
       if(timetmp - ledLasttime > jsData.clockScrollTime){     // 更新時間確認
         ledLasttime = timetmp;  // 更新時間設定
@@ -209,7 +208,7 @@ void taskDeviceCtrl(void *Parameters){
         _i2cCtrl.matrixsetHexdata(pageData);
       }
     }
-    else if(dispMode.mode() == 1){  // 表示モード1(マトリクスデータ表示)
+    else if(_dispMode->mode() == 1){  // 表示モード1(マトリクスデータ表示)
       if(timetmp - ledLasttime > jsData.animationTime){     // 更新時間確認
         ledLasttime = timetmp;  // 更新時間設定
         if(!jsData.empty()){

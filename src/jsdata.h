@@ -2,6 +2,7 @@
 #define jsdata_h
 
 #include "wifi_ctrl.h"
+#include "display_ctrl.h"
 
 #ifdef GLOBAL_VAL_DEF
 #define GLOBAL
@@ -69,6 +70,8 @@ class jsonData{
 
     void wifiPSet(WiFiConnect* pWifiCon);   // WiFi接続設定ポインタ設定
     WiFiConnect *pWifiConnect_  = nullptr;  // WiFi接続制御ポインタ
+
+    modeCtrl dispMode;            // 表示モード制御
 
   private:
     portMUX_TYPE jsonMutex;

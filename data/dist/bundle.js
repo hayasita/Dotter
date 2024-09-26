@@ -3535,11 +3535,11 @@ __webpack_require__.r(__webpack_exports__);
     bindingTypes,
     getComponent
   ) => template(
-    '<h1>Dash Bord</h1><div class="card"><div class="card-header">\r\n\t\t\tGraph\r\n\t\t</div><div class="card-body"><h5 class="card-title">Chart</h5><p class="card-text"><div style="width: 100%;"><canvas id="sensorChart"></canvas></div><div style="width: 100%;"><canvas id="dcdcChart"></canvas></div></p></div></div><div class="row"><div class="col-md-6"><div class="card h-100"><div class="card-header">\r\n\t\t\t\tネットワーク接続設定\r\n\t\t\t</div><div class="card-body"><h5 class="card-title">Current Settings</h5><p class="card-text"><div class="col-sm-11 offset-sm-1"><table class="table"><tr><td>STAモード SSID</td><td expr2="expr2"> </td></tr><tr><td>STAモード IP Adress</td><td expr3="expr3"> </td></tr><tr><td>APモード SSID</td><td expr4="expr4"> </td></tr><tr><td>APモード IP Adress</td><td expr5="expr5"> </td></tr></table></div></p></div></div></div><div class="col-md-6"><div class="card h-100"><div class="card-header">\r\n\t\t\t\tWiFi Station 設定\r\n\t\t\t</div><div class="card-body"><h2 class="card-title">センサ情報</h2><div class="col-sm-9 offset-sm-1"><table class="table"><tr expr6="expr6"></tr></table></div></div></div></div><div class="col-md-12"><div class="card h-100"><div class="card-header">\r\n      Log message\r\n    </div><div class="card-body"><div id="logAll" style="overflow-y: scroll; height: 200px; border: 1px solid #ccc;padding: 10px;"></div></div></div></div><div class="col-md-12"><div class="card h-100"><div class="card-header"></div><div class="card-body"><h2 class="card-title">センサ情報</h2><div class="col-1"></div><div class="col-7"><div id="sensorDataTable"></div></div><div class="col-7"></div><a href="./setting.js">setting.js</a><br/><a href="./_setting.js">_setting.js</a><br/><a href="./setting.json">setting.json</a><br/></div></div></div></div>',
+    '<h1>Dash Bord</h1><div class="card"><div class="card-header">\r\n\t\t\tGraph\r\n\t\t</div><div class="card-body"><h5 class="card-title">Chart</h5><p class="card-text"><div style="width: 100%;"><canvas id="sensorChart"></canvas></div><div style="width: 100%;"><canvas id="dcdcChart"></canvas></div></p></div></div><div class="row"><div class="col-md-6"><div class="card h-100"><div class="card-header">\r\n\t\t\t\tネットワーク接続設定\r\n\t\t\t</div><div class="card-body"><h5 class="card-title">Current Settings</h5><p class="card-text"><div class="col-sm-11 offset-sm-1"><table class="table"><tr><td>STAモード SSID</td><td expr0="expr0"> </td></tr><tr><td>STAモード IP Adress</td><td expr1="expr1"> </td></tr><tr><td>APモード SSID</td><td expr2="expr2"> </td></tr><tr><td>APモード IP Adress</td><td expr3="expr3"> </td></tr></table></div></p></div></div></div><div class="col-md-6"><div class="card h-100"><div class="card-header">\r\n\t\t\t\tWiFi Station 設定\r\n\t\t\t</div><div class="card-body"><h2 class="card-title">センサ情報</h2><div class="col-sm-9 offset-sm-1"><table class="table"><tr expr4="expr4"></tr></table></div></div></div></div><div class="col-md-12"><div class="card h-100"><div class="card-header">\r\n      Log message\r\n    </div><div class="card-body"><div id="logAll" style="overflow-y: scroll; height: 200px; border: 1px solid #ccc;padding: 10px;"></div></div></div></div><div class="col-md-12"><div class="card h-100"><div class="card-header"></div><div class="card-body"><h2 class="card-title">センサ情報</h2><div class="col-1"></div><div class="col-7"><div id="sensorDataTable"></div></div><div class="col-7"></div><a href="./setting.js">setting.js</a><br/><a href="./_setting.js">_setting.js</a><br/><a href="./setting.json">setting.json</a><br/></div></div></div></div>',
     [
       {
-        redundantAttribute: 'expr2',
-        selector: '[expr2]',
+        redundantAttribute: 'expr0',
+        selector: '[expr0]',
 
         expressions: [
           {
@@ -3550,8 +3550,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr3',
-        selector: '[expr3]',
+        redundantAttribute: 'expr1',
+        selector: '[expr1]',
 
         expressions: [
           {
@@ -3562,8 +3562,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr4',
-        selector: '[expr4]',
+        redundantAttribute: 'expr2',
+        selector: '[expr2]',
 
         expressions: [
           {
@@ -3574,8 +3574,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr5',
-        selector: '[expr5]',
+        redundantAttribute: 'expr3',
+        selector: '[expr3]',
 
         expressions: [
           {
@@ -3591,11 +3591,11 @@ __webpack_require__.r(__webpack_exports__);
         condition: null,
 
         template: template(
-          '<td expr7="expr7"> </td><td expr8="expr8"></td>',
+          '<td expr5="expr5"> </td><td expr6="expr6"></td>',
           [
             {
-              redundantAttribute: 'expr7',
-              selector: '[expr7]',
+              redundantAttribute: 'expr5',
+              selector: '[expr5]',
 
               expressions: [
                 {
@@ -3606,8 +3606,8 @@ __webpack_require__.r(__webpack_exports__);
               ]
             },
             {
-              redundantAttribute: 'expr8',
-              selector: '[expr8]',
+              redundantAttribute: 'expr6',
+              selector: '[expr6]',
 
               expressions: [
                 {
@@ -3620,8 +3620,8 @@ __webpack_require__.r(__webpack_exports__);
           ]
         ),
 
-        redundantAttribute: 'expr6',
-        selector: '[expr6]',
+        redundantAttribute: 'expr4',
+        selector: '[expr4]',
         itemName: 'senser',
         indexName: null,
         evaluate: _scope => _scope.sensorList
@@ -4405,11 +4405,11 @@ __webpack_require__.r(__webpack_exports__);
     bindingTypes,
     getComponent
   ) => template(
-    '<h1>表示設定</h1><div class="card"><div class="card-header">\r\n\t\t\tLED表示設定\r\n\t\t</div><div class="card-body"><h5 class="card-title">Display Brightness</h5><p class="card-text"><div class="col-sm-11 offset-sm-1">\r\n        Bright : <span id="glowInTheBrightId">5</span><input expr31="expr31" type="range" class="form-range" id="glowInTheBright" min="1" max="15" step="1"/></div></p></div></div>',
+    '<h1>表示設定</h1><div class="card"><div class="card-header">\r\n\t\t\tLED表示設定\r\n\t\t</div><div class="card-body"><h5 class="card-title">Display Brightness</h5><p class="card-text"><div class="col-sm-11 offset-sm-1">\r\n        Bright : <span id="glowInTheBrightId">5</span><input expr24="expr24" type="range" class="form-range" id="glowInTheBright" min="1" max="15" step="1"/></div></p></div></div>',
     [
       {
-        redundantAttribute: 'expr31',
-        selector: '[expr31]',
+        redundantAttribute: 'expr24',
+        selector: '[expr24]',
 
         expressions: [
           {
@@ -5110,11 +5110,11 @@ function brdig(item){
     bindingTypes,
     getComponent
   ) => template(
-    '<h1 expr24="expr24"> </h1><h1 expr25="expr25"> </h1><h1 expr26="expr26"> </h1><div class="form-group"><label for="select1">Select:</label><select id="select1" class="form-control"><option expr27="expr27"></option></select></div><hr/><div id="div1"></div><hr/><table class="table"><tr><th class="itemname-width">Display digit</th><th>Brightness setting</th></tr><tr><td>Dig.9</td><td><div class="input-group"><button expr28="expr28" type="button" class="btn btn-primary btn-dispconf-number" id="brDig9Minus" data-type="minus" data-field="brDig9Unit" pear-button="brDig9Plus">-</button><input expr29="expr29" type="number" class="form-control input-sm no-spin" name="brightDig9" id="brDig9Unit" min="1" max="15" placeholder="1-15"/><button expr30="expr30" type="button" class="btn btn-primary btn-dispconf-number" id="brDig9Plus" data-type="plus" data-field="brDig9Unit" pear-button="brDig9Minus">+</button></div></td></tr></table><div id="brDigSetting"></div><p><button type="button" class="btn btn-primary">Primary</button><button type="button" class="btn btn-secondary">Secondary</button><button type="button" class="btn btn-success">Success</button><button type="button" class="btn btn-danger">Danger</button><button type="button" class="btn btn-warning">Warning</button><button type="button" class="btn btn-info">Info</button></p><div class="accordion" id="accordionExample"><div class="accordion-item"><h2 class="accordion-header" id="headingOne"><button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">\r\n        Accordion Item #1\r\n      </button></h2><div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample"><div class="accordion-body"><strong>This is the first item\'s accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It\'s also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.\r\n      </div></div></div><div class="accordion-item"><h2 class="accordion-header" id="headingTwo"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">\r\n        Accordion Item #2\r\n      </button></h2><div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample"><div class="accordion-body"><strong>This is the second item\'s accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It\'s also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.\r\n      </div></div></div><div class="accordion-item"><h2 class="accordion-header" id="headingThree"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">\r\n        Accordion Item #3\r\n      </button></h2><div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample"><div class="accordion-body"><strong>This is the third item\'s accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It\'s also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.\r\n      </div></div></div><p><a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">\r\n      Link with href\r\n    </a><button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">\r\n      Button with data-bs-target\r\n    </button></p><div class="collapse" id="collapseExample"><div class="card card-body">\r\n      Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.\r\n    </div></div></div>',
+    '<h1 expr58="expr58"> </h1><h1 expr59="expr59"> </h1><h1 expr60="expr60"> </h1><div class="form-group"><label for="select1">Select:</label><select id="select1" class="form-control"><option expr61="expr61"></option></select></div><hr/><div id="div1"></div><hr/><table class="table"><tr><th class="itemname-width">Display digit</th><th>Brightness setting</th></tr><tr><td>Dig.9</td><td><div class="input-group"><button expr62="expr62" type="button" class="btn btn-primary btn-dispconf-number" id="brDig9Minus" data-type="minus" data-field="brDig9Unit" pear-button="brDig9Plus">-</button><input expr63="expr63" type="number" class="form-control input-sm no-spin" name="brightDig9" id="brDig9Unit" min="1" max="15" placeholder="1-15"/><button expr64="expr64" type="button" class="btn btn-primary btn-dispconf-number" id="brDig9Plus" data-type="plus" data-field="brDig9Unit" pear-button="brDig9Minus">+</button></div></td></tr></table><div id="brDigSetting"></div><p><button type="button" class="btn btn-primary">Primary</button><button type="button" class="btn btn-secondary">Secondary</button><button type="button" class="btn btn-success">Success</button><button type="button" class="btn btn-danger">Danger</button><button type="button" class="btn btn-warning">Warning</button><button type="button" class="btn btn-info">Info</button></p><div class="accordion" id="accordionExample"><div class="accordion-item"><h2 class="accordion-header" id="headingOne"><button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">\r\n        Accordion Item #1\r\n      </button></h2><div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample"><div class="accordion-body"><strong>This is the first item\'s accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It\'s also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.\r\n      </div></div></div><div class="accordion-item"><h2 class="accordion-header" id="headingTwo"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">\r\n        Accordion Item #2\r\n      </button></h2><div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample"><div class="accordion-body"><strong>This is the second item\'s accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It\'s also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.\r\n      </div></div></div><div class="accordion-item"><h2 class="accordion-header" id="headingThree"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">\r\n        Accordion Item #3\r\n      </button></h2><div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample"><div class="accordion-body"><strong>This is the third item\'s accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It\'s also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.\r\n      </div></div></div><p><a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">\r\n      Link with href\r\n    </a><button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">\r\n      Button with data-bs-target\r\n    </button></p><div class="collapse" id="collapseExample"><div class="card card-body">\r\n      Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.\r\n    </div></div></div>',
     [
       {
-        redundantAttribute: 'expr24',
-        selector: '[expr24]',
+        redundantAttribute: 'expr58',
+        selector: '[expr58]',
 
         expressions: [
           {
@@ -5125,8 +5125,8 @@ function brdig(item){
         ]
       },
       {
-        redundantAttribute: 'expr25',
-        selector: '[expr25]',
+        redundantAttribute: 'expr59',
+        selector: '[expr59]',
 
         expressions: [
           {
@@ -5137,8 +5137,8 @@ function brdig(item){
         ]
       },
       {
-        redundantAttribute: 'expr26',
-        selector: '[expr26]',
+        redundantAttribute: 'expr60',
+        selector: '[expr60]',
 
         expressions: [
           {
@@ -5168,15 +5168,15 @@ function brdig(item){
           ]
         ),
 
-        redundantAttribute: 'expr27',
-        selector: '[expr27]',
+        redundantAttribute: 'expr61',
+        selector: '[expr61]',
         itemName: 'tz',
         indexName: null,
         evaluate: _scope => _scope.tzlist
       },
       {
-        redundantAttribute: 'expr28',
-        selector: '[expr28]',
+        redundantAttribute: 'expr62',
+        selector: '[expr62]',
 
         expressions: [
           {
@@ -5187,8 +5187,8 @@ function brdig(item){
         ]
       },
       {
-        redundantAttribute: 'expr29',
-        selector: '[expr29]',
+        redundantAttribute: 'expr63',
+        selector: '[expr63]',
 
         expressions: [
           {
@@ -5198,8 +5198,8 @@ function brdig(item){
         ]
       },
       {
-        redundantAttribute: 'expr30',
-        selector: '[expr30]',
+        redundantAttribute: 'expr64',
+        selector: '[expr64]',
 
         expressions: [
           {
@@ -5258,11 +5258,11 @@ __webpack_require__.r(__webpack_exports__);
     bindingTypes,
     getComponent
   ) => template(
-    '<nav class="navbar navbar-expand-lg bg-body-tertiary"><div class="container-fluid"><a expr0="expr0" class="navbar-brand" href="#"> </a><div><span expr1="expr1" class="navbar-text"> </span></div><button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="ナビゲーションの切替"><span class="navbar-toggler-icon"></span></button><div class="collapse navbar-collapse" id="navbarNav"><ul class="navbar-nav"></ul></div></div></nav>',
+    '<nav class="navbar navbar-expand-lg bg-body-tertiary"><div class="container-fluid"><a expr7="expr7" class="navbar-brand" href="#"> </a><div><span expr8="expr8" class="navbar-text"> </span></div><button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="ナビゲーションの切替"><span class="navbar-toggler-icon"></span></button><div class="collapse navbar-collapse" id="navbarNav"><ul class="navbar-nav"></ul></div></div></nav>',
     [
       {
-        redundantAttribute: 'expr0',
-        selector: '[expr0]',
+        redundantAttribute: 'expr7',
+        selector: '[expr7]',
 
         expressions: [
           {
@@ -5273,8 +5273,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr1',
-        selector: '[expr1]',
+        redundantAttribute: 'expr8',
+        selector: '[expr8]',
 
         expressions: [
           {
@@ -5337,7 +5337,7 @@ __webpack_require__.r(__webpack_exports__);
       vmUI.clearStaReConnectionCallback(this.clearStaConnectionSpinner.bind(this));
 
       // STA自動接続　チェックボックス初期値設定
-              if(vmUI.getNetworkSetting("staAutoConnect") == 1){
+              if(vmUI.getNetworkSetting("staStartupConnect") == 1){
                   this.staStartupConnectCheck ="checked";
         this.tstaStartupConnectCheck = "自動接続有効";
               }
@@ -5784,11 +5784,11 @@ __webpack_require__.r(__webpack_exports__);
     bindingTypes,
     getComponent
   ) => template(
-    '<h1>設定</h1><div class="card"><div class="card-header">\r\n    LED表示設定\r\n  </div><div class="card-body"><h5 class="card-title">LED 表示輝度</h5><p class="card-text"><div class="col-sm-11 offset-sm-1">\r\n        Bright : <span id="glowInTheBrightId">5</span><input expr44="expr44" type="range" class="form-range" id="glowInTheBright" min="1" max="15" step="1"/></div></p><h5 class="card-title">LED 表示方向</h5><p class="card-text"><div class="col-sm-11 offset-sm-1"><div expr45="expr45" class="form-check form-switch"><input expr46="expr46" class="form-check-input" type="checkbox" type="checkbox"/> </div></div></p></div></div><div class="card"><div class="card-header">\r\n    ドット絵エディタ 設定\r\n  </div><div class="card-body"><h5 class="card-title">色設定</h5><div class="card-text"><div class="col-sm-11 offset-sm-1"><div class="form-check form-check-inline"><input class="form-check-input" type="radio" id="redRadio" name="color" value="1"/><label class="form-check-label" for="redRadio">Red</label></div><div class="form-check form-check-inline"><input class="form-check-input" type="radio" id="blueRadio" name="color" value="4"/><label class="form-check-label" for="blueRadio">Blue</label></div><div class="form-check form-check-inline"><input class="form-check-input" type="radio" id="greenRadio" name="color" value="2"/><label class="form-check-label" for="greenRadio">Green</label></div><div class="form-check form-check-inline"><input class="form-check-input" type="radio" id="yellowRadio" name="color" value="3"/><label class="form-check-label" for="yellowRadio">Yellow</label></div></div></div></div></div><div class="card"><div class="card-header">\r\n    データファイル設定\r\n  </div><div class="card-body"><h5 class="card-title">サンプルファイル有効</h5><p class="card-text"><div class="col-sm-11 offset-sm-1"><div expr47="expr47" class="form-check form-switch"><input expr48="expr48" class="form-check-input" type="checkbox" type="checkbox"/> </div></div></p></div></div><div class="card"><div class="card-header">\r\n    サウンド設定\r\n  </div><div class="card-body"><h5 class="card-title">サウンド出力有効</h5><p class="card-text"><div class="col-sm-11 offset-sm-1"><div expr49="expr49" class="form-check form-switch"><input expr50="expr50" class="form-check-input" type="checkbox" type="checkbox"/> </div></div></p></div></div><div class="card"><div class="card-header">\r\n    時計設定\r\n  </div><div class="card-body"><h5 class="card-title">スクロール表示</h5><p class="card-text"><div class="col-sm-11 offset-sm-1">\r\n        Scroll speed : <span id="clockScrollTimeSetId">10</span><input expr51="expr51" type="range" class="form-range" id="clockScrollTimeSet" min="10" max="1000" step="10"/></div></p><h5 class="card-title">ネットワーク時刻同期</h5><p class="card-text"><div expr52="expr52" class="col-sm-11 offset-sm-1 form-check form-switch form-label"><input expr53="expr53" class="form-check-input" type="checkbox" type="checkbox"/> </div><div class="col-sm-11 offset-sm-1"><label for="autoConnectInterval" class="form-label">自動接続間隔 (時間)</label><select expr54="expr54" class="form-select form-select-sm" id="autoConnectInterval"><option value="0">No Reconnect</option><option value="1">1</option><option value="2">2</option><option value="4">4</option><option value="8">8</option><option value="12">12</option><option value="24">24</option></select></div></p></div></div><div class="row"><div class="col-md-6"><div class="card h-100"><div class="card-header">\r\n\t\t\t\tネットワーク接続設定\r\n\t\t\t</div><div class="card-body"><h5 class="card-title">Current Settings</h5><p class="card-text"><div class="col-sm-11 offset-sm-1"><table class="table"><tr><td>STAモード SSID</td><td expr55="expr55"> </td></tr><tr><td>STAモード IP Adress</td><td expr56="expr56"> </td></tr><tr><td>APモード SSID</td><td expr57="expr57"> </td></tr><tr><td>APモード IP Adress</td><td expr58="expr58"> </td></tr></table></div></p></div></div></div><div class="col-md-6"><div class="card h-100"><div class="card-header">\r\n\t\t\t\tWiFi Station 設定\r\n\t\t\t</div><div class="card-body"><h5 class="card-title">WiFi Station Setting</h5><p class="card-text"><div class="col-sm-11 offset-sm-1"><table class="table"><tr><td class="itemname-width"><div class="col-sm-4">\r\n                WiFi SSID 検索\r\n                </div><div class="col-sm-8" offset-sm-1><button expr59="expr59" type="submit" id="getWiFiListButton" class="btn btn-outline-primary btn-sm" style="margin-top: 5px;"><span class="spinner-border spinner-border-sm visually-hidden" role="status" aria-hidden="true"></span>\r\n                  Scan SSID\r\n                  </button></div></td></tr><tr><td class="itemname-width"><label for="selectSSID" class="form-label">SSID 選択</label><select expr60="expr60" class="form-select form-select-sm" aria-label="WiFiStationList" name="WiFiStationList" id="WiFiStationList"></select><label for="inputSSIDPassword" class="form-label">Password</label><input expr61="expr61" type="password" class="form-control" id="inputSSIDPassword"/><div expr62="expr62" class="form-check form-switch"><input expr63="expr63" class="form-check-input" type="checkbox"/> </div><button expr64="expr64" type="submit" id="ssidSubmit" class="btn btn-outline-primary btn-sm" style="margin-top: 5px;"><span class="spinner-border spinner-border-sm visually-hidden" role="status" aria-hidden="true"></span>\r\n                  Connection\r\n                </button></td></tr></table></div></p></div></div></div><div class="col-md-12"><div class="card h-100"><div class="card-header">\r\n      WiFi Log message\r\n    </div><div class="card-body"><div id="logWiFi" style="overflow-y: scroll; height: 200px; border: 1px solid #ccc;padding: 10px;"></div></div></div></div></div>',
+    '<h1>設定</h1><div class="card"><div class="card-header">\r\n    LED表示設定\r\n  </div><div class="card-body"><h5 class="card-title">LED 表示輝度</h5><p class="card-text"><div class="col-sm-11 offset-sm-1">\r\n        Bright : <span id="glowInTheBrightId">5</span><input expr37="expr37" type="range" class="form-range" id="glowInTheBright" min="1" max="15" step="1"/></div></p><h5 class="card-title">LED 表示方向</h5><p class="card-text"><div class="col-sm-11 offset-sm-1"><div expr38="expr38" class="form-check form-switch"><input expr39="expr39" class="form-check-input" type="checkbox" type="checkbox"/> </div></div></p></div></div><div class="card"><div class="card-header">\r\n    ドット絵エディタ 設定\r\n  </div><div class="card-body"><h5 class="card-title">色設定</h5><div class="card-text"><div class="col-sm-11 offset-sm-1"><div class="form-check form-check-inline"><input class="form-check-input" type="radio" id="redRadio" name="color" value="1"/><label class="form-check-label" for="redRadio">Red</label></div><div class="form-check form-check-inline"><input class="form-check-input" type="radio" id="blueRadio" name="color" value="4"/><label class="form-check-label" for="blueRadio">Blue</label></div><div class="form-check form-check-inline"><input class="form-check-input" type="radio" id="greenRadio" name="color" value="2"/><label class="form-check-label" for="greenRadio">Green</label></div><div class="form-check form-check-inline"><input class="form-check-input" type="radio" id="yellowRadio" name="color" value="3"/><label class="form-check-label" for="yellowRadio">Yellow</label></div></div></div></div></div><div class="card"><div class="card-header">\r\n    データファイル設定\r\n  </div><div class="card-body"><h5 class="card-title">サンプルファイル有効</h5><p class="card-text"><div class="col-sm-11 offset-sm-1"><div expr40="expr40" class="form-check form-switch"><input expr41="expr41" class="form-check-input" type="checkbox" type="checkbox"/> </div></div></p></div></div><div class="card"><div class="card-header">\r\n    サウンド設定\r\n  </div><div class="card-body"><h5 class="card-title">サウンド出力有効</h5><p class="card-text"><div class="col-sm-11 offset-sm-1"><div expr42="expr42" class="form-check form-switch"><input expr43="expr43" class="form-check-input" type="checkbox" type="checkbox"/> </div></div></p></div></div><div class="card"><div class="card-header">\r\n    時計設定\r\n  </div><div class="card-body"><h5 class="card-title">スクロール表示</h5><p class="card-text"><div class="col-sm-11 offset-sm-1">\r\n        Scroll speed : <span id="clockScrollTimeSetId">10</span><input expr44="expr44" type="range" class="form-range" id="clockScrollTimeSet" min="10" max="1000" step="10"/></div></p><h5 class="card-title">ネットワーク時刻同期</h5><p class="card-text"><div expr45="expr45" class="col-sm-11 offset-sm-1 form-check form-switch form-label"><input expr46="expr46" class="form-check-input" type="checkbox" type="checkbox"/> </div><div class="col-sm-11 offset-sm-1"><label for="autoConnectInterval" class="form-label">自動接続間隔 (時間)</label><select expr47="expr47" class="form-select form-select-sm" id="autoConnectInterval"><option value="0">No Reconnect</option><option value="1">1</option><option value="2">2</option><option value="4">4</option><option value="8">8</option><option value="12">12</option><option value="24">24</option></select></div></p></div></div><div class="row"><div class="col-md-6"><div class="card h-100"><div class="card-header">\r\n\t\t\t\tネットワーク接続設定\r\n\t\t\t</div><div class="card-body"><h5 class="card-title">Current Settings</h5><p class="card-text"><div class="col-sm-11 offset-sm-1"><table class="table"><tr><td>STAモード SSID</td><td expr48="expr48"> </td></tr><tr><td>STAモード IP Adress</td><td expr49="expr49"> </td></tr><tr><td>APモード SSID</td><td expr50="expr50"> </td></tr><tr><td>APモード IP Adress</td><td expr51="expr51"> </td></tr></table></div></p></div></div></div><div class="col-md-6"><div class="card h-100"><div class="card-header">\r\n\t\t\t\tWiFi Station 設定\r\n\t\t\t</div><div class="card-body"><h5 class="card-title">WiFi Station Setting</h5><p class="card-text"><div class="col-sm-11 offset-sm-1"><table class="table"><tr><td class="itemname-width"><div class="col-sm-4">\r\n                WiFi SSID 検索\r\n                </div><div class="col-sm-8" offset-sm-1><button expr52="expr52" type="submit" id="getWiFiListButton" class="btn btn-outline-primary btn-sm" style="margin-top: 5px;"><span class="spinner-border spinner-border-sm visually-hidden" role="status" aria-hidden="true"></span>\r\n                  Scan SSID\r\n                  </button></div></td></tr><tr><td class="itemname-width"><label for="selectSSID" class="form-label">SSID 選択</label><select expr53="expr53" class="form-select form-select-sm" aria-label="WiFiStationList" name="WiFiStationList" id="WiFiStationList"></select><label for="inputSSIDPassword" class="form-label">Password</label><input expr54="expr54" type="password" class="form-control" id="inputSSIDPassword"/><div expr55="expr55" class="form-check form-switch"><input expr56="expr56" class="form-check-input" type="checkbox"/> </div><button expr57="expr57" type="submit" id="ssidSubmit" class="btn btn-outline-primary btn-sm" style="margin-top: 5px;"><span class="spinner-border spinner-border-sm visually-hidden" role="status" aria-hidden="true"></span>\r\n                  Connection\r\n                </button></td></tr></table></div></p></div></div></div><div class="col-md-12"><div class="card h-100"><div class="card-header">\r\n      WiFi Log message\r\n    </div><div class="card-body"><div id="logWiFi" style="overflow-y: scroll; height: 200px; border: 1px solid #ccc;padding: 10px;"></div></div></div></div></div>',
     [
       {
-        redundantAttribute: 'expr44',
-        selector: '[expr44]',
+        redundantAttribute: 'expr37',
+        selector: '[expr37]',
 
         expressions: [
           {
@@ -5803,8 +5803,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr45',
-        selector: '[expr45]',
+        redundantAttribute: 'expr38',
+        selector: '[expr38]',
 
         expressions: [
           {
@@ -5820,8 +5820,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr46',
-        selector: '[expr46]',
+        redundantAttribute: 'expr39',
+        selector: '[expr39]',
 
         expressions: [
           {
@@ -5837,8 +5837,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr47',
-        selector: '[expr47]',
+        redundantAttribute: 'expr40',
+        selector: '[expr40]',
 
         expressions: [
           {
@@ -5854,8 +5854,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr48',
-        selector: '[expr48]',
+        redundantAttribute: 'expr41',
+        selector: '[expr41]',
 
         expressions: [
           {
@@ -5871,8 +5871,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr49',
-        selector: '[expr49]',
+        redundantAttribute: 'expr42',
+        selector: '[expr42]',
 
         expressions: [
           {
@@ -5888,8 +5888,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr50',
-        selector: '[expr50]',
+        redundantAttribute: 'expr43',
+        selector: '[expr43]',
 
         expressions: [
           {
@@ -5905,8 +5905,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr51',
-        selector: '[expr51]',
+        redundantAttribute: 'expr44',
+        selector: '[expr44]',
 
         expressions: [
           {
@@ -5921,8 +5921,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr52',
-        selector: '[expr52]',
+        redundantAttribute: 'expr45',
+        selector: '[expr45]',
 
         expressions: [
           {
@@ -5938,8 +5938,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr53',
-        selector: '[expr53]',
+        redundantAttribute: 'expr46',
+        selector: '[expr46]',
 
         expressions: [
           {
@@ -5955,8 +5955,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr54',
-        selector: '[expr54]',
+        redundantAttribute: 'expr47',
+        selector: '[expr47]',
 
         expressions: [
           {
@@ -5972,8 +5972,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr55',
-        selector: '[expr55]',
+        redundantAttribute: 'expr48',
+        selector: '[expr48]',
 
         expressions: [
           {
@@ -5984,8 +5984,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr56',
-        selector: '[expr56]',
+        redundantAttribute: 'expr49',
+        selector: '[expr49]',
 
         expressions: [
           {
@@ -5996,8 +5996,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr57',
-        selector: '[expr57]',
+        redundantAttribute: 'expr50',
+        selector: '[expr50]',
 
         expressions: [
           {
@@ -6008,8 +6008,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr58',
-        selector: '[expr58]',
+        redundantAttribute: 'expr51',
+        selector: '[expr51]',
 
         expressions: [
           {
@@ -6020,8 +6020,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr59',
-        selector: '[expr59]',
+        redundantAttribute: 'expr52',
+        selector: '[expr52]',
 
         expressions: [
           {
@@ -6032,8 +6032,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr60',
-        selector: '[expr60]',
+        redundantAttribute: 'expr53',
+        selector: '[expr53]',
 
         expressions: [
           {
@@ -6044,8 +6044,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr61',
-        selector: '[expr61]',
+        redundantAttribute: 'expr54',
+        selector: '[expr54]',
 
         expressions: [
           {
@@ -6056,8 +6056,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr62',
-        selector: '[expr62]',
+        redundantAttribute: 'expr55',
+        selector: '[expr55]',
 
         expressions: [
           {
@@ -6073,8 +6073,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr63',
-        selector: '[expr63]',
+        redundantAttribute: 'expr56',
+        selector: '[expr56]',
 
         expressions: [
           {
@@ -6085,8 +6085,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr64',
-        selector: '[expr64]',
+        redundantAttribute: 'expr57',
+        selector: '[expr57]',
 
         expressions: [
           {
@@ -7652,11 +7652,11 @@ __webpack_require__.r(__webpack_exports__);
     bindingTypes,
     getComponent
   ) => template(
-    '<h1>Wifi設定</h1><div class="row"><div class="col-md-6"><div class="card h-100"><div class="card-header">\r\n\t\t\t\tネットワーク接続設定\r\n\t\t\t</div><div class="card-body"><h5 class="card-title">Current Settings</h5><p class="card-text"><div class="col-sm-11 offset-sm-1"><table class="table"><tr><td>STAモード SSID</td><td expr32="expr32"> </td></tr><tr><td>STAモード IP Adress</td><td expr33="expr33"> </td></tr><tr><td>APモード SSID</td><td expr34="expr34"> </td></tr><tr><td>APモード IP Adress</td><td expr35="expr35"> </td></tr></table></div></p></div></div></div><div class="col-md-6"><div class="card h-100"><div class="card-header">\r\n\t\t\t\tWiFi Station 設定\r\n\t\t\t</div><div class="card-body"><h5 class="card-title">WiFi Station Setting</h5><p class="card-text"><div class="col-sm-11 offset-sm-1"><table class="table"><tr><td class="itemname-width"><div class="col-sm-4">\r\n                WiFi SSID 検索\r\n                </div><div class="col-sm-8" offset-sm-1><button expr36="expr36" type="submit" id="getWiFiListButton" class="btn btn-outline-primary btn-sm" style="margin-top: 5px;"><span class="spinner-border spinner-border-sm visually-hidden" role="status" aria-hidden="true"></span>\r\n                  Scan SSID\r\n                  </button></div></td></tr><tr><td class="itemname-width"><label for="selectSSID" class="form-label">SSID 選択</label><select expr37="expr37" class="form-select form-select-sm" aria-label="WiFiStationList" name="WiFiStationList" id="WiFiStationList"></select><label for="inputSSIDPassword" class="form-label">Password</label><input expr38="expr38" type="password" class="form-control" id="inputSSIDPassword"/><div expr39="expr39" class="form-check form-switch"><input expr40="expr40" class="form-check-input" type="checkbox"/> </div><button expr41="expr41" type="submit" id="ssidSubmit" class="btn btn-outline-primary btn-sm" style="margin-top: 5px;"><span class="spinner-border spinner-border-sm visually-hidden" role="status" aria-hidden="true"></span>\r\n                  Connection\r\n                </button></td></tr></table></div><h5 class="card-title">STA 自動接続</h5><p class="card-text"><div expr42="expr42" class="col-sm-11 offset-sm-1 form-check form-switch"><input expr43="expr43" class="form-check-input" type="checkbox" type="checkbox"/> </div></p></p></div></div></div><div class="col-md-12"><div class="card h-100"><div class="card-header">\r\n      WiFi Log message\r\n    </div><div class="card-body"><div id="logWiFi" style="overflow-y: scroll; height: 200px; border: 1px solid #ccc;padding: 10px;"></div></div></div></div></div>',
+    '<h1>Wifi設定</h1><div class="row"><div class="col-md-6"><div class="card h-100"><div class="card-header">\r\n\t\t\t\tネットワーク接続設定\r\n\t\t\t</div><div class="card-body"><h5 class="card-title">Current Settings</h5><p class="card-text"><div class="col-sm-11 offset-sm-1"><table class="table"><tr><td>STAモード SSID</td><td expr25="expr25"> </td></tr><tr><td>STAモード IP Adress</td><td expr26="expr26"> </td></tr><tr><td>APモード SSID</td><td expr27="expr27"> </td></tr><tr><td>APモード IP Adress</td><td expr28="expr28"> </td></tr></table></div></p></div></div></div><div class="col-md-6"><div class="card h-100"><div class="card-header">\r\n\t\t\t\tWiFi Station 設定\r\n\t\t\t</div><div class="card-body"><h5 class="card-title">WiFi Station Setting</h5><p class="card-text"><div class="col-sm-11 offset-sm-1"><table class="table"><tr><td class="itemname-width"><div class="col-sm-4">\r\n                WiFi SSID 検索\r\n                </div><div class="col-sm-8" offset-sm-1><button expr29="expr29" type="submit" id="getWiFiListButton" class="btn btn-outline-primary btn-sm" style="margin-top: 5px;"><span class="spinner-border spinner-border-sm visually-hidden" role="status" aria-hidden="true"></span>\r\n                  Scan SSID\r\n                  </button></div></td></tr><tr><td class="itemname-width"><label for="selectSSID" class="form-label">SSID 選択</label><select expr30="expr30" class="form-select form-select-sm" aria-label="WiFiStationList" name="WiFiStationList" id="WiFiStationList"></select><label for="inputSSIDPassword" class="form-label">Password</label><input expr31="expr31" type="password" class="form-control" id="inputSSIDPassword"/><div expr32="expr32" class="form-check form-switch"><input expr33="expr33" class="form-check-input" type="checkbox"/> </div><button expr34="expr34" type="submit" id="ssidSubmit" class="btn btn-outline-primary btn-sm" style="margin-top: 5px;"><span class="spinner-border spinner-border-sm visually-hidden" role="status" aria-hidden="true"></span>\r\n                  Connection\r\n                </button></td></tr></table></div><h5 class="card-title">STA 自動接続</h5><p class="card-text"><div expr35="expr35" class="col-sm-11 offset-sm-1 form-check form-switch"><input expr36="expr36" class="form-check-input" type="checkbox" type="checkbox"/> </div></p></p></div></div></div><div class="col-md-12"><div class="card h-100"><div class="card-header">\r\n      WiFi Log message\r\n    </div><div class="card-body"><div id="logWiFi" style="overflow-y: scroll; height: 200px; border: 1px solid #ccc;padding: 10px;"></div></div></div></div></div>',
     [
       {
-        redundantAttribute: 'expr32',
-        selector: '[expr32]',
+        redundantAttribute: 'expr25',
+        selector: '[expr25]',
 
         expressions: [
           {
@@ -7667,8 +7667,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr33',
-        selector: '[expr33]',
+        redundantAttribute: 'expr26',
+        selector: '[expr26]',
 
         expressions: [
           {
@@ -7679,8 +7679,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr34',
-        selector: '[expr34]',
+        redundantAttribute: 'expr27',
+        selector: '[expr27]',
 
         expressions: [
           {
@@ -7691,8 +7691,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr35',
-        selector: '[expr35]',
+        redundantAttribute: 'expr28',
+        selector: '[expr28]',
 
         expressions: [
           {
@@ -7703,8 +7703,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr36',
-        selector: '[expr36]',
+        redundantAttribute: 'expr29',
+        selector: '[expr29]',
 
         expressions: [
           {
@@ -7715,8 +7715,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr37',
-        selector: '[expr37]',
+        redundantAttribute: 'expr30',
+        selector: '[expr30]',
 
         expressions: [
           {
@@ -7727,8 +7727,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr38',
-        selector: '[expr38]',
+        redundantAttribute: 'expr31',
+        selector: '[expr31]',
 
         expressions: [
           {
@@ -7739,8 +7739,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr39',
-        selector: '[expr39]',
+        redundantAttribute: 'expr32',
+        selector: '[expr32]',
 
         expressions: [
           {
@@ -7756,8 +7756,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr40',
-        selector: '[expr40]',
+        redundantAttribute: 'expr33',
+        selector: '[expr33]',
 
         expressions: [
           {
@@ -7768,8 +7768,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr41',
-        selector: '[expr41]',
+        redundantAttribute: 'expr34',
+        selector: '[expr34]',
 
         expressions: [
           {
@@ -7785,8 +7785,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr42',
-        selector: '[expr42]',
+        redundantAttribute: 'expr35',
+        selector: '[expr35]',
 
         expressions: [
           {
@@ -7802,8 +7802,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr43',
-        selector: '[expr43]',
+        redundantAttribute: 'expr36',
+        selector: '[expr36]',
 
         expressions: [
           {

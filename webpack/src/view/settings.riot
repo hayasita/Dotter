@@ -277,7 +277,7 @@
         vmUI.clearStaReConnectionCallback(this.clearStaConnectionSpinner.bind(this));
 
         // STA自動接続　チェックボックス初期値設定
-				if(vmUI.getNetworkSetting("staAutoConnect") == 1){
+				if(vmUI.getNetworkSetting("staStartupConnect") == 1){
 					this.staStartupConnectCheck ="checked";
           this.tstaStartupConnectCheck = "自動接続有効";
 				}

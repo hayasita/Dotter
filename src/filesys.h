@@ -10,7 +10,7 @@
 #include <cstdint>
 #include <vector>
 #include <string>
-
+/*
 class datafileCtr{
   public:
     datafileCtr(void);                  // コンストラクタ
@@ -21,7 +21,7 @@ class datafileCtr{
 //    std::vector<std::string> dataFilePath;
 
 };
-
+*/
 
 #undef GLOBAL
 #endif

@@ -672,6 +672,34 @@ bool jsonData::filepathIni(void)
 }
 
 /**
+ * @brief   LEDデータファイル読み込み
+ * 
+ * @return true     データファイル読み込み成功
+ * @return false    データファイル読み込み失敗
+ */
+bool jsonData::readLedDataFile(void)               // LED表示データファイル読み込み 
+{
+  bool ret = false;
+  if(!dataFilePath.empty()){
+    uint8_t dataNum;
+    if(dataFilePath.size() > dataNumber){
+      dataNum = dataNumber;  // データファイルがある場合、前回表示していたデータ番号のファイル読み込む
+    }
+    else{
+      dataNum = 0;  // データファイルがない場合、最初のデータを対象とする
+    }
+    readJsonFile(dataFilePath[dataNum].c_str());  // データファイルがある場合、最初のデータを読み込む
+    ret = true;
+  }
+  else{
+    // データファイルがない場合の表示データが必要？
+    Serial.println("dataFile empty");
+  }
+
+  return ret;
+}
+
+/**
  * @brief setting.json作製・書き込み
  * 
  */

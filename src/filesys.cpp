@@ -4,6 +4,7 @@
 #include "filesys.h"
 #include "jsdata.h"
 
+/*
 datafileCtr::datafileCtr(void)
 {
 //  jsData.dataFilePath.push_back("/data/userData0.json");
@@ -27,3 +28,4 @@ uint8_t datafileCtr::size(void)
 {
   return jsData.dataFilePath.size();
 }
+*/

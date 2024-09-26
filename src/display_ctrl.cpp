@@ -12,15 +12,15 @@
  * @param keydata   キー入力データ
  * @param dataFile  表示データ管理
  */
-void displayCtrl(uint8_t keydata,datafileCtr dataFile)
+void displayCtrl(uint8_t keydata)
 {
   // 表示データ　ファイル読み込み
   if(keydata == 0x02){
     jsData.dataNumber++;
-    if(jsData.dataNumber >= dataFile.size()){
+    if(jsData.dataNumber >= jsData.dataFilePath.size()){
       jsData.dataNumber = 0;
     }
-    jsData.readJsonFile(dataFile.jsonFilePath(jsData.dataNumber));
+    jsData.readLedDataFile();
     jsData.writeJsonFile();    // dataNumber更新（設定値書き込み
   }
 

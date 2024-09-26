@@ -30,8 +30,9 @@ class jsonData{
   public:
     jsonData(void);   // コンストラクタ
     bool parseJson(String readStr, bool, bool);       // Jsonデータのパース
-    void readJsonFile(const char *path);  // JsonファイルからLEDデータ取得
+    void readJsonFile(const char *path);      // Jsonファイル読み込み
     void saveJsonFile(const char *path);
+    bool readLedDataFile(void);               // LED表示データファイル読み込み
     std::vector<uint8_t> getPageData(void);  // 任意のページのLEDデータ取得
     std::vector<uint8_t> getPageSaveData(uint8_t page);  // 任意のページのSave用LEDデータ取得
     std::vector<uint8_t> dataRotation(std::vector<uint8_t> data);    // LEDデータ表示方向回転処理

@@ -81,21 +81,10 @@ void taskDeviceCtrl(void *Parameters){
     m5Oled.clear();
   }
 
-  // 
-  datafileCtr dataFile;       // 表示データ管理
-
-  jsData.readJsonFile("/setting.json");
-
-  if(!jsData.filepathIni()){   // DataFile List登録
-    uint8_t dataNum;
-    if(jsData.dataFilePath.size() > jsData.dataNumber){
-      dataNum = jsData.dataNumber;  // データファイルがある場合、前回表示していたデータ番号のファイル読み込む
-    }
-    else{
-      dataNum = 0;  // データファイルがない場合、最初のデータを対象とする
-    }
-    jsData.readJsonFile(dataFile.jsonFilePath(dataNum));  // データファイルがある場合、最初のデータを読み込む
-  }
+  // JSONファイルデータ読み込み
+  jsData.readJsonFile("/setting.json"); // 設定ファイル読み込み
+  jsData.filepathIni();                 // データファイルのリスト初期化
+  jsData.readLedDataFile();             // データファイル読み込み
 
   // 端子入力初期化
   unsigned char swList[] = {BUTTON_0,BUTTON_1};
@@ -145,7 +134,7 @@ void taskDeviceCtrl(void *Parameters){
     }
     else if(itmKeyCode == 0x02){
       if(!jsData.dataFilePath.empty()){
-        displayCtrl(itmKeyCode,dataFile); // データファイルがある場合、表示データ制御を行う
+        displayCtrl(itmKeyCode); // データファイルがある場合、表示データ制御を行う
       }
     }
     else if(itmKeyCode == 0x81){    // WiFi Ctrl

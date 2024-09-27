@@ -231,7 +231,7 @@ bool SerialMonitor::opecodeenv(std::vector<std::string> command)
   Serial.printf("rotatePosition: %d\n", jsData.rotatePosition);
   Serial.printf("dotColor: %d\n", jsData.dotColor);
   Serial.printf("showSampleData: %d\n", jsData.showSampleData);
-  Serial.printf("dataNumber: %d\n", jsData.dataNumber);
+  Serial.printf("dataNumber: %d\n", jsData.getDataNumber());
 
   return true;
 }

@@ -34,6 +34,10 @@ class jsonData{
     void readJsonFile(const char *path);      // Jsonファイル読み込み
     void saveJsonFile(const char *path);
     bool readLedDataFile(void);               // LED表示データファイル読み込み
+
+    uint8_t getDataNumber(void);              // LED表示データ番号取得
+    void ledDisplayCtrl(uint8_t keydata);     // LED表示データ切り替え
+
     std::vector<uint8_t> getPageData(void);  // 任意のページのLEDデータ取得
     std::vector<uint8_t> getPageSaveData(uint8_t page);  // 任意のページのSave用LEDデータ取得
     std::vector<uint8_t> dataRotation(std::vector<uint8_t> data);    // LEDデータ表示方向回転処理
@@ -62,7 +66,6 @@ class jsonData{
     uint8_t rotatePosition;       // 表示方向
     uint8_t dotColor;             // WebIFマトリクスエディタ表示色設定
     uint8_t showSampleData;       // サンプルデータ表示・非表示設定
-    uint8_t dataNumber;           // 表示データ番号
     uint8_t staStartupConnect;    // STA起動時接続設定
     uint8_t staReConnectInterval; // STA再接続間隔
     uint8_t soundEnable;          // サウンド有効設定
@@ -79,6 +82,7 @@ class jsonData{
     std::vector<std::vector<uint8_t>> ledAllData; // LEDアニメーションデータ
     std::string filename;
 
+    uint8_t dataNumber;           // 表示データ番号
     uint8_t pageCount;            // ページ位置
 
     String makeJsonPiece(String key, String value ,bool connma);    // jsonデータ作成:String

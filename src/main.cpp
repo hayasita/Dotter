@@ -128,9 +128,7 @@ void taskDeviceCtrl(void *Parameters){
       Serial.println(_dispMode->mode());
     }
     else if(itmKeyCode == 0x02){
-      if(!jsData.dataFilePath.empty()){
-        displayCtrl(itmKeyCode); // データファイルがある場合、表示データ制御を行う
-      }
+      jsData.ledDisplayCtrl(itmKeyCode); // データファイルがある場合、表示データ制御を行う
     }
     else if(itmKeyCode == 0x81){    // WiFi Ctrl
       itmKeyCode == 0x00;

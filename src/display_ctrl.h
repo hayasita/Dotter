@@ -11,8 +11,6 @@
 #include "filesys.h"
 #include "dispFont.h"
 
-void displayCtrl(uint8_t keydata);
-
 //std::vector<uint8_t> displayClock(tm timeInfo);    // 時計表示
 
 /**

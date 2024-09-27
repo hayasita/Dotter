@@ -431,6 +431,37 @@ void jsonData::readJsonFile(const char *path)
 }
 
 /**
+ * @brief LED表示データ番号取得
+ * 
+ * @return uint8_t データ番号
+ */
+uint8_t jsonData::getDataNumber(void)
+{
+  return dataNumber;
+}
+
+/**
+ * @brief LED表示データ切り替え
+ * ドットマトリクスに表示するデータの切り替えを行う
+ * 
+ * @param keydata キー入力データ
+ */
+void jsonData::ledDisplayCtrl(uint8_t keydata)
+{
+  // 表示データ　ファイル読み込み
+  if((keydata == 0x02) && (!dataFilePath.empty())){
+    dataNumber++;
+    if(dataNumber >= jsData.dataFilePath.size()){
+      dataNumber = 0;
+    }
+    readLedDataFile();
+    writeJsonFile();    // dataNumber更新（設定値書き込み
+  }
+
+  return;
+}
+
+/**
  * @brief   LEDデータをJsonファイルから読み込む
  * 
  * @param page  ページ番号
@@ -849,7 +880,7 @@ String makeSettingjs(void){
   html_tmp = html_tmp + (String)"\"showSampleData\" : " + jsData.showSampleData + ",\\\n";
 
   // 表示データ番号設定
-  html_tmp = html_tmp + (String)"\"dataNumber\" : " + jsData.dataNumber + ",\\\n";
+  html_tmp = html_tmp + (String)"\"dataNumber\" : " + jsData.getDataNumber() + ",\\\n";
 
   // STA起動時接続設定
   html_tmp = html_tmp + (String)"\"staStartupConnect\" : " + jsData.staStartupConnect + ",\\\n";

@@ -1,5 +1,15 @@
+/**
+ * @file display_ctrl.cpp
+ * @author hayasita04@gmail.com
+ * @brief 表示モード制御・表示データ作成
+ * @version 0.1
+ * @date 2024-09-29
+ * 
+ * @copyright Copyright (c) 2024
+ * 
+ */
 
-#include "jsdata.h"
+#include <M5Unified.h>
 #include "display_ctrl.h"
 #include "timeCtrl.h"
 #include <misakiUTF16.h>
@@ -11,33 +21,119 @@
  * 
  */
 modeCtrl::modeCtrl(void)
+  : currentOperationMode(OperationMode::MODE_DOTTER)
 {
-  modeNumber = 1;
+
   return;
 }
 
+
 /**
- * @brief  モード番号取得
+ * @brief 現在の動作モード取得
  * 
- * @return uint8_t 
+ * @return OperationMode 
  */
-uint8_t modeCtrl::mode(void)
+OperationMode modeCtrl::getCurrentOperationMode(void)
 {
-  return modeNumber;
+  return currentOperationMode;
 }
 
 /**
- * @brief  モード切り替え
+ * @brief 動作モード切り替え
  * 
- * @param keydata 
+ * @param keydata
  */
 void modeCtrl::modeChange(uint8_t keydata)
 {
-  modeNumber++;
-  if(modeNumber >= 2){
-    modeNumber = 0;
+
+  switch (currentOperationMode) {
+    case OperationMode::MODE_DOTTER:
+      currentOperationMode = OperationMode::MODE_CLOCK;
+      break;
+    case OperationMode::MODE_CLOCK:
+      currentOperationMode = OperationMode::MODE_DOTTER;
+//      currentOperationMode = OperationMode::MODE_TIMER;
+      break;
+    case OperationMode::MODE_TIMER:
+      currentOperationMode = OperationMode::MODE_TEST;
+      break;
+    case OperationMode::MODE_TEST:
+      currentOperationMode = OperationMode::MODE_DOTTER;
+      break;
+    default:
+      currentOperationMode = OperationMode::MODE_DOTTER;
+      break;
   }
+
   return;
+}
+
+/**
+ * @brief Construct a new display Title::display Title object
+ * 
+ */
+displayTitle::displayTitle(void)
+  : displayTitleSq(DisplayTitleSq::DISP_TITLE)
+{
+  return;
+}
+
+/**
+ * @brief   タイトル表示データ作成
+ * 
+ * @param dataNumber 
+ * @param dispMode 
+ */
+void displayTitle::makeTitle(uint8_t dataNumber, modeCtrl dispMode)
+{
+  titleLasttime = millis();
+  displayTitleSq = DisplayTitleSq::DISP_TITLE;
+
+  Serial.print("dataNumber : ");
+  Serial.println(dataNumber);
+  Serial.print("currentOperationMode : ");
+  Serial.println(static_cast<uint8_t>(dispMode.getCurrentOperationMode()));
+//  Serial.println(titleLasttime);
+
+  char buffer[4];
+  buffer[0] = 'D';
+  buffer[1] = '0' + dataNumber;
+  buffer[2] = ' ';
+  buffer[3] = '\0';
+  Serial.println(buffer);
+//  titleData = clockFontData.getFontData(buffer);
+  titleData = makeFontData(buffer);
+  // 最低幅として横16ドットに調整
+  if(titleData.size() > 16) {
+    titleData.resize(16);
+  }
+
+  return;
+}
+
+/**
+ * @brief   タイトル表示データ取得
+ * 
+ * @return std::vector<uint8_t> 
+ */
+std::vector<uint8_t> displayTitle::getTitleData(void)
+{
+
+  if( (millis() - titleLasttime) > 800 ){     // タイトル表示時間確認
+    displayTitleSq = DisplayTitleSq::DISP_DATA;
+  }
+
+  return titleData;
+}
+
+/**
+ * @brief タイトル表示状態取得
+ * 
+ * @return DisplayTitleSq 
+ */
+DisplayTitleSq displayTitle::getDisplayTitleSq(void)
+{
+  return displayTitleSq;
 }
 
 /**

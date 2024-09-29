@@ -87,6 +87,8 @@ void taskDeviceCtrl(void *Parameters){
 
   // 表示モード設定
   modeCtrl *_dispMode = &jsData.dispMode;
+  displayTitle *_dispTitle = &jsData.dispTitle;               // タイトル表示制御
+  _dispTitle->makeTitle(jsData.getDataNumber(),*_dispMode);   // タイトル初期値作成
 
   char bufc[100];
   // time_t のバイト数、ビット数
@@ -125,10 +127,14 @@ void taskDeviceCtrl(void *Parameters){
       itmKeyCode = 0x00;
       Serial.println("表示モード変更");
       _dispMode->modeChange(itmKeyCode);  // 表示モード変更
-      Serial.println(_dispMode->mode());
+      Serial.println(static_cast<uint8_t>(_dispMode->getCurrentOperationMode()));
+
+      _dispTitle->makeTitle(jsData.getDataNumber(),*_dispMode);    // タイトル作成
     }
     else if(itmKeyCode == 0x02){
       jsData.ledDisplayCtrl(itmKeyCode); // データファイルがある場合、表示データ制御を行う
+
+      _dispTitle->makeTitle(jsData.getDataNumber(),*_dispMode);    // タイトル作成
     }
     else if(itmKeyCode == 0x81){    // WiFi Ctrl
       itmKeyCode == 0x00;
@@ -193,32 +199,45 @@ void taskDeviceCtrl(void *Parameters){
 */
     }
 
-    // Matrix Display Control
-    if(_dispMode->mode() == 0){  // 表示モード0(時計表示
-        // 時計データ更新
-      if(timetmp - ledLasttime > jsData.clockScrollTime){     // 更新時間確認
-        ledLasttime = timetmp;  // 更新時間設定
-        // 時計データ更新
-        std::vector<uint8_t> pageData = displayClock.makeData(oledData.timeInfo);
+    if(_dispTitle->getDisplayTitleSq() == DisplayTitleSq::DISP_TITLE){  // タイトル表示
+      // タイトル表示
+      if(timetmp - ledLasttime > 100){     // 更新時間確認
+        std::vector<uint8_t> titleData = _dispTitle->getTitleData();
         // データ回転処理
-        pageData = jsData.dataRotation(pageData);
+        titleData = jsData.dataRotation(titleData);
         // LEDマトリクスデータ転送
-        _i2cCtrl.matrixsetHexdata(pageData);
+        _i2cCtrl.matrixsetHexdata(titleData);
       }
     }
-    else if(_dispMode->mode() == 1){  // 表示モード1(マトリクスデータ表示)
-      if(timetmp - ledLasttime > jsData.animationTime){     // 更新時間確認
-        ledLasttime = timetmp;  // 更新時間設定
-        if(!jsData.empty()){
-          // データ取得
-          std::vector<uint8_t> pageData = jsData.getPageData();
+    else{
+
+      // Matrix Display Control
+      if(_dispMode->getCurrentOperationMode() == OperationMode::MODE_CLOCK){  // 表示モード0(時計表示
+          // 時計データ更新
+        if(timetmp - ledLasttime > jsData.clockScrollTime){     // 更新時間確認
+          ledLasttime = timetmp;  // 更新時間設定
+          // 時計データ更新
+          std::vector<uint8_t> pageData = displayClock.makeData(oledData.timeInfo);
           // データ回転処理
           pageData = jsData.dataRotation(pageData);
-          // VK16K33 Matrix Driver
+          // LEDマトリクスデータ転送
           _i2cCtrl.matrixsetHexdata(pageData);
         }
-        else{
-          jsData.paseCountClear();
+      }
+      else if(_dispMode->getCurrentOperationMode() == OperationMode::MODE_DOTTER){  // 表示モード1(マトリクスデータ表示)
+        if(timetmp - ledLasttime > jsData.animationTime){     // 更新時間確認
+          ledLasttime = timetmp;  // 更新時間設定
+          if(!jsData.empty()){
+            // データ取得
+            std::vector<uint8_t> pageData = jsData.getPageData();
+            // データ回転処理
+            pageData = jsData.dataRotation(pageData);
+            // VK16K33 Matrix Driver
+            _i2cCtrl.matrixsetHexdata(pageData);
+          }
+          else{
+            jsData.paseCountClear();
+          }
         }
       }
     }

@@ -75,7 +75,8 @@ class jsonData{
     WiFiConnect *pWifiConnect_  = nullptr;  // WiFi接続制御ポインタ
 
     modeCtrl dispMode;            // 表示モード制御
-
+    displayTitle dispTitle;       // タイトル表示制御
+    
   private:
     portMUX_TYPE jsonMutex;
     JsonVariant jsonDataArray;

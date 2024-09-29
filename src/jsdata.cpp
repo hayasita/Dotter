@@ -40,6 +40,9 @@ jsonData::jsonData(void)
   pageCount =0;                     // ページ位置
 
   jsonMutex = portMUX_INITIALIZER_UNLOCKED; // Mutex
+
+  modeWriteSq = ModeWriteSQ::WAIT;          // 動作モード書き込み要求状態 初期化
+
   return;
 }
 
@@ -51,6 +54,34 @@ jsonData::jsonData(void)
 void jsonData::wifiPSet(WiFiConnect* pWifiCon)
 {
   pWifiConnect_ = pWifiCon;
+  return;
+}
+
+/**
+ * @brief モード設定書き込み要求
+ * 
+ */
+void jsonData::modeWriteReq(void)
+{
+  modeWriteTime = millis();
+  modeWriteSq = ModeWriteSQ::TIMER;
+  return;
+}
+
+/**
+ * @brief モード設定書き込み
+ * 
+ */
+void jsonData::modeWrite(void)
+{
+  if(modeWriteSq == ModeWriteSQ::TIMER){
+    if((millis() - modeWriteTime) > (1000 * 60)){ // 1分経過
+    Serial.println("modeWrite");
+    writeJsonFile();
+    modeWriteSq = ModeWriteSQ::WAIT;
+    }
+  }
+
   return;
 }
 
@@ -455,7 +486,7 @@ void jsonData::ledDisplayCtrl(uint8_t keydata)
       dataNumber = 0;
     }
     readLedDataFile();
-    writeJsonFile();    // dataNumber更新（設定値書き込み
+//    writeJsonFile();    // dataNumber更新（設定値書き込み
   }
 
   return;

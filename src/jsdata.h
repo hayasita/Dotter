@@ -24,6 +24,15 @@ enum class DataType{
 };
 
 /**
+ * @brief 動作モード書き込み要求状態
+ * 
+ */
+enum class ModeWriteSQ{
+  WAIT,     // 待機
+  TIMER,    // タイマー
+};
+
+/**
  * @brief json内部データ管理
  * 
  */
@@ -76,7 +85,10 @@ class jsonData{
 
     modeCtrl dispMode;            // 表示モード制御
     displayTitle dispTitle;       // タイトル表示制御
-    
+
+    void modeWriteReq(void);      // モード設定書き込み要求
+    void modeWrite(void);         // モード設定書き込み
+
   private:
     portMUX_TYPE jsonMutex;
     JsonVariant jsonDataArray;
@@ -85,6 +97,9 @@ class jsonData{
 
     uint8_t dataNumber;           // 表示データ番号
     uint8_t pageCount;            // ページ位置
+
+    ModeWriteSQ modeWriteSq;      // 設定値書き込み要求状態
+    unsigned long modeWriteTime;  // 設定値書き込み要求時間
 
     String makeJsonPiece(String key, String value ,bool connma);    // jsonデータ作成:String
     String makeJsonPiece(String key, uint8_t value ,bool connma);   // jsonデータ作成:uint8_t

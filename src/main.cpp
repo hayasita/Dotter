@@ -133,6 +133,7 @@ void taskDeviceCtrl(void *Parameters){
     }
     else if(itmKeyCode == 0x02){
       jsData.ledDisplayCtrl(itmKeyCode); // データファイルがある場合、表示データ制御を行う
+      jsData.modeWriteReq();             // モード設定書き込み要求
 
       _dispTitle->makeTitle(jsData.getDataNumber(),*_dispMode);    // タイトル作成
     }
@@ -150,6 +151,7 @@ void taskDeviceCtrl(void *Parameters){
       _imu.whoAmI();
 
     }
+    jsData.modeWrite();     // モード設定書き込み
 
   // 接続要求：タイマー
     wifiConnect.withTimer();

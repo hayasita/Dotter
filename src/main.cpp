@@ -85,10 +85,14 @@ void taskDeviceCtrl(void *Parameters){
   unsigned char swList[] = {BUTTON_0,BUTTON_1};
   ITM itm(swList,sizeof(swList));
 
+  // タイマー表示
+  dispTimer displayTimer;
+
   // 表示モード設定
   modeCtrl *_dispMode = &jsData.dispMode;
   displayTitle *_dispTitle = &jsData.dispTitle;               // タイトル表示制御
   _dispTitle->makeTitle(jsData.getDataNumber(),*_dispMode);   // タイトル初期値作成
+  _dispMode->_displayTimer = &displayTimer;                    // タイマー表示モード設定
 
   char bufc[100];
   // time_t のバイト数、ビット数
@@ -128,14 +132,37 @@ void taskDeviceCtrl(void *Parameters){
       Serial.println("表示モード変更");
       _dispMode->modeChange(itmKeyCode);  // 表示モード変更
       Serial.println(static_cast<uint8_t>(_dispMode->getCurrentOperationMode()));
-
+      jsData.modeWriteReq();             // モード設定書き込み要求
       _dispTitle->makeTitle(jsData.getDataNumber(),*_dispMode);    // タイトル作成
     }
     else if(itmKeyCode == 0x02){
-      jsData.ledDisplayCtrl(itmKeyCode); // データファイルがある場合、表示データ制御を行う
-      jsData.modeWriteReq();             // モード設定書き込み要求
-
-      _dispTitle->makeTitle(jsData.getDataNumber(),*_dispMode);    // タイトル作成
+      if(_dispMode->getCurrentOperationMode() == OperationMode::MODE_TIMER){    // 動作モードがタイマー表示の場合は、動作制御
+        if(_dispMode->_displayTimer->timerSq == TimerSq::TIMER_STOP){
+          Serial.println("Timer Start.");
+          _dispMode->_displayTimer->timerSq = TimerSq::TIMER_RUN; // タイマー開始
+        }
+        else if(_dispMode->_displayTimer->timerSq == TimerSq::TIMER_RUN){
+          if(_dispMode->_displayTimer->isTimerExpired == IsTimerExpired::TIMER_EXPIRED){
+            // タイマー状態が動作中で、タイマー設定時間経過状態の場合は、タイマー継続動作中に遷移
+            _dispMode->_displayTimer->isTimerExpired = IsTimerExpired::TIMER_EXPIRED_CONTINUING;
+          }
+        }
+        else if(_dispMode->_displayTimer->timerSq == TimerSq::TIMER_EXPIRED){ // タイマー設定時間経過
+          Serial.println("Timer Stop.");
+          _dispMode->_displayTimer->timerSq = TimerSq::TIMER_RESET; // タイマーリセット
+        }
+      }
+      else{
+        // 動作モードがタイマー表示以外の場合は、表示データ切り替え
+        if(_dispMode->displaySelect()){
+          // ドットマトリクス以外
+        }
+        else{
+          jsData.ledDisplayCtrl(itmKeyCode); // データファイルがある場合、表示データ制御を行う
+        }
+        jsData.modeWriteReq();             // モード設定書き込み要求
+        _dispTitle->makeTitle(jsData.getDataNumber(),*_dispMode);    // タイトル作成
+      }
     }
     else if(itmKeyCode == 0x81){    // WiFi Ctrl
       itmKeyCode == 0x00;
@@ -144,12 +171,23 @@ void taskDeviceCtrl(void *Parameters){
     }
     else if(itmKeyCode == 0x82){
       itmKeyCode == 0x00;
-      // SD
-      sdcard.listDir(SD, "/", 3);
-
-      deviceChk.init();
-      _imu.whoAmI();
-
+      if(_dispMode->getCurrentOperationMode() == OperationMode::MODE_TIMER){
+        // タイマー表示の場合は、タイマー設定時間切替
+        if(_dispMode->_displayTimer->timerSq == TimerSq::TIMER_STOP){
+          // 停止時のみ設定可能
+          _dispMode->displaySelect();
+          jsData.modeWriteReq();             // モード設定書き込み要求
+          _dispTitle->makeTitle(jsData.getDataNumber(),*_dispMode);    // タイトル作成
+        }
+      }
+      else{
+        // 動作テスト
+        // SDカードデータ読み込み
+        sdcard.listDir(SD, "/", 3);
+        // デバイス確認
+        deviceChk.init();
+        _imu.whoAmI();
+      }
     }
     jsData.modeWrite();     // モード設定書き込み
 
@@ -214,19 +252,7 @@ void taskDeviceCtrl(void *Parameters){
     else{
 
       // Matrix Display Control
-      if(_dispMode->getCurrentOperationMode() == OperationMode::MODE_CLOCK){  // 表示モード0(時計表示
-          // 時計データ更新
-        if(timetmp - ledLasttime > jsData.clockScrollTime){     // 更新時間確認
-          ledLasttime = timetmp;  // 更新時間設定
-          // 時計データ更新
-          std::vector<uint8_t> pageData = displayClock.makeData(oledData.timeInfo);
-          // データ回転処理
-          pageData = jsData.dataRotation(pageData);
-          // LEDマトリクスデータ転送
-          _i2cCtrl.matrixsetHexdata(pageData);
-        }
-      }
-      else if(_dispMode->getCurrentOperationMode() == OperationMode::MODE_DOTTER){  // 表示モード1(マトリクスデータ表示)
+      if(_dispMode->getCurrentOperationMode() == OperationMode::MODE_DOTTER){  // ドットマトリクス表示
         if(timetmp - ledLasttime > jsData.animationTime){     // 更新時間確認
           ledLasttime = timetmp;  // 更新時間設定
           if(!jsData.empty()){
@@ -241,6 +267,26 @@ void taskDeviceCtrl(void *Parameters){
             jsData.paseCountClear();
           }
         }
+      }
+      else if(_dispMode->getCurrentOperationMode() == OperationMode::MODE_CLOCK){  // 時計表示
+        // 時計データ更新
+        if(timetmp - ledLasttime > jsData.clockScrollTime){     // 更新時間確認
+          ledLasttime = timetmp;  // 更新時間設定
+          // 時計データ更新
+          std::vector<uint8_t> pageData = displayClock.makeData(oledData.timeInfo,_dispMode->getClockDispMode());
+          // データ回転処理
+          pageData = jsData.dataRotation(pageData);
+          // LEDマトリクスデータ転送
+          _i2cCtrl.matrixsetHexdata(pageData);
+        }
+      }
+      else if(_dispMode->getCurrentOperationMode() == OperationMode::MODE_TIMER){  // タイマー表示
+        // タイマーデータ更新
+        std::vector<uint8_t> pageData = displayTimer.makeData(_dispMode->gettimerDispMode());
+        // データ回転処理
+        pageData = jsData.dataRotation(pageData);
+        // LEDマトリクスデータ転送
+        _i2cCtrl.matrixsetHexdata(pageData);
       }
     }
 

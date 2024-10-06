@@ -41,16 +41,77 @@ ClockCtrl::ClockCtrl(void)
  * @return true 成功
  * @return false 失敗
  */
-bool dispDateTime(char* buffer,tm timeinfo,const char* title)
+bool dispDateTime(char* buffer,tm timeinfo,const char* title,ClockDispMode mode)
 {
   bool ret = true;
+  int writtenChars;
   char tmp[50];
+ 
+  static int lastSec = timeinfo.tm_sec;
+  static unsigned long lastColonTime = millis();
+  char colon = ':';
 
-  int writtenChars = snprintf(tmp, sizeof(tmp)
-    ,"%s%lu/%02d/%02d %02d:%02d:%02d"
-    ,title
-    ,timeinfo.tm_year+1900,timeinfo.tm_mon+1,timeinfo.tm_mday
-    ,timeinfo.tm_hour,timeinfo.tm_min,timeinfo.tm_sec);
+  if(mode != ClockDispMode::OLED_DATE){
+    if(lastSec != timeinfo.tm_sec){
+      lastSec = timeinfo.tm_sec;
+      lastColonTime = millis();
+    }
+    if((millis() - lastColonTime) > 500){
+      colon = ' ';
+    }else{
+      colon = ':';
+    }
+  }
+
+  switch(mode){
+    case ClockDispMode::TWELVE_HOUR:
+      if(timeinfo.tm_hour > 12){
+        timeinfo.tm_hour = timeinfo.tm_hour - 12;
+      }
+      writtenChars = snprintf(tmp, sizeof(tmp)
+        ,"%s%d%c%02d"
+        ,title
+        ,timeinfo.tm_hour, colon, timeinfo.tm_min);
+      break;
+    case ClockDispMode::TWELVE_HOUR_SEC:
+      if(timeinfo.tm_hour > 12){
+        timeinfo.tm_hour = timeinfo.tm_hour - 12;
+      }
+      writtenChars = snprintf(tmp, sizeof(tmp)
+        ,"%s%d:%02d:%02d"
+        ,title
+        ,timeinfo.tm_hour,timeinfo.tm_min,timeinfo.tm_sec);
+      break;
+    case ClockDispMode::TWENTY_FOUR_HOUR:
+      writtenChars = snprintf(tmp, sizeof(tmp)
+        ,"%s%02d%c%02d"
+        ,title
+        ,timeinfo.tm_hour, colon, timeinfo.tm_min);
+      break;
+    case ClockDispMode::TWENTY_FOUR_HOUR_SEC:
+      writtenChars = snprintf(tmp, sizeof(tmp)
+        ,"%s%02d:%02d:%02d"
+        ,title
+        ,timeinfo.tm_hour,timeinfo.tm_min,timeinfo.tm_sec);
+      break;
+    case ClockDispMode::DATE_TIME:
+    case ClockDispMode::OLED_DATE:
+      writtenChars = snprintf(tmp, sizeof(tmp)
+        ,"%s%lu/%02d/%02d %02d:%02d:%02d"
+        ,title
+        ,timeinfo.tm_year+1900,timeinfo.tm_mon+1,timeinfo.tm_mday
+        ,timeinfo.tm_hour,timeinfo.tm_min,timeinfo.tm_sec);
+      break;
+    case ClockDispMode::DATE:
+      writtenChars = snprintf(tmp, sizeof(tmp)
+        ,"%s%lu/%02d/%02d"
+        ,title
+        ,timeinfo.tm_year+1900,timeinfo.tm_mon+1,timeinfo.tm_mday);
+      break;
+    default:
+      break;
+  }
+
   if((writtenChars >= 0 && writtenChars < sizeof(tmp))){
     ret = true;
     strcpy(buffer,tmp);

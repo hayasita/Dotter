@@ -17,6 +17,7 @@
 #include "dotserver.h"
 #include "jsdata.h"
 #include "timeCtrl.h"
+//#include "display_ctrl.h"
 
 jsonData::jsonData(void)
 {
@@ -33,7 +34,7 @@ jsonData::jsonData(void)
   staStartupConnect = 1;            // STA起動時接続設定
   staReConnectInterval = 4;         // STA再接続間隔
   soundEnable = 1;                  // サウンド有効設定
-  clockScrollTime = 100;            // 時計スクロール時間
+  clockScrollTime = 160;            // 時計スクロール時間
 
   animationTime = 500;              // アニメーション間隔
 
@@ -264,6 +265,39 @@ bool jsonData::parseJson(String readStr ,bool dataWrite ,bool online)
       if(dataWrite){writeJsonFile();}    // 設定値書き込み
       Serial.print("dataNumber Value: ");
       Serial.println(dataNumberValue); // 取得した値をシリアルモニターに出力
+    }
+
+    // 現在の動作モード設定
+    jsondata = jsonDocument["currentOperationMode"];
+    if(!jsondata.isNull()){
+      Serial.println("currentOperationMode");
+      uint8_t currentOperationModeValue = jsondata.as<uint8_t>(); // キーの値を uint8_t 型で取得
+      dispMode.setCurrentOperationMode(static_cast<OperationMode>(currentOperationModeValue));
+      if(dataWrite){writeJsonFile();}    // 設定値書き込み
+      Serial.print("currentOperationMode Value: ");
+      Serial.println(currentOperationModeValue); // 取得した値をシリアルモニターに出力
+    }
+
+    // 時計表示モード設定
+    jsondata = jsonDocument["clockDispMode"];
+    if(!jsondata.isNull()){
+      Serial.println("clockDispMode");
+      uint8_t clockDispModeValue = jsondata.as<uint8_t>(); // キーの値を uint8_t 型で取得
+      dispMode.setClockDispMode(static_cast<ClockDispMode>(clockDispModeValue));
+      if(dataWrite){writeJsonFile();}    // 設定値書き込み
+      Serial.print("clockDispMode Value: ");
+      Serial.println(clockDispModeValue); // 取得した値をシリアルモニターに出力
+    }
+
+    // タイマー表示モード設定
+    jsondata = jsonDocument["timerDispMode"];
+    if(!jsondata.isNull()){
+      Serial.println("timerDispMode");
+      uint8_t timerDispModeValue = jsondata.as<uint8_t>(); // キーの値を uint8_t 型で取得
+      dispMode.settimerDispMode(static_cast<TimerDispMode>(timerDispModeValue));
+      if(dataWrite){writeJsonFile();}    // 設定値書き込み
+      Serial.print("timerDispMode Value: ");
+      Serial.println(timerDispModeValue); // 取得した値をシリアルモニターに出力
     }
 
     // WiFiアクセスポイントのリストを取得
@@ -778,7 +812,11 @@ void jsonData::writeJsonFile(void){
   configData = configData + makeJsonPiece("staStartupConnect", staStartupConnect, true);          // STA起動時接続設定
   configData = configData + makeJsonPiece("staReConnectInterval", staReConnectInterval, true);    // STA再接続間隔
   configData = configData + makeJsonPiece("soundEnable", soundEnable, true);                      // サウンド有効設定
-  configData = configData + makeJsonPiece("clockScrollTime", clockScrollTime, false);             // 時計スクロール時間
+  configData = configData + makeJsonPiece("clockScrollTime", clockScrollTime, true);             // 時計スクロール時間
+
+  configData = configData + makeJsonPiece("currentOperationMode", static_cast<uint8_t>(dispMode.getCurrentOperationMode()), true);   // 現在の動作モード
+  configData = configData + makeJsonPiece("clockDispMode", static_cast<uint8_t>(dispMode.getClockDispMode()), true);    // 現在の動作モード
+  configData = configData + makeJsonPiece("timerDispMode", static_cast<uint8_t>(dispMode.gettimerDispMode()), false);   // 現在の動作モード
 
   Serial.println(configData);
 

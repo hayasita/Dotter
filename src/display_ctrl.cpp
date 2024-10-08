@@ -14,7 +14,7 @@
 #include "timeCtrl.h"
 #include <misakiUTF16.h>
 #include "dispFont.h"
-
+#include "sound_ctrl.h"
 
 /**
  * @brief Construct a new mode Ctrl::mode Ctrl object
@@ -421,6 +421,7 @@ dispTimer::dispTimer(void)
   : timerSq(TimerSq::TIMER_RESET),   // タイマー状態s
     isTimerExpired(IsTimerExpired::TIMER_NOT_EXPIRED)                // タイマー経過
 {
+  soundReq = SoundReqPr::SOUND_OFF;
   return;
 }
 
@@ -504,11 +505,13 @@ std::vector<uint8_t> dispTimer::makeData(TimerDispMode mode)    // タイマー�
     if( (mode == TimerDispMode::THREE_FIVE_MIN) && (timerTime <= 120) && (isTimerExpired == IsTimerExpired::TIMER_NOT_EXPIRED) ){
       isTimerExpired = IsTimerExpired::TIMER_EXPIRED;
       expiredSqTime = millis();
+      soundReq = SoundReqPr::SOUND_PLAY1;
     }
     if(timerTime == 0){
       isTimerExpired = IsTimerExpired::TIMER_EXPIRED;
       timerSq = TimerSq::TIMER_EXPIRED;
       expiredSqTime = millis();
+      soundReq = SoundReqPr::SOUND_PLAY2;
     }
   }
 

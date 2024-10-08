@@ -25,6 +25,7 @@
 #include "imu.h"
 #include "led_ctrl.h"
 #include "sdCard.h"
+#include "sound_ctrl.h"
 #include "timeCtrl.h"
 #include "wifi_real.h"
 #include "wifi_ctrl.h"
@@ -145,11 +146,25 @@ void taskDeviceCtrl(void *Parameters){
           if(_dispMode->_displayTimer->isTimerExpired == IsTimerExpired::TIMER_EXPIRED){
             // タイマー状態が動作中で、タイマー設定時間経過状態の場合は、タイマー継続動作中に遷移
             _dispMode->_displayTimer->isTimerExpired = IsTimerExpired::TIMER_EXPIRED_CONTINUING;
+          
+            SoundReqPr keyData;    // SoundTaskへのタスク間通信データ
+            if(uxQueueSpacesAvailable(xQueueSoundPlay) != 0){             // キューの追加可能数が0ではない
+              keyData = SoundReqPr::SOUND_STOP;
+              xQueueSend(xQueueSoundPlay, &keyData, 0);
+            }
+
           }
         }
         else if(_dispMode->_displayTimer->timerSq == TimerSq::TIMER_EXPIRED){ // タイマー設定時間経過
           Serial.println("Timer Stop.");
           _dispMode->_displayTimer->timerSq = TimerSq::TIMER_RESET; // タイマーリセット
+          
+          SoundReqPr keyData;    // SoundTaskへのタスク間通信データ
+          if(uxQueueSpacesAvailable(xQueueSoundPlay) != 0){             // キューの追加可能数が0ではない
+            keyData = SoundReqPr::SOUND_STOP;
+            xQueueSend(xQueueSoundPlay, &keyData, 0);
+          }
+
         }
       }
       else{
@@ -187,6 +202,13 @@ void taskDeviceCtrl(void *Parameters){
         // デバイス確認
         deviceChk.init();
         _imu.whoAmI();
+
+        SoundReqPr keyData;    // SoundTaskへのタスク間通信データ
+        if(uxQueueSpacesAvailable(xQueueSoundPlay) != 0){             // キューの追加可能数が0ではない
+          keyData = SoundReqPr::SOUND_PLAY1;
+          xQueueSend(xQueueSoundPlay, &keyData, 0);
+        }
+
       }
     }
     jsData.modeWrite();     // モード設定書き込み
@@ -287,6 +309,15 @@ void taskDeviceCtrl(void *Parameters){
         pageData = jsData.dataRotation(pageData);
         // LEDマトリクスデータ転送
         _i2cCtrl.matrixsetHexdata(pageData);
+
+        if(soundReq != SoundReqPr::SOUND_OFF){
+          SoundReqPr keyData;    // SoundTaskへのタスク間通信データ
+          if(uxQueueSpacesAvailable(xQueueSoundPlay) != 0){             // キューの追加可能数が0ではない
+            keyData = soundReq;
+            xQueueSend(xQueueSoundPlay, &keyData, 0);
+          }
+          soundReq = SoundReqPr::SOUND_OFF;
+        }
       }
     }
 
@@ -344,6 +375,12 @@ void setup() {
   // フラグ初期化
   getwifiStaListreq = 0;  // WiFiStationList取得要求
   wifiStaReconnect = 0;   // STA再接続要求セット
+
+    // キュー作成
+  xQueueSoundPlay = xQueueCreate(QUEUE_SOUNDLENGTH, sizeof(SoundReqPr));
+
+  // Core1で関数taskSoundCtrlをstackサイズ4096,優先順位1で起動
+  xTaskCreatePinnedToCore(taskSoundCtrl,"taskSoundCtrl",4096,NULL,1,&sountaskHandle,1);
 
   // Core1で関数taskDeviceCtrlをstackサイズ4096,優先順位1で起動
   xTaskCreatePinnedToCore(taskDeviceCtrl, "taskDeviceCtrl", 4096, NULL, 1, NULL, 1);

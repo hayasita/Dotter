@@ -94,6 +94,7 @@ class displayTitle{
     DisplayTitleSq getDisplayTitleSq(void);     // タイトル表示状態取得
   private:
     std::vector<uint8_t> titleData;   // タイトルデータ
+    int extractNumberAfterPrefix(const std::string& str, const std::string& prefix);    // プレフィックス後の数値抽出
     void makeTitleDotter(uint8_t dataNumber);           // ドットマトリクスタイトル作成
     void makeTitleClock(ClockDispMode clockDispMode);   // 時計タイトル作成
     void makeTitleTimer(TimerDispMode timerDispMode);   // タイマータイトル作成

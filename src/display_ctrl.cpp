@@ -15,6 +15,7 @@
 #include <misakiUTF16.h>
 #include "dispFont.h"
 #include "sound_ctrl.h"
+#include "jsdata.h"
 
 /**
  * @brief Construct a new mode Ctrl::mode Ctrl object
@@ -250,6 +251,30 @@ void displayTitle::makeTitle(uint8_t dataNumber, modeCtrl dispMode)
 }
 
 /**
+ * @brief   タイトル表示データ取得
+ * 
+ * @param str     データタファイルpath
+ * @param prefix  プレフィックス
+ * @return int    プレフィックス後の数値
+ */
+int displayTitle::extractNumberAfterPrefix(const std::string& str, const std::string& prefix)
+{
+  size_t pos = str.find(prefix);
+  if (pos != std::string::npos) {
+    pos += prefix.length(); // prefixの直後の位置に移動
+    std::string numberStr;
+    while (pos < str.length() && std::isdigit(str[pos])) {
+      numberStr += str[pos];
+      pos++;
+    }
+    if (numberStr.length() == 2) { // 数値が2桁であることを確認
+      return std::stoi(numberStr);
+    }
+  }
+  return -1; // 数値が見つからなかった場合
+}
+
+/**
  * @brief ドットマトリクス表示タイトル作成
  * 
  * @param dataNumber 
@@ -257,12 +282,48 @@ void displayTitle::makeTitle(uint8_t dataNumber, modeCtrl dispMode)
 void displayTitle::makeTitleDotter(uint8_t dataNumber)
 {
   char buffer[4];
-  buffer[0] = 'D';
-  buffer[1] = '0' + dataNumber;
-  buffer[2] = ' ';
-  buffer[3] = '\0';
+
+  Serial.println("\n-- dotMatrix::makeTitleDotter");
   Serial.println(buffer);
+  Serial.println(jsData.dataFilePath[dataNumber].c_str());
+
+  std::string filePath = jsData.dataFilePath[dataNumber];
+  std::string prefix1 = "/data/sample";
+  std::string prefix2 = "/data/data";
+
+  if(filePath.rfind(prefix1, 0) == 0){
+    buffer[0] = 'S';
+    int number = extractNumberAfterPrefix(filePath, prefix1);
+    if (number != -1) {
+      buffer[1] = '0' + (number % 10);
+    }
+    else{
+      Serial.println("Number not found after prefix1");
+      buffer[1] = '0';
+    }
+  }
+  else if(filePath.rfind(prefix2, 0) == 0){
+    buffer[0] = 'D';
+    int number = extractNumberAfterPrefix(filePath, prefix2);
+    if (number != -1) {
+      buffer[1] = '0' + (number % 10);
+    }
+    else{
+      Serial.println("Number not found after prefix1");
+      buffer[1] = '0';
+    }
+  }
+  else{
+    // データファイルが存在しない場合
+    buffer[0] = 'E';
+    buffer[1] = '0';
+  }
+//  buffer[2] = ' ';
+//  buffer[3] = '\0';
+  buffer[2] = '\0';
+  
   titleData = makeFontData(buffer);
+  titleData.resize(16);
 
   return;
 }

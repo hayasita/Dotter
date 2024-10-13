@@ -11,6 +11,8 @@
 #ifndef timeCtrl_h
 #define timeCtrl_h
 
+#include "display_ctrl.h"
+
 #ifdef GLOBAL_VAL_DEF
 #define GLOBAL
 #else
@@ -32,7 +34,7 @@ class ClockCtrl{
     tm getTime(void);
 };
 
-bool dispDateTime(char* buffer,tm timeinfo,const char* title);
+bool dispDateTime(char* buffer,tm timeinfo,const char* title,ClockDispMode mode);    // 日時表示データ作成 display_ctrl.cppにもっていくべき？
 
 void sntpInit(void);    // SNTP初期化
 

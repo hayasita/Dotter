@@ -223,10 +223,10 @@ void M5OLED::printClockData(DisplayData dispDat)
   if(ready){
     char buffer[100];
 
-    dispDateTime(buffer,dispDat.timeInfo,"");
+    dispDateTime(buffer,dispDat.timeInfo,"",ClockDispMode::OLED_DATE);
     oled.setCursor(0, 0);
     oled.print(buffer);
-    dispDateTime(buffer,dispDat.lastConnectTime,"");  // 最終接続時刻
+    dispDateTime(buffer,dispDat.lastConnectTime,"",ClockDispMode::OLED_DATE);  // 最終接続時刻
     oled.setCursor(0, 8);
     oled.print(buffer);
   }

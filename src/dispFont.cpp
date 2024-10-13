@@ -107,9 +107,9 @@ void clockFont::init(void)
 
   dispData.push_back(0x00);
   dispData.push_back(0x00);
-  dispData.push_back(0x00);
-  dispData.push_back(0x00);
-  dispData.push_back(0x00);
+//  dispData.push_back(0x00);
+//  dispData.push_back(0x00);
+//  dispData.push_back(0x00);
   fontArray.push_back({' ',dispData});
   dispData.clear();
 

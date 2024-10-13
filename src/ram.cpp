@@ -10,5 +10,6 @@
 #include "monitor_real_device.h"
 #include "monitor.h"
 #include "sdCard.h"
+#include "sound_ctrl.h"
 #include "timeCtrl.h"
 #include "wifi_ctrl.h"

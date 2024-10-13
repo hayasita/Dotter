@@ -7,6 +7,31 @@
 #define GLOBAL extern
 #endif
 
+#if defined (M5STACK_ATOM)
+
+const char* updateHtml = R"=====(
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dotter OTA</title>
+</head>
+
+<body>
+  <h1>Dotter OTA</h1>
+
+  <span>ATOM Lite、ATOM Matrix はOTA機能をサポートしていません。<br>
+  PlatformIOを使用して以下のソースリストをビルドし、USB接続してアップデートしてください。<br>
+  <a href="https://github.com/hayasita/Dotter">GitHub/hayasita/Dotter</a>
+  </span>
+
+</body>
+</html>
+)=====";
+
+#else
+
 const char* updateHtml = R"=====(
 <!DOCTYPE html>
 <html lang="ja">
@@ -156,6 +181,8 @@ const char* updateHtml = R"=====(
 </body>
 </html>
 )=====";
+
+#endif
 
 #undef GLOBAL
 #endif

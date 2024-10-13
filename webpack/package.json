@@ -1,7 +1,8 @@
 {
-  "name": "riot-webpack",
+  "name": "dotter-webif-system",
   "version": "0.0.1",
-  "description": "Example of webpack and riot",
+  "description": "Dotter Web Interface System",
+
   "repository": "riot/examples",
   "main": "src/index.js",
   "author": "Zhomart Mukhamejanov",

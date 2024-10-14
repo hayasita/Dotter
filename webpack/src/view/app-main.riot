@@ -31,11 +31,11 @@
       <li class="nav-item" role="presentation">
         <button class="nav-link" id="tab5-tab" data-bs-toggle="tab" data-bs-target="#tab5" type="button" role="tab" aria-controls="tab5" aria-selected="false">設定</button>
       </li>
-      
+      <!--
       <li class="nav-item" role="presentation">
         <button class="nav-link" id="tab6-tab" data-bs-toggle="tab" data-bs-target="#tab6" type="button" role="tab" aria-controls="tab6" aria-selected="false">DeviceConf</button>
       </li>
-      
+      -->
       
       <li class="nav-item" role="presentation">
         <button class="nav-link" id="tab7-tab" data-bs-toggle="tab" data-bs-target="#tab7" type="button" role="tab" aria-controls="tab7" aria-selected="false">Help</button>
@@ -65,11 +65,11 @@
       <div class="tab-pane fade" id="tab5" role="tabpanel" aria-labelledby="tab5-tab">
         <div id="settings"></div>
       </div>
-      
+      <!--
       <div class="tab-pane fade" id="tab6" role="tabpanel" aria-labelledby="tab6-tab">
         <div id="deviceconf"></div>
       </div>
-      
+      -->
       
       <div class="tab-pane fade" id="tab7" role="tabpanel" aria-labelledby="tab7-tab">
         <div id="help"></div>
@@ -143,7 +143,7 @@
 //        component(timeconf)(document.getElementById('timeconf'), {vmUI,obs})
 //        component(dispconf)(document.getElementById('dispconf'), {vmUI,obs})
         component(settings)(document.getElementById('settings'), {vmUI,dotMatrixUI,obs})
-        component(deviceconf)(document.getElementById('deviceconf'), {vmUI,obs})
+//        component(deviceconf)(document.getElementById('deviceconf'), {vmUI,obs})
 //        component(mytag)(document.getElementById('mytag'), {vmUI,obs})
         component(help)(document.getElementById('help'), {vmUI,obs})
         component(Footer)(document.getElementById('Footer'), {vmUI,obs})

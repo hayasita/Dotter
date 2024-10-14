@@ -112,7 +112,7 @@ void setWebhandle(void)
   });
 
   //Returns update page
-  server.on("/update", HTTP_GET, [](AsyncWebServerRequest *request) {
+  server.on("/update.html", HTTP_GET, [](AsyncWebServerRequest *request) {
     request->send(200, "text/html", updateHtml);
   });
 

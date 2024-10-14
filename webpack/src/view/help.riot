@@ -1,0 +1,58 @@
+<help>
+  <h1>Help</h1>
+
+  <div class="card">
+    <div class="card-header">
+      ようこそ
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">バージョン</h5>
+      <p class="card-text">
+        <div class="col-sm-11 offset-sm-1">
+          <span>System : { state.name }<BR></span>
+          <span>Version : { state.version }<BR></span>
+          <span>description : { state.description }<BR></span>
+        </div>
+      </p>
+
+      <h5 class="card-title">使い方</h5>
+      <p class="card-text">
+        <div class="col-sm-11 offset-sm-1">
+          <span><a href="./help/index.html">操作方法</a></span>
+        </div>
+      </p>
+
+      <h5 class="card-title">システム更新</h5>
+      <p class="card-text">
+        <div class="col-sm-11 offset-sm-1">
+          <span><a href="./update.html">システム更新リンク</a></span>
+        </div>
+      </p>
+
+    </div>
+  </div>
+
+
+  <script>
+    const MSTPackage = require('../../package.json');
+
+    export default {
+      onBeforeMount() {
+        console.log('help onBeforeMount');
+      },
+      onMounted(props, state){
+        let vmUI = props.vmUI;
+
+        console.log(MSTPackage.name);
+
+        // 状態を更新
+        this.update({
+          name: MSTPackage.name,
+          version: MSTPackage.version,
+          description: MSTPackage.description
+        });
+      }
+    }
+  </script>
+
+</help>

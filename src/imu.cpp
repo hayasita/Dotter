@@ -3,8 +3,13 @@
 #include "imu.h"
 #include <Wire.h>
 
-#define MPU6050_ADDR 0x68
-#define MPU6050_WHO_AM_I 0x75
+#define MPU6050_ADDR         0x68   // MPU-6050 device address
+#define MPU6050_SMPLRT_DIV   0x19   // MPU-6050 register address
+#define MPU6050_CONFIG       0x1a   // 
+#define MPU6050_GYRO_CONFIG  0x1b   //
+#define MPU6050_ACCEL_CONFIG 0x1c   //
+#define MPU6050_WHO_AM_I     0x75   //
+#define MPU6050_PWR_MGMT_1   0x6b   //
 
 /**
  * @brief Construct a new IMU::IMU object
@@ -18,6 +23,110 @@ IMU::IMU(bool imuDeviceChk)
 }
 
 /**
+ * @brief IMU I2C書き込み
+ * 
+ * @param reg レジスタアドレス
+ * @param data IMUデータ
+ */
+void IMU::writeImu(uint8_t reg, uint8_t data)    // IMU I2C書き込み
+{
+  if(ready == true){
+    Wire.beginTransmission(MPU6050_ADDR);
+    Wire.write(reg);
+    Wire.write(data);
+    Wire.endTransmission();
+  }
+  return;
+}
+
+
+/**
+ * @brief IMU I2C読み込み
+ * 
+ * @param reg レジスタアドレス
+ * @return uint8_t データ
+ */
+uint8_t IMU::readImu(uint8_t reg)
+{
+  uint8_t data =  0;
+  if(ready == true){
+    Wire.beginTransmission(MPU6050_ADDR);
+    Wire.write(reg);
+    Wire.endTransmission(true);
+    Wire.requestFrom(MPU6050_ADDR, 1/*length*/); 
+    data =  Wire.read();
+  }
+  return data;
+}
+
+/**
+ * @brief   IMUキャリブレーション測定
+ * 
+ * @return CalibrateData キャリブレーションデータ
+ */
+CalibrateData IMU::calibrate(void)
+{
+
+  if(ready == true){
+    IMU_RAW_DATA data;
+    IMU_CNV_DATA cnvData;
+    calibrateData.offsetX = 0, calibrateData.offsetY = 0, calibrateData.offsetZ = 0;
+
+    // キャリブレーション開始
+    for(int i = 0; i < 3000; i++){
+      getRawData(&data);      //IMUデータ取得
+      cnvData = convertUnit(&data);
+      calibrateData.offsetX += cnvData.dpsX;
+      calibrateData.offsetY += cnvData.dpsY;
+      calibrateData.offsetZ += cnvData.dpsZ;
+      calibrateData.offsetAngleX += cnvData.acc_angle_x;
+      calibrateData.offsetAngleY += cnvData.acc_angle_y;
+      if(i % 1000 == 0){
+        Serial.print(".");
+        M5.Lcd.printf(".");
+      }
+    }
+    Serial.println();
+    M5.Lcd.printf("\n");
+
+    calibrateData.offsetX /= 3000;
+    calibrateData.offsetY /= 3000;
+    calibrateData.offsetZ /= 3000;
+    calibrateData.offsetAngleX /= 3000;
+    calibrateData.offsetAngleY /= 3000;
+    //キャリブレーション終了
+
+    filterData.gyro_angle_x = calibrateData.offsetAngleX;
+    filterData.gyro_angle_y = calibrateData.offsetAngleY;
+  }
+  return calibrateData;
+}
+
+/**
+ * @brief IMUオフセット情報設定
+ * 
+ * @param offset オフセット情報
+ */
+void IMU::setOffset(CalibrateData offset)
+{
+  if(ready == true){
+    calibrateData.offsetX = offset.offsetX;
+    calibrateData.offsetY = offset.offsetY;
+    calibrateData.offsetZ = offset.offsetZ;
+    calibrateData.offsetAngleX = offset.offsetAngleX;
+    calibrateData.offsetAngleY = offset.offsetAngleY;
+
+    IMU_RAW_DATA data;
+    IMU_CNV_DATA cnvData;
+    getRawData(&data);              //IMUデータ取得
+    cnvData = convertUnit(&data);   //単位Gへ変換
+
+    filterData.gyro_angle_x = cnvData.acc_angle_x;
+    filterData.gyro_angle_y = cnvData.acc_angle_y;
+  }
+  return;
+}
+/**
  * @brief IMUの初期化
  * 
  */
@@ -25,13 +134,92 @@ void IMU::init(void)
 {
   if(ready == true){
     Serial.println("IMU init");
-    Wire.beginTransmission(0x68);//送信処理を開始する(0x68がセンサーのアドレス)
-    Wire.write(0x6b);            //レジスタ「0x6b」(動作状変数)を指定
-    Wire.write(0x00);            //0x00を指定(ON)
-    Wire.endTransmission();      //送信を終了する
+    writeImu(MPU6050_SMPLRT_DIV, 0x00);   // sample rate: 8kHz/(7+1) = 1kHz
+    writeImu(MPU6050_CONFIG, 0x00);       // disable DLPF, gyro output rate = 8kHz
+    writeImu(MPU6050_GYRO_CONFIG, 0x08);  // gyro range: ±500dps
+    writeImu(MPU6050_ACCEL_CONFIG, 0x00); // accel range: ±2g
+    writeImu(MPU6050_PWR_MGMT_1, 0x01);   // disable sleep mode, PLL with X gyro
+
+    filterData.gyro_angle_x = 0;
+    filterData.gyro_angle_y = 0;
+    filterData.gyro_angle_z = 0;
+    filterData.acc_angle_x = 0;
+    filterData.acc_angle_y = 0;
+    filterData._interval = 0;
+
+    preInterval = (float)millis();
   }
   return;
 }
+
+/**
+ * @brief IMUの単位変換
+ * 
+ * @param data 加速度センサ読出しデータ
+ * @return IMU_CNV_DATA   単位変換後のデータ
+ */
+IMU_CNV_DATA IMU::convertUnit(IMU_RAW_DATA *data)
+{
+  IMU_CNV_DATA cnvData;
+  if(ready == true){
+#if defined (M5STACK_ATOM)
+    cnvData.acc_x = ((float)data->ax) / 16384.0;
+    cnvData.acc_y = ((float)data->ay) / 16384.0;
+    cnvData.acc_z = ((float)data->az) / 16384.0;
+
+    cnvData.dpsX = ((float)data->gx) / 65.5; // LSB sensitivity: 65.5 LSB/dps @ ±500dps
+    cnvData.dpsY = ((float)data->gy) / 65.5;
+    cnvData.dpsZ = ((float)data->gz) / 65.5;
+#else
+    cnvData.acc_x = -((float)data->ax) / 16384.0;
+    cnvData.acc_y = ((float)data->ay) / 16384.0;
+    cnvData.acc_z = -((float)data->az) / 16384.0;
+
+    cnvData.dpsX = -((float)data->gx) / 65.5; // LSB sensitivity: 65.5 LSB/dps @ ±500dps
+    cnvData.dpsY = ((float)data->gy) / 65.5;
+    cnvData.dpsZ = -((float)data->gz) / 65.5;
+#endif
+    cnvData.acc_angle_x = (atan2(cnvData.acc_y, cnvData.acc_z + abs(cnvData.acc_x)) * 360 / 2.0 / PI);
+    cnvData.acc_angle_y = (atan2(cnvData.acc_x, cnvData.acc_z + abs(cnvData.acc_y)) * 360 / -2.0 / PI);
+  }
+  return cnvData;
+}
+
+/**
+ * @brief   IMUの相補フィルター計算
+ * 
+ * @return IMU_FILTER_DATA 
+ */
+IMU_FILTER_DATA IMU::complementaryFilter(void)
+{
+  if(ready == true){
+    float angleX, angleY, angleZ;
+    IMU_RAW_DATA data;
+    IMU_CNV_DATA cnvData;
+
+    getRawData(&data);              //IMUデータ取得
+    cnvData = convertUnit(&data);   //単位Gへ変換
+
+    //前回計算した時から今までの経過時間を算出
+    filterData._interval = (millis() - preInterval);
+    preInterval = millis();
+
+    filterData.gyro_angle_x += (cnvData.dpsX - calibrateData.offsetX) * ((float)filterData._interval * 0.001);
+    filterData.gyro_angle_y += (cnvData.dpsY - calibrateData.offsetY) * ((float)filterData._interval * 0.001);
+    filterData.gyro_angle_z += (cnvData.dpsZ - calibrateData.offsetZ) * ((float)filterData._interval * 0.001);
+    filterData.acc_angle_x = cnvData.acc_angle_x;
+    filterData.acc_angle_y = cnvData.acc_angle_y;
+
+    angleX = (0.996 * filterData.gyro_angle_x) + (0.004 * cnvData.acc_angle_x);
+    angleY = (0.996 * filterData.gyro_angle_y) + (0.004 * cnvData.acc_angle_y);
+    angleZ = filterData.gyro_angle_z;
+    filterData.gyro_angle_x = angleX;
+    filterData.gyro_angle_y = angleY;
+    filterData.gyro_angle_z = angleZ;
+  }
+  return filterData;
+}
+
 
 /**
  * @brief   IMUのデータ取得
@@ -43,30 +231,18 @@ bool IMU::getRawData(IMU_RAW_DATA *data)
 {
   bool ret = false;
   if(ready == true){
+    Wire.beginTransmission(MPU6050_ADDR);
+    Wire.write(0x3B);
+    Wire.endTransmission(false);
+    Wire.requestFrom(MPU6050_ADDR, 14, true);
 
-    uint8_t i2c_data[14]; //センサからのデータ格納用配列
-    int16_t ax = 0;
-
-    Wire.beginTransmission(0x68); //送信処理を開始する
-    Wire.write(0x3b);             //(取得値の先頭を指定)
-    Wire.endTransmission();       //送信を終了する
-    Wire.requestFrom(0x68, 14);   //データを要求する(0x3bから14バイトが6軸の値)
-
-    uint8_t i = 0;
-    while (Wire.available()) {
-      i2c_data[i] = Wire.read();//データを読み込む
-  //    Serial.printf("%d:",i);
-  //    Serial.println(data[i]);
-      i++;
-    }
-    
-    data->ax = (i2c_data[0] << 8) | i2c_data[1];
-    data->ay = (i2c_data[2] << 8) | i2c_data[3];
-    data->az = (i2c_data[4] << 8) | i2c_data[5];
-    data->temp = (i2c_data[6] << 8) | i2c_data[7];
-    data->gx = (i2c_data[8] << 8) | i2c_data[9];
-    data->gy = (i2c_data[10] << 8) | i2c_data[11];
-    data->gz = (i2c_data[12] << 8) | i2c_data[13];
+    data->ax = Wire.read() << 8 | Wire.read();
+    data->ay = Wire.read() << 8 | Wire.read();
+    data->az = Wire.read() << 8 | Wire.read();
+    data->temp = Wire.read() << 8 | Wire.read();
+    data->gx = Wire.read() << 8 | Wire.read();
+    data->gy = Wire.read() << 8 | Wire.read();
+    data->gz = Wire.read() << 8 | Wire.read();
 
     ret = true;
   }
@@ -75,61 +251,73 @@ bool IMU::getRawData(IMU_RAW_DATA *data)
 }
 
 /**
- * @brief IMUの移動平均計算
- * 
- * @param data            IMUデータ
- * @return IMU_RAW_DATA   移動平均計算後のデータ
- */
-IMU_RAW_DATA IMU::calcIMUMovAvg(IMU_RAW_DATA data) {
-    static int32_t axf = 0; // 初期化
-    static int32_t ayf = 0; // 初期化
-    static int32_t azf = 0; // 初期化
-
-    IMU_RAW_DATA avgData;
-
-    // 移動平均の計算
-    axf = (axf - (axf >> 4)) + (int32_t)data.ax;
-    ayf = (ayf - (ayf >> 4)) + (int32_t)data.ay;
-    azf = (azf - (azf >> 4)) + (int32_t)data.az;
-
-    avgData.ax = (int16_t)(axf >> 4);
-    avgData.ay = (int16_t)(ayf >> 4);
-    avgData.az = (int16_t)(azf >> 4);
-
-    return avgData;
-}
-
-/**
  * @brief IMUの識別情報判定
  * 
- * @return * void 
+ * @return IMU_TYPE
  */
-void IMU::whoAmI(void)
+IMU_TYPE IMU::whoAmI(void)
 {
   if(ready == true){
     Wire.beginTransmission(MPU6050_ADDR);
     Wire.write(MPU6050_WHO_AM_I);
     Wire.endTransmission();
     Wire.requestFrom(MPU6050_ADDR,1);
-    uint8_t who = Wire.read();
+    who = Wire.read();
 
-    Serial.print("IMU:");
-    Serial.println(who,HEX);
     if(who == 0x68){
       imuType = IMU_TYPE::MPU6050;
-      Serial.println("MPU6050");
     }else if (who == 0x19){
       imuType = IMU_TYPE::MPU6886;
-      Serial.println("MPU6886");
+    }else if (who == 0x70){
+      imuType = IMU_TYPE::MPU6500;
     }else{
       imuType = IMU_TYPE::UnknownDevice;
-      Serial.println("Unknown device");
     }
   }
   else{
     imuType = IMU_TYPE::NoDevice;
-    Serial.println("IMU:Not found");
   }
+  return imuType;
+}
 
+/**
+ * @brief   IMUの識別情報表示
+ * 
+ */
+void IMU::displayWhoAmI(void)
+{
+  if(ready == true){
+    whoAmI();
+
+    Serial.print("IMU:");
+    Serial.print(who,HEX);
+
+    M5.Lcd.print("IMU:");
+    M5.Lcd.print(who,HEX);
+
+    switch(imuType){
+      case IMU_TYPE::MPU6050:
+        Serial.println(" : MPU6050");
+        M5.Lcd.println(" : MPU6050");
+        break;
+      case IMU_TYPE::MPU6886:
+        Serial.println(" : MPU6886");
+        M5.Lcd.println(" : MPU6886");
+        break;
+      case IMU_TYPE::MPU6500:
+        Serial.println(" : MPU6500");
+        M5.Lcd.println(" : MPU6500");
+        break;
+      case IMU_TYPE::UnknownDevice:
+        Serial.println(" : Unknown device");
+        M5.Lcd.println(" : Unknown device");
+        break;
+      case IMU_TYPE::NoDevice:
+        Serial.println(" : IMU:Not found");
+        M5.Lcd.println(" : IMU:Not found");
+        break;
+    }
+
+  }
   return;
 }

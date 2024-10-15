@@ -251,6 +251,32 @@ void M5OLED::printIMUData(IMU_RAW_DATA data)
   return;
 }
 
+/**
+ * @brief 加速度センサ　相補フィルター計算データ表示
+ * 
+ * @param data 
+ */
+void M5OLED::printIMUData(IMU_FILTER_DATA data)
+{
+  if(ready){
+    oled.setCursor(0, 16);
+
+    oled.printf("%04d,%04d,%04d", (int16_t)data.gyro_angle_x, (int16_t)data.gyro_angle_y, (int16_t)data.gyro_angle_z);
+    oled.setCursor(0, 24);
+    oled.printf("%04d,%04d", (int16_t)data.acc_angle_x, (int16_t)data.acc_angle_y);
+    oled.setCursor(0, 32);
+    oled.printf("%04d", data._interval);
+/*
+    oled.printf("%04f,%04f", data.gyro_angle_x, data.gyro_angle_y);
+    oled.setCursor(0, 32);
+    oled.printf("%04f,%04f", data.acc_angle_x, data.acc_angle_y);
+    oled.setCursor(0, 40);
+    oled.printf("%04d", data._interval);
+*/
+  }
+  return;
+}
+
 //#ifdef DELETE
 /**
  * @brief M5OLEDセンサデータ表示

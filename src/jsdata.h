@@ -3,6 +3,7 @@
 
 #include "wifi_ctrl.h"
 #include "display_ctrl.h"
+#include "imu.h"
 
 #ifdef GLOBAL_VAL_DEF
 #define GLOBAL
@@ -89,6 +90,9 @@ class jsonData{
     void modeWriteReq(void);      // モード設定書き込み要求
     void modeWrite(void);         // モード設定書き込み
 
+    void imuCalibrateRq(void);    // IMUキャリブレーション要求
+    bool imuCalibrateEx(void);    // IMUキャリブレーション実行
+    CalibrateData imuCalibrateData;   // IMUキャリブレーションデータ
   private:
     portMUX_TYPE jsonMutex;
     JsonVariant jsonDataArray;
@@ -98,12 +102,15 @@ class jsonData{
     uint8_t dataNumber;           // 表示データ番号
     uint8_t pageCount;            // ページ位置
 
+    uint8_t imuCalibrateSq;       // IMUキャリブレーションシーケンス
+
     ModeWriteSQ modeWriteSq;      // 設定値書き込み要求状態
     unsigned long modeWriteTime;  // 設定値書き込み要求時間
 
     String makeJsonPiece(String key, String value ,bool connma);    // jsonデータ作成:String
     String makeJsonPiece(String key, uint8_t value ,bool connma);   // jsonデータ作成:uint8_t
     String makeJsonPiece(String key, uint16_t value ,bool connma);  // jsonデータ作成:uint16_t
+    String makeJsonPiece(String key, float value ,bool connma);     // jsonデータ作成:float
 
     bool containsSample(const std::string& path);     // ファイル名に "sample" を含むかどうかを判定する関数
     void removeSampleFiles(void);                     // "sample" を含むパスを削除するメンバ関数

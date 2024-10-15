@@ -41,7 +41,9 @@ void SerialMonitor::init(void)
   codeArray.push_back({"ls"         ,[&](){return opecodels(command);}  ,"ls path"});
   codeArray.push_back({"datalist"   ,[&](){return opecodedatalist(command);}  ,"datalist\tDisplays Matrix data file list."});
   codeArray.push_back({"env"        ,[&](){return opecodeenv(command);}  ,"env\tconfig data list."});
+  codeArray.push_back({"imucal"     ,[&](){return opecodeImuCalib(command);}  ,"imucal\tIMU calibration."});
   codeArray.push_back({"command2"   ,[&](){return dummyExec(command);}  ,"command Help."});
+
   return;
 }
 
@@ -233,5 +235,21 @@ bool SerialMonitor::opecodeenv(std::vector<std::string> command)
   Serial.printf("showSampleData: %d\n", jsData.showSampleData);
   Serial.printf("dataNumber: %d\n", jsData.getDataNumber());
 
+  return true;
+}
+
+/**
+ * @brief imuキャリブレーション実行
+{
+ * 
+ * @param command 
+ * @return true 
+ * @return false 
+ */
+bool SerialMonitor::opecodeImuCalib(std::vector<std::string> command)
+{
+  Serial.println("opecodeImuCalib");
+
+  jsData.imuCalibrateRq();
   return true;
 }

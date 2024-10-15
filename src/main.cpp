@@ -81,6 +81,7 @@ void taskDeviceCtrl(void *Parameters){
   jsData.readJsonFile("/setting.json"); // 設定ファイル読み込み
   jsData.filepathIni();                 // データファイルのリスト初期化
   jsData.readLedDataFile();             // データファイル読み込み
+  _imu.setOffset(jsData.imuCalibrateData);     // IMUオフセット設定
 
   // 端子入力初期化
   unsigned char swList[] = {BUTTON_0,BUTTON_1};
@@ -235,15 +236,9 @@ void taskDeviceCtrl(void *Parameters){
       // 時計データ更新
       oledData.timeInfo = clockCtrl.getTime();
 
-      // IMUデータ取得
-      IMU_RAW_DATA imuData;
-      IMU_RAW_DATA imuData2;
-      _imu.getRawData(&imuData);
-      imuData2 = _imu.calcIMUMovAvg(imuData);
-
       // M5OLED表示
       m5Oled.printClockData(oledData);
-      m5Oled.printIMUData(imuData2);
+//      m5Oled.printIMUData(filterData);
 
 /*
       static constexpr const char* const wd[7] = {"Sun","Mon","Tue","Wed","Thr","Fri","Sat"};
@@ -259,6 +254,21 @@ void taskDeviceCtrl(void *Parameters){
                   , dt.time.seconds
                   );
 */
+    }
+
+    // IMUデータ取得
+    if(jsData.imuCalibrateEx()){
+      jsData.imuCalibrateData = _imu.calibrate();
+      jsData.writeJsonFile();
+      Serial.printf("offsetX : %6f\n", jsData.imuCalibrateData.offsetX);
+      Serial.printf("offsetY : %6f\n", jsData.imuCalibrateData.offsetY);
+      Serial.printf("offsetZ : %6f\n", jsData.imuCalibrateData.offsetZ);
+      Serial.printf("offsetAngleX : %6f\n", jsData.imuCalibrateData.offsetAngleX);
+      Serial.printf("offsetAngleY : %6f\n", jsData.imuCalibrateData.offsetAngleY);
+    }
+    else{
+      IMU_FILTER_DATA filterData = _imu.complementaryFilter();
+      m5Oled.printIMUData(filterData);
     }
 
     if(_dispTitle->getDisplayTitleSq() == DisplayTitleSq::DISP_TITLE){  // タイトル表示

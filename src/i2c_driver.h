@@ -93,6 +93,7 @@ class M5OLED{
     void printClockData(DisplayData);
     void printEnvSensorData(DisplayData);
     void printIMUData(IMU_RAW_DATA);
+    void printIMUData(IMU_FILTER_DATA);           // 相補フィルター計算データ表示
   private:
     bool ready;       // M5OLEDデバイスの有無
     M5UnitOLED oled;

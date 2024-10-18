@@ -205,12 +205,19 @@ void Sand::grainAdd(void)
 
 std::vector<uint8_t> Sand::grainRoll(float angleX, float angleY)
 {
+  unsigned long currentTime = micros();
+
   vecCal(angleX,angleY);
 
   for (auto &grain : grains) {
     grain.roll(vecX, vecY, &pageData);
   }
 
+  runTime = micros() - currentTime;   // 実行時間計測
+
+  interval = millis() - lastTime;
+  lastTime = millis();
+  
   return pageData;
 }
 

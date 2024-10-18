@@ -53,6 +53,10 @@ class Sand {
     void vecCal(float angleX, float angleY);
     float vecX;
     float vecY;
+
+    unsigned long runTime;  // 実行時間
+    unsigned long lastTime; // 前回実行時間
+    unsigned long interval; // 実行間隔
 };
 
 #undef GLOBAL

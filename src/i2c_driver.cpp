@@ -295,6 +295,7 @@ void  M5OLED::printSandData(IMU_FILTER_DATA data, float x, float y, float grainx
 void M5OLED::printSandData(Sand sand)  // 砂表示
 {
   if(ready){
+/*
     oled.setCursor(0, 0);
     oled.printf("%d,%04f,%04f", sand.grains[0].mode, sand.grains[0].getX(), sand.grains[0].getY());
 
@@ -310,6 +311,10 @@ void M5OLED::printSandData(Sand sand)  // 砂表示
 
     oled.setCursor(0, 32);
     oled.printf("%04f,%04f", sand.vecX, sand.vecY);
+*/
+    oled.setCursor(0, 56);
+    oled.printf("%d,%d   ", sand.runTime,sand.interval);
+
   }
   return;
 }

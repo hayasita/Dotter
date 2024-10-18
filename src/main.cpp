@@ -341,7 +341,7 @@ void taskDeviceCtrl(void *Parameters){
         }
       }
       else if(_dispMode->getCurrentOperationMode() == OperationMode::MODE_IMU){   // IMU表示
-        if(timetmp - sandLasttime > 20){     // 更新時間確認
+        if(timetmp - sandLasttime > 10){     // 更新時間確認
           sandLasttime = timetmp;  // 更新時間設定
 /*
           sand.vecCal(filterData.gyro_angle_x,filterData.gyro_angle_y);

@@ -29,6 +29,7 @@
 #include "timeCtrl.h"
 #include "wifi_real.h"
 #include "wifi_ctrl.h"
+#include "sand.h"
 
 /**
  * @brief デバイス制御タスク
@@ -107,6 +108,9 @@ void taskDeviceCtrl(void *Parameters){
   // 起動時のWiFi接続処理要求設定
   wifiConnect.forceConnect();
 
+  // 砂表示
+  Sand sand;
+
   setToneChannel(0);
   const int soundPin = SOUND_PIN;
   if(jsData.soundEnable == 1){
@@ -121,8 +125,11 @@ void taskDeviceCtrl(void *Parameters){
   while(1){
     static unsigned long ledLasttime = millis(); 
     static unsigned long clockDisptLasttime = millis(); 
+    static unsigned long sandLasttime = millis();
     unsigned long timetmp;      // millis()tmp
     uint8_t itmKeyCode;
+
+    IMU_FILTER_DATA filterData;   // IMUフィルタデータ
 
     timetmp = millis();               // 処理間隔確認用基本時刻
 
@@ -168,6 +175,9 @@ void taskDeviceCtrl(void *Parameters){
 
         }
       }
+      else if(_dispMode->getCurrentOperationMode() == OperationMode::MODE_IMU){
+        sand.grainAdd();
+      }
       else{
         // 動作モードがタイマー表示以外の場合は、表示データ切り替え
         if(_dispMode->displaySelect()){
@@ -203,13 +213,13 @@ void taskDeviceCtrl(void *Parameters){
         // デバイス確認
         deviceChk.init();
         _imu.whoAmI();
-
+/*
         SoundReqPr keyData;    // SoundTaskへのタスク間通信データ
         if(uxQueueSpacesAvailable(xQueueSoundPlay) != 0){             // キューの追加可能数が0ではない
           keyData = SoundReqPr::SOUND_PLAY1;
           xQueueSend(xQueueSoundPlay, &keyData, 0);
         }
-
+*/
       }
     }
     jsData.modeWrite();     // モード設定書き込み
@@ -237,7 +247,8 @@ void taskDeviceCtrl(void *Parameters){
       oledData.timeInfo = clockCtrl.getTime();
 
       // M5OLED表示
-      m5Oled.printClockData(oledData);
+//      m5Oled.printClockData(oledData);
+//      m5Oled.printIMUData(filterData);  // IMUデータ表示
 //      m5Oled.printIMUData(filterData);
 
 /*
@@ -267,8 +278,8 @@ void taskDeviceCtrl(void *Parameters){
       Serial.printf("offsetAngleY : %6f\n", jsData.imuCalibrateData.offsetAngleY);
     }
     else{
-      IMU_FILTER_DATA filterData = _imu.complementaryFilter();
-      m5Oled.printIMUData(filterData);
+      filterData = _imu.complementaryFilter();
+//      m5Oled.printIMUData(filterData);
     }
 
     if(_dispTitle->getDisplayTitleSq() == DisplayTitleSq::DISP_TITLE){  // タイトル表示
@@ -327,6 +338,37 @@ void taskDeviceCtrl(void *Parameters){
             xQueueSend(xQueueSoundPlay, &keyData, 0);
           }
           soundReq = SoundReqPr::SOUND_OFF;
+        }
+      }
+      else if(_dispMode->getCurrentOperationMode() == OperationMode::MODE_IMU){   // IMU表示
+        if(timetmp - sandLasttime > 20){     // 更新時間確認
+          sandLasttime = timetmp;  // 更新時間設定
+/*
+          sand.vecCal(filterData.gyro_angle_x,filterData.gyro_angle_y);
+          sand.grain.roll(sand.getVecX(),sand.getVecY());
+          // IMUデータ表示
+          m5Oled.printSandData(filterData,sand.getVecX(),sand.getVecY(), sand.grain.getX(), sand.grain.getY());
+
+          std::vector<uint8_t> pageData;
+          pageData.resize(16);
+          pageData[(uint8_t)sand.grain.getY()] = 0x01 << (uint8_t)sand.grain.getX();
+*/
+        //  sand.vecCal(filterData.gyro_angle_x,filterData.gyro_angle_y);
+        //  sand.grains[0].roll(sand.getVecX(),sand.getVecY(),&pageData);
+          std::vector<uint8_t> pageData = sand.grainRoll(filterData.gyro_angle_x,filterData.gyro_angle_y);
+          // IMUデータ表示
+//          m5Oled.printSandData(filterData,sand.getVecX(),sand.getVecY(), sand.grains[0].getX(), sand.grains[0].getY());
+          m5Oled.printSandData(sand);
+          
+//          std::vector<uint8_t> pageData;
+//          pageData.resize(16);
+//          for (auto &grain : sand.grains) {
+//            pageData[(uint8_t)grain.getY()] = 0x01 << (uint8_t)grain.getX();
+//          }
+          //pageData[(uint8_t)sand.grains[0].getY()] = 0x01 << (uint8_t)sand.grains[0].getX();
+
+          _i2cCtrl.matrixsetHexdata(pageData);
+
         }
       }
     }

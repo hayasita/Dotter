@@ -11,6 +11,7 @@
 #include <cstdint>
 #include <vector>
 #include "imu.h"
+#include "sand.h"
 
 /*
 #include "Freenove_VK16K33_Lib.h"
@@ -94,6 +95,10 @@ class M5OLED{
     void printEnvSensorData(DisplayData);
     void printIMUData(IMU_RAW_DATA);
     void printIMUData(IMU_FILTER_DATA);           // 相補フィルター計算データ表示
+//    void printSandData(IMU_FILTER_DATA, float, float, float, float);  // 砂表示
+    void printSandData(Sand sand);  // 砂表示
+
+
   private:
     bool ready;       // M5OLEDデバイスの有無
     M5UnitOLED oled;

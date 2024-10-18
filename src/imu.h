@@ -7,6 +7,8 @@
 #define GLOBAL extern
 #endif
 
+#include <cstdint>
+
 /**
  * @brief IMUデバイス種別
  * 

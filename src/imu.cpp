@@ -138,7 +138,8 @@ void IMU::init(void)
     writeImu(MPU6050_CONFIG, 0x00);       // disable DLPF, gyro output rate = 8kHz
     writeImu(MPU6050_GYRO_CONFIG, 0x08);  // gyro range: ±500dps
     writeImu(MPU6050_ACCEL_CONFIG, 0x00); // accel range: ±2g
-    writeImu(MPU6050_PWR_MGMT_1, 0x01);   // disable sleep mode, PLL with X gyro
+//    writeImu(MPU6050_PWR_MGMT_1, 0x01);   // disable sleep mode, PLL with X gyro
+    writeImu(MPU6050_PWR_MGMT_1, 0x00);   // disable sleep mode, PLL with X gyro
 
     filterData.gyro_angle_x = 0;
     filterData.gyro_angle_y = 0;
@@ -170,6 +171,8 @@ IMU_CNV_DATA IMU::convertUnit(IMU_RAW_DATA *data)
     cnvData.dpsX = ((float)data->gx) / 65.5; // LSB sensitivity: 65.5 LSB/dps @ ±500dps
     cnvData.dpsY = ((float)data->gy) / 65.5;
     cnvData.dpsZ = ((float)data->gz) / 65.5;
+    cnvData.acc_angle_x = (atan2(cnvData.acc_y, cnvData.acc_z + abs(cnvData.acc_x)) * 360 / 2.0 / PI);
+    cnvData.acc_angle_y = (atan2(cnvData.acc_x, cnvData.acc_z + abs(cnvData.acc_y)) * 360 / -2.0 / PI);
 #else
     cnvData.acc_x = -((float)data->ax) / 16384.0;
     cnvData.acc_y = ((float)data->ay) / 16384.0;
@@ -178,9 +181,11 @@ IMU_CNV_DATA IMU::convertUnit(IMU_RAW_DATA *data)
     cnvData.dpsX = -((float)data->gx) / 65.5; // LSB sensitivity: 65.5 LSB/dps @ ±500dps
     cnvData.dpsY = ((float)data->gy) / 65.5;
     cnvData.dpsZ = -((float)data->gz) / 65.5;
-#endif
     cnvData.acc_angle_x = (atan2(cnvData.acc_y, cnvData.acc_z + abs(cnvData.acc_x)) * 360 / 2.0 / PI);
     cnvData.acc_angle_y = (atan2(cnvData.acc_x, cnvData.acc_z + abs(cnvData.acc_y)) * 360 / -2.0 / PI);
+#endif
+//    cnvData.acc_angle_x = (atan2(cnvData.acc_y, cnvData.acc_z + abs(cnvData.acc_x)) * 360 / 2.0 / PI);
+//    cnvData.acc_angle_y = (atan2(cnvData.acc_x, cnvData.acc_z + abs(cnvData.acc_y)) * 360 / -2.0 / PI);
   }
   return cnvData;
 }

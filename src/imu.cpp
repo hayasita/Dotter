@@ -139,7 +139,7 @@ void IMU::init(void)
     writeImu(MPU6050_GYRO_CONFIG, 0x08);  // gyro range: ±500dps
     writeImu(MPU6050_ACCEL_CONFIG, 0x00); // accel range: ±2g
 //    writeImu(MPU6050_PWR_MGMT_1, 0x01);   // disable sleep mode, PLL with X gyro
-    writeImu(MPU6050_PWR_MGMT_1, 0x00);   // disable sleep mode, PLL with X gyro
+    writeImu(MPU6050_PWR_MGMT_1, 0x00);   // disable sleep mode, PLL with 8MHz
 
     filterData.gyro_angle_x = 0;
     filterData.gyro_angle_y = 0;

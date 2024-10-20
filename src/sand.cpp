@@ -360,7 +360,7 @@ void Sand::accCal(float angleX, float angleY)
   if (angleY < -45) angleY = -45;
   if (angleY > 45) angleY = 45;
 
-  #if defined (M5STACK_ATOM)
+  #if defined (M5STACK_ATOM) || defined (M5STACK_ATOMS3)
     tmpX = -(std::tan(angleX * M_PI / 180.0));
     tmpY = -(std::tan(angleY * M_PI / 180.0));
   #else
@@ -389,7 +389,7 @@ uint8_t Sand::vecCal4(float angleX, float angleY)
 
     float vecX, vecY;
 
-    #if defined (M5STACK_ATOM)
+    #if defined (M5STACK_ATOM) || defined (M5STACK_ATOMS3)
         vecX = -(std::tan(angleX * M_PI / 180.0));
         vecY = -(std::tan(angleY * M_PI / 180.0));
     #else
@@ -424,7 +424,7 @@ uint8_t Sand::vecCal8(float angleX, float angleY)
 
     float vecX, vecY;
 
-    #if defined (M5STACK_ATOM)
+    #if defined (M5STACK_ATOM) || defined (M5STACK_ATOMS3)
         vecX = -(std::tan(angleX * M_PI / 180.0));
         vecY = -(std::tan(angleY * M_PI / 180.0));
     #else

@@ -347,6 +347,7 @@ void taskDeviceCtrl(void *Parameters){
       }
       else if(_dispMode->getCurrentOperationMode() == OperationMode::MODE_IMU){   // IMU表示
         // 砂落下表示
+        sand.autoGrainRequest();
         if(timetmp - sandLasttime > 10){      // 更新時間確認
           sandLasttime = timetmp;             // 更新時間設定
           // 砂表示データ作成

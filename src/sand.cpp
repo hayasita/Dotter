@@ -268,7 +268,11 @@ void Sand::removeGrainRequest(void)
   return;
 }
 
-void Sand::autoGrainRequest(void)          // 砂自動追加リクエスト
+/**
+ * @brief 砂自動追加リクエスト
+ * 
+ */
+void Sand::autoGrainRequest(void)
 {
   static unsigned long lastTime = 0;
   static uint8_t removeCnt = 0;

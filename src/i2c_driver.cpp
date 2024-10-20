@@ -308,10 +308,10 @@ void M5OLED::printSandData(Sand sand)  // 砂表示
     if(sand.grains.size() > 2){
       oled.printf("%d,%04f,%04f", sand.grains[2].mode, sand.grains[2].getX(), sand.grains[2].getY());
     }
-
-    oled.setCursor(0, 32);
-    oled.printf("%04f,%04f", sand.vecX, sand.vecY);
 */
+//    oled.setCursor(0, 32);
+//    oled.printf("%04f,%04f", sand.vecX, sand.vecY);
+
     oled.setCursor(0, 56);
     oled.printf("%d,%d   ", sand.runTime,sand.interval);
 

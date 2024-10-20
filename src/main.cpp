@@ -176,7 +176,8 @@ void taskDeviceCtrl(void *Parameters){
         }
       }
       else if(_dispMode->getCurrentOperationMode() == OperationMode::MODE_IMU){
-        sand.grainAdd();
+        // 砂追加
+        sand.addGrainRequest();
       }
       else{
         // 動作モードがタイマー表示以外の場合は、表示データ切り替え
@@ -205,6 +206,10 @@ void taskDeviceCtrl(void *Parameters){
           jsData.modeWriteReq();             // モード設定書き込み要求
           _dispTitle->makeTitle(jsData.getDataNumber(),*_dispMode);    // タイトル作成
         }
+      }
+      else if(_dispMode->getCurrentOperationMode() == OperationMode::MODE_IMU){
+        // 砂一行削除
+        sand.removeGrainRequest();
       }
       else{
         // 動作テスト
@@ -341,34 +346,15 @@ void taskDeviceCtrl(void *Parameters){
         }
       }
       else if(_dispMode->getCurrentOperationMode() == OperationMode::MODE_IMU){   // IMU表示
-        if(timetmp - sandLasttime > 10){     // 更新時間確認
-          sandLasttime = timetmp;  // 更新時間設定
-/*
-          sand.vecCal(filterData.gyro_angle_x,filterData.gyro_angle_y);
-          sand.grain.roll(sand.getVecX(),sand.getVecY());
-          // IMUデータ表示
-          m5Oled.printSandData(filterData,sand.getVecX(),sand.getVecY(), sand.grain.getX(), sand.grain.getY());
-
-          std::vector<uint8_t> pageData;
-          pageData.resize(16);
-          pageData[(uint8_t)sand.grain.getY()] = 0x01 << (uint8_t)sand.grain.getX();
-*/
-        //  sand.vecCal(filterData.gyro_angle_x,filterData.gyro_angle_y);
-        //  sand.grains[0].roll(sand.getVecX(),sand.getVecY(),&pageData);
+        // 砂落下表示
+        if(timetmp - sandLasttime > 10){      // 更新時間確認
+          sandLasttime = timetmp;             // 更新時間設定
+          // 砂表示データ作成
           std::vector<uint8_t> pageData = sand.grainRoll(filterData.gyro_angle_x,filterData.gyro_angle_y);
-          // IMUデータ表示
-//          m5Oled.printSandData(filterData,sand.getVecX(),sand.getVecY(), sand.grains[0].getX(), sand.grains[0].getY());
-          m5Oled.printSandData(sand);
-          
-//          std::vector<uint8_t> pageData;
-//          pageData.resize(16);
-//          for (auto &grain : sand.grains) {
-//            pageData[(uint8_t)grain.getY()] = 0x01 << (uint8_t)grain.getX();
-//          }
-          //pageData[(uint8_t)sand.grains[0].getY()] = 0x01 << (uint8_t)sand.grains[0].getX();
-
+          // LEDマトリクスデータ転送
           _i2cCtrl.matrixsetHexdata(pageData);
-
+          // IMUデータ表示
+          m5Oled.printSandData(sand);
         }
       }
     }

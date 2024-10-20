@@ -40,6 +40,8 @@ jsonData::jsonData(void)
 
   pageCount =0;                     // ページ位置
 
+  imuCalibrateSq = 0;               // IMUキャリブレーションシーケンス
+
   jsonMutex = portMUX_INITIALIZER_UNLOCKED; // Mutex
 
   modeWriteSq = ModeWriteSQ::WAIT;          // 動作モード書き込み要求状態 初期化
@@ -56,6 +58,31 @@ void jsonData::wifiPSet(WiFiConnect* pWifiCon)
 {
   pWifiConnect_ = pWifiCon;
   return;
+}
+
+/**
+ * @brief IMUキャリブレーション要求
+ * 
+ */
+void jsonData::imuCalibrateRq(void)
+{
+  imuCalibrateSq = 1;
+  return;
+}
+
+/**
+ * @brief IMUキャリブレーション実行
+ * 
+ * @return true   キャリブレーション実行
+ * @return false  キャリブレーション実行無し
+ */
+bool jsonData::imuCalibrateEx(void)
+{
+  if(imuCalibrateSq == 1){
+    imuCalibrateSq = 0;
+    return true;
+  }
+  return false;
 }
 
 /**
@@ -400,6 +427,56 @@ bool jsonData::parseJson(String readStr ,bool dataWrite ,bool online)
       Serial.println("clockScrollTimeChangeSet");
     }
 
+    // IMU X軸オフセット値
+    jsondata = jsonDocument["imuOffsetX"];
+    if(!jsondata.isNull()){
+      Serial.println("imuOffsetX");
+      imuCalibrateData.offsetX = jsondata.as<float>(); // キーの値を uint8_t 型で取得
+      if(dataWrite){writeJsonFile();}       // 設定値書き込み
+      Serial.print("imuCalibrateData.offsetX Value: ");
+      Serial.println(imuCalibrateData.offsetX);     // 取得した値をシリアルモニターに出力
+    }
+ 
+    // IMU Y軸オフセット値
+    jsondata = jsonDocument["imuOffsetY"];
+    if(!jsondata.isNull()){
+      Serial.println("imuOffsetY");
+      imuCalibrateData.offsetY = jsondata.as<float>(); // キーの値を uint8_t 型で取得
+      if(dataWrite){writeJsonFile();}       // 設定値書き込み
+      Serial.print("imuCalibrateData.offsetY Value: ");
+      Serial.println(imuCalibrateData.offsetY);     // 取得した値をシリアルモニターに出力
+    }
+ 
+    // IMU Z軸オフセット値
+    jsondata = jsonDocument["imuOffsetZ"];
+    if(!jsondata.isNull()){
+      Serial.println("imuOffsetZ");
+      imuCalibrateData.offsetZ = jsondata.as<float>(); // キーの値を uint8_t 型で取得
+      if(dataWrite){writeJsonFile();}       // 設定値書き込み
+      Serial.print("imuCalibrateData.offsetZ Value: ");
+      Serial.println(imuCalibrateData.offsetZ);     // 取得した値をシリアルモニターに出力
+    }
+ /*
+    // IMU X軸オフセット値
+    jsondata = jsonDocument["imuOffsetAngleX"];
+    if(!jsondata.isNull()){
+      Serial.println("imuOffsetAngleX");
+      imuCalibrateData.offsetAngleX = jsondata.as<float>(); // キーの値を uint8_t 型で取得
+      if(dataWrite){writeJsonFile();}       // 設定値書き込み
+      Serial.print("imuCalibrateData.offsetAngleX Value: ");
+      Serial.println(imuCalibrateData.offsetAngleX);     // 取得した値をシリアルモニターに出力
+    }
+ 
+    // IMU X軸オフセット値
+    jsondata = jsonDocument["imuOffsetAngleY"];
+    if(!jsondata.isNull()){
+      Serial.println("imuOffsetAngleY");
+      imuCalibrateData.offsetAngleY = jsondata.as<float>(); // キーの値を uint8_t 型で取得
+      if(dataWrite){writeJsonFile();}       // 設定値書き込み
+      Serial.print("imuCalibrateData.offsetAngleY Value: ");
+      Serial.println(imuCalibrateData.offsetAngleY);     // 取得した値をシリアルモニターに出力
+    }
+*/
     return true;
   }
 
@@ -814,6 +891,12 @@ void jsonData::writeJsonFile(void){
   configData = configData + makeJsonPiece("soundEnable", soundEnable, true);                      // サウンド有効設定
   configData = configData + makeJsonPiece("clockScrollTime", clockScrollTime, true);             // 時計スクロール時間
 
+  configData = configData + makeJsonPiece("imuOffsetX", imuCalibrateData.offsetX, true);            // IMU X軸オフセット値
+  configData = configData + makeJsonPiece("imuOffsetY", imuCalibrateData.offsetY, true);            // IMU Y軸オフセット値
+  configData = configData + makeJsonPiece("imuOffsetZ", imuCalibrateData.offsetZ, true);            // IMU Z軸オフセット値
+//  configData = configData + makeJsonPiece("imuOffsetAngleX", imuCalibrateData.offsetAngleX, true);  // IMU X軸オフセット角度
+//  configData = configData + makeJsonPiece("imuOffsetAngleY", imuCalibrateData.offsetAngleY, true);  // IMU Y軸オフセット角度
+
   configData = configData + makeJsonPiece("currentOperationMode", static_cast<uint8_t>(dispMode.getCurrentOperationMode()), true);   // 現在の動作モード
   configData = configData + makeJsonPiece("clockDispMode", static_cast<uint8_t>(dispMode.getClockDispMode()), true);    // 現在の動作モード
   configData = configData + makeJsonPiece("timerDispMode", static_cast<uint8_t>(dispMode.gettimerDispMode()), false);   // 現在の動作モード
@@ -881,6 +964,25 @@ String jsonData::makeJsonPiece(String key, uint8_t value ,bool connma)
  * @return String 
  */
 String jsonData::makeJsonPiece(String key, uint16_t value ,bool connma)
+{
+  String ret = "{\"" + key + "\":" + value + "}";
+  if(connma == true){
+    ret = ret + ",";
+  }
+  ret = ret + "\n";
+  return ret;
+}
+
+/**
+ * @brief jsonデータ作成:float
+ * 
+ * @param key     jsonのキー
+ * @param value   jsonの値
+ * @param connma  true:データの最後に「.」を追加する
+ *                false:追加しない
+ * @return String 
+ */
+String jsonData::makeJsonPiece(String key, float value ,bool connma)
 {
   String ret = "{\"" + key + "\":" + value + "}";
   if(connma == true){

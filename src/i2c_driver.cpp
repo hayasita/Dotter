@@ -251,6 +251,76 @@ void M5OLED::printIMUData(IMU_RAW_DATA data)
   return;
 }
 
+/**
+ * @brief 加速度センサ　相補フィルター計算データ表示
+ * 
+ * @param data 
+ */
+void M5OLED::printIMUData(IMU_FILTER_DATA data)
+{
+  if(ready){
+    oled.setCursor(0, 16);
+
+    oled.printf("%04d,%04d,%04d", (int16_t)data.gyro_angle_x, (int16_t)data.gyro_angle_y, (int16_t)data.gyro_angle_z);
+    oled.setCursor(0, 24);
+    oled.printf("%04d,%04d", (int16_t)data.acc_angle_x, (int16_t)data.acc_angle_y);
+    oled.setCursor(0, 32);
+    oled.printf("%04d", data._interval);
+/*
+    oled.printf("%04f,%04f", data.gyro_angle_x, data.gyro_angle_y);
+    oled.setCursor(0, 32);
+    oled.printf("%04f,%04f", data.acc_angle_x, data.acc_angle_y);
+    oled.setCursor(0, 40);
+    oled.printf("%04d", data._interval);
+*/
+  }
+  return;
+}
+
+/*
+void  M5OLED::printSandData(IMU_FILTER_DATA data, float x, float y, float grainx, float grainy)  // 砂表示
+{
+    oled.setCursor(0, 0);
+    oled.printf("%04f,%04f", grainx, grainy);
+
+    oled.setCursor(0, 16);
+    oled.printf("%04f,%04f", data.gyro_angle_x, data.gyro_angle_y);
+    oled.setCursor(0, 24);
+    oled.printf("%04f,%04f", x, y);
+    oled.setCursor(0, 32);
+    oled.printf("%04d", data._interval);
+  return;
+}
+*/
+void M5OLED::printSandData(Sand sand)  // 砂表示
+{
+  if(ready){
+/*
+    oled.setCursor(0, 0);
+    oled.printf("%d,%04f,%04f", sand.grains[0].mode, sand.grains[0].getX(), sand.grains[0].getY());
+
+    oled.setCursor(0, 16);
+    if(sand.grains.size() > 1){
+      oled.printf("%d,%04f,%04f", sand.grains[1].mode, sand.grains[1].getX(), sand.grains[1].getY());
+    }
+
+    oled.setCursor(0, 24);
+    if(sand.grains.size() > 2){
+      oled.printf("%d,%04f,%04f", sand.grains[2].mode, sand.grains[2].getX(), sand.grains[2].getY());
+    }
+*/
+//    oled.setCursor(0, 32);
+//    oled.printf("%04f,%04f", sand.vecX, sand.vecY);
+
+    oled.setCursor(0, 56);
+    oled.printf("%d,%d   ", sand.runTime,sand.interval);
+
+  }
+  return;
+}
+
+
+
 //#ifdef DELETE
 /**
  * @brief M5OLEDセンサデータ表示
@@ -386,6 +456,24 @@ String DeviceChk::getBoardName(void)
 
   boardName = name;
 //  Serial.println(boardName);
+
+  switch(M5.getBoard()){
+    case m5::board_t::board_M5StampS3:
+      boardName = "StampS3";
+      break;
+    case m5::board_t::board_M5AtomS3Lite:
+      boardName = "ATOMS3Lite";
+      break;
+    case m5::board_t::board_M5AtomS3:
+      boardName = "ATOMS3";
+      break;
+    case m5::board_t::board_M5Atom:
+      boardName = "ATOM";
+      break;
+    default:
+      boardName = "Who am I ?";
+      break;
+  }
 
   return boardName;
 }

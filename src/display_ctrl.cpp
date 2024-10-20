@@ -110,14 +110,17 @@ void modeCtrl::modeChange(uint8_t keydata)
       currentOperationMode = OperationMode::MODE_TIMER;   // 時計表示 -> タイマー表示
       break;
     case OperationMode::MODE_TIMER:
-      currentOperationMode = OperationMode::MODE_DOTTER;  // タイマー表示 -> ドットマトリクス表示
-//      currentOperationMode = OperationMode::MODE_TEST;
+//      currentOperationMode = OperationMode::MODE_DOTTER;  // タイマー表示 -> ドットマトリクス表示
+      currentOperationMode = OperationMode::MODE_IMU;     // タイマー表示 -> IMU表示
+      break;
+    case OperationMode::MODE_IMU:
+      currentOperationMode = OperationMode::MODE_DOTTER;  // IMU表示 -> ドットマトリクス表示
       break;
     case OperationMode::MODE_TEST:
-      currentOperationMode = OperationMode::MODE_DOTTER;
+      currentOperationMode = OperationMode::MODE_DOTTER;  // -> ドットマトリクス表示
       break;
     default:
-      currentOperationMode = OperationMode::MODE_DOTTER;
+      currentOperationMode = OperationMode::MODE_DOTTER;  // -> ドットマトリクス表示
       break;
   }
 
@@ -236,6 +239,9 @@ void displayTitle::makeTitle(uint8_t dataNumber, modeCtrl dispMode)
       break;
     case OperationMode::MODE_TIMER:   // タイマー表示
       makeTitleTimer(dispMode.gettimerDispMode());
+      break;
+    case OperationMode::MODE_IMU:     // IMU表示
+      makeTitleIMU();
       break;
     case OperationMode::MODE_TEST:
       makeTitleTest();
@@ -390,6 +396,20 @@ void displayTitle::makeTitleTimer(TimerDispMode timerDispMode)
 
   return;
 }
+
+/**
+ * @brief IMUタイトル作成
+ * 
+ */
+void displayTitle::makeTitleIMU(void)
+{
+  std::vector<uint8_t> vec;
+  vec.assign({0x1C, 0x22, 0x41, 0x49, 0x3A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00});
+  titleData = vec;
+
+  return;
+}
+
 /**
  * @brief テストタイトル作成
  * 

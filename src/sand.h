@@ -54,6 +54,7 @@ class Sand {
 
     void addGrainRequest(void);           // 砂追加リクエスト
     void removeGrainRequest(void);        // 砂除去リクエスト
+    void autoGrainRequest(void);          // 砂自動追加リクエスト
     std::vector<uint8_t> grainRoll(float angleX, float angleY);   // 砂移動処理
 
     unsigned long runTime;                // 実行時間

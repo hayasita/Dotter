@@ -268,6 +268,30 @@ void Sand::removeGrainRequest(void)
   return;
 }
 
+void Sand::autoGrainRequest(void)          // 砂自動追加リクエスト
+{
+  static unsigned long lastTime = 0;
+  static uint8_t removeCnt = 0;
+
+  if( (millis() - lastTime) > 1000){
+    if(grains.size() < 120){
+      addGrainRequest();
+    }
+    removeCnt++;
+    lastTime = millis();
+  }
+
+  if(grains.size() > 45){
+    removeGrainRequest();
+  }
+  if(removeCnt >= 30){
+    removeGrainRequest();
+    removeCnt = 0;
+  }
+
+  return;
+}
+
 /**
  * @brief 砂除去シーケンス処理
  * 

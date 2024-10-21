@@ -599,6 +599,10 @@ void jsonData::ledDisplayCtrl(uint8_t keydata)
     readLedDataFile();
 //    writeJsonFile();    // dataNumber更新（設定値書き込み
   }
+  else{
+//    Serial.println("dataFilePath.empty()");
+    ledAllData.clear();   // LEDアニメーションデータ初期化
+  }
 
   return;
 }

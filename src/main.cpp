@@ -363,14 +363,30 @@ void taskDeviceCtrl(void *Parameters){
     // M5ATOM Matrix LED 
     if(wifiConnect.getWiFiConSts() == WiFiConSts::NOCONNECTION){           // WiFi接続なし
       led.set(0, CRGB::Red, LEDPATTERN_ALLON);
+
+      M5.Display.clear(BLACK);
+//      M5.Display.setCursor(0, 0);
+//      M5.Display.setTextSize(1.5);
+//      M5.Display.print("WiFi Disconnection.");
+
     }
     else if( (wifiConnect.getWiFiConSts() == WiFiConSts::MAN_CONNECT)       // WiFi接続完了
           || (wifiConnect.getWiFiConSts() == WiFiConSts::SNTPAUTO_CONNECT)  // SNTP自動接続・SNTP処理完了まち
       ){
       led.set(0, CRGB::Green, LEDPATTERN_ALLON);
+
+//      M5.Display.clear(BLACK);
+      M5.Display.setCursor(0, 0);
+      M5.Display.setTextSize(1.5);
+      M5.Display.print("WiFi Connection.   ");
     }
     else{
       led.set(0, CRGB::Green, LEDPATTERN_ONEBEAT);  // WiFi接続・切断処理中
+      
+//      M5.Display.clear(BLACK);
+      M5.Display.setCursor(0, 0);
+      M5.Display.setTextSize(1.5);
+      M5.Display.print("WiFi Connecting.   ");
     }
     led.man();
 
@@ -398,6 +414,10 @@ void setup() {
 
   Serial.begin(115200);
 //  while (!Serial);
+
+  // ATOMS3 Display
+  M5.Display.setRotation(2);
+  M5.Display.clear(BLACK);
 
   // Initialize SPIFFS
   if(!SPIFFS.begin()){

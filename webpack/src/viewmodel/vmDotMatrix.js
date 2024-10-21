@@ -7,7 +7,7 @@ export class DotMatrixUI {
     this.rows = 8;
     this.cols = 16;
     this.dotcolor = 'rgb(255, 0, 0)';
-    this.bgcolor = 'rgb(0, 0, 0)';
+    this.bgcolor = 'rgb(255, 255, 255)';
 
     // ドットマトリクス編集領域情報初期化
     this.colorMatrix = [];
@@ -86,6 +86,7 @@ export class DotMatrixUI {
     if(rgbArray[0] != 0){colorCode += 1}
     if(rgbArray[1] != 0){colorCode += 2}
     if(rgbArray[2] != 0){colorCode += 4}
+    if(colorCode == 7){colorCode = 0}
 //      console.log(colorCode + "\n");
     let colorObject = {
       c: parseInt(colorCode)

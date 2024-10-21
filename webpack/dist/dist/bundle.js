@@ -3538,11 +3538,11 @@ __webpack_require__.r(__webpack_exports__);
     bindingTypes,
     getComponent
   ) => template(
-    '<h1>Dash Bord</h1><div class="card"><div class="card-header">\r\n\t\t\tGraph\r\n\t\t</div><div class="card-body"><h5 class="card-title">Chart</h5><p class="card-text"><div style="width: 100%;"><canvas id="sensorChart"></canvas></div><div style="width: 100%;"><canvas id="dcdcChart"></canvas></div></p></div></div><div class="row"><div class="col-md-6"><div class="card h-100"><div class="card-header">\r\n\t\t\t\tネットワーク接続設定\r\n\t\t\t</div><div class="card-body"><h5 class="card-title">Current Settings</h5><p class="card-text"><div class="col-sm-11 offset-sm-1"><table class="table"><tr><td>STAモード SSID</td><td expr0="expr0"> </td></tr><tr><td>STAモード IP Adress</td><td expr1="expr1"> </td></tr><tr><td>APモード SSID</td><td expr2="expr2"> </td></tr><tr><td>APモード IP Adress</td><td expr3="expr3"> </td></tr></table></div></p></div></div></div><div class="col-md-6"><div class="card h-100"><div class="card-header">\r\n\t\t\t\tWiFi Station 設定\r\n\t\t\t</div><div class="card-body"><h2 class="card-title">センサ情報</h2><div class="col-sm-9 offset-sm-1"><table class="table"><tr expr4="expr4"></tr></table></div></div></div></div><div class="col-md-12"><div class="card h-100"><div class="card-header">\r\n      Log message\r\n    </div><div class="card-body"><div id="logAll" style="overflow-y: scroll; height: 200px; border: 1px solid #ccc;padding: 10px;"></div></div></div></div><div class="col-md-12"><div class="card h-100"><div class="card-header"></div><div class="card-body"><h2 class="card-title">センサ情報</h2><div class="col-1"></div><div class="col-7"><div id="sensorDataTable"></div></div><div class="col-7"></div><a href="./setting.js">setting.js</a><br/><a href="./_setting.js">_setting.js</a><br/><a href="./setting.json">setting.json</a><br/></div></div></div></div>',
+    '<h1>Dash Bord</h1><div class="card"><div class="card-header">\r\n\t\t\tGraph\r\n\t\t</div><div class="card-body"><h5 class="card-title">Chart</h5><p class="card-text"><div style="width: 100%;"><canvas id="sensorChart"></canvas></div><div style="width: 100%;"><canvas id="dcdcChart"></canvas></div></p></div></div><div class="row"><div class="col-md-6"><div class="card h-100"><div class="card-header">\r\n\t\t\t\tネットワーク接続設定\r\n\t\t\t</div><div class="card-body"><h5 class="card-title">Current Settings</h5><p class="card-text"><div class="col-sm-11 offset-sm-1"><table class="table"><tr><td>STAモード SSID</td><td expr17="expr17"> </td></tr><tr><td>STAモード IP Adress</td><td expr18="expr18"> </td></tr><tr><td>APモード SSID</td><td expr19="expr19"> </td></tr><tr><td>APモード IP Adress</td><td expr20="expr20"> </td></tr></table></div></p></div></div></div><div class="col-md-6"><div class="card h-100"><div class="card-header">\r\n\t\t\t\tWiFi Station 設定\r\n\t\t\t</div><div class="card-body"><h2 class="card-title">センサ情報</h2><div class="col-sm-9 offset-sm-1"><table class="table"><tr expr21="expr21"></tr></table></div></div></div></div><div class="col-md-12"><div class="card h-100"><div class="card-header">\r\n      Log message\r\n    </div><div class="card-body"><div id="logAll" style="overflow-y: scroll; height: 200px; border: 1px solid #ccc;padding: 10px;"></div></div></div></div><div class="col-md-12"><div class="card h-100"><div class="card-header"></div><div class="card-body"><h2 class="card-title">センサ情報</h2><div class="col-1"></div><div class="col-7"><div id="sensorDataTable"></div></div><div class="col-7"></div><a href="./setting.js">setting.js</a><br/><a href="./_setting.js">_setting.js</a><br/><a href="./setting.json">setting.json</a><br/></div></div></div></div>',
     [
       {
-        redundantAttribute: 'expr0',
-        selector: '[expr0]',
+        redundantAttribute: 'expr17',
+        selector: '[expr17]',
 
         expressions: [
           {
@@ -3553,8 +3553,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr1',
-        selector: '[expr1]',
+        redundantAttribute: 'expr18',
+        selector: '[expr18]',
 
         expressions: [
           {
@@ -3565,8 +3565,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr2',
-        selector: '[expr2]',
+        redundantAttribute: 'expr19',
+        selector: '[expr19]',
 
         expressions: [
           {
@@ -3577,8 +3577,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr3',
-        selector: '[expr3]',
+        redundantAttribute: 'expr20',
+        selector: '[expr20]',
 
         expressions: [
           {
@@ -3594,11 +3594,11 @@ __webpack_require__.r(__webpack_exports__);
         condition: null,
 
         template: template(
-          '<td expr5="expr5"> </td><td expr6="expr6"></td>',
+          '<td expr22="expr22"> </td><td expr23="expr23"></td>',
           [
             {
-              redundantAttribute: 'expr5',
-              selector: '[expr5]',
+              redundantAttribute: 'expr22',
+              selector: '[expr22]',
 
               expressions: [
                 {
@@ -3609,8 +3609,8 @@ __webpack_require__.r(__webpack_exports__);
               ]
             },
             {
-              redundantAttribute: 'expr6',
-              selector: '[expr6]',
+              redundantAttribute: 'expr23',
+              selector: '[expr23]',
 
               expressions: [
                 {
@@ -3623,8 +3623,8 @@ __webpack_require__.r(__webpack_exports__);
           ]
         ),
 
-        redundantAttribute: 'expr4',
-        selector: '[expr4]',
+        redundantAttribute: 'expr21',
+        selector: '[expr21]',
         itemName: 'senser',
         indexName: null,
         evaluate: _scope => _scope.sensorList
@@ -3778,11 +3778,11 @@ __webpack_require__.r(__webpack_exports__);
     bindingTypes,
     getComponent
   ) => template(
-    '<h1>デバイス設定</h1><div class="row"><div class="col-md-6"><div class="card h-100"><div class="card-header">\r\n\t\t\tシステム設定\r\n\t\t</div><div class="card-body"><p class="card-text"><div class="col-sm-11 offset-sm-1"><div expr40="expr40" class="form-check form-switch"><input expr41="expr41" class="form-check-input" type="checkbox" type="checkbox"/> </div><div></div><table class="table"><tr><td class="itemname-width">WiFi切断</td><td><div><button expr42="expr42" class="btn btn-outline-primary btn-sm" value="Setting">Execute Action</button></div></td></tr><tr><td class="itemname-width">再起動</td><td><div><button expr43="expr43" class="btn btn-outline-primary btn-sm" value="Setting">Execute Action</button></div></td></tr><tr><td class="itemname-width">EEROM 初期化</td><td><div><button expr44="expr44" class="btn btn-outline-primary btn-sm" value="Setting">Execute Action</button></div></td></tr><tr><td class="itemname-width">内部情報初期化</td><td><div><button expr45="expr45" class="btn btn-outline-primary btn-sm" value="Setting">Execute Action</button></div></td></tr></table></div></p></div></div></div><div class="col-md-6"><div class="card h-100"><div class="card-header">\r\n\t\t\tデバイス状態\r\n\t\t</div><div class="card-body"><h5 class="card-title">i2c接続デバイス</h5><p class="card-text"><div class="col-sm-11 offset-sm-1"><table class="table"><tr><td class="itemname-width">WiFi切断</td><td><div><button type="button" class="btn btn-primary btn-sm">Small button</button><input class="btn btn-primary btn-sm" type="reset" value="Reset"/><button expr46="expr46" class="btn btn-outline-primary btn-sm" value="Setting">Setting</button></div></td></tr><tr><td class="itemname-width">再起動</td><td><div><button expr47="expr47" class="btn btn-outline-primary btn-sm" value="Setting">Setting</button></div></td></tr><tr><td class="itemname-width">EEROM 初期化</td><td><div><button expr48="expr48" class="btn btn-outline-primary btn-sm" value="Setting">Setting</button></div></td></tr><tr><td class="itemname-width">内部情報初期化</td><td><div><button expr49="expr49" class="btn btn-outline-primary btn-sm" value="Setting">Setting</button></div></td></tr></table></div></p><h5 class="card-title">DC-DCコンバータ</h5></div></div></div></div><div class="card"><div class="card-header">\r\n\t\t\tIR機能設定\r\n\t\t</div><div class="card-body"><h5 class="card-title">赤外線リモコン 使用</h5><p class="card-text"><div class="col-sm-11 offset-sm-1"><div expr50="expr50" class="form-check form-switch"><input expr51="expr51" class="form-check-input" type="checkbox" type="checkbox"/> </div></div></p><h5 class="card-title">受信データ</h5><p class="card-text"><div class="col-sm-11 offset-sm-1"><div id="logNtpSetting" style="overflow-y: scroll; height: 100px; border: 1px solid #ccc;padding: 10px;"></div></div></p><h5 class="card-title">機能設定</h5><p class="card-text"><div class="col-sm-11 offset-sm-1"><button expr52="expr52" type="submit" id="ssidSubmit" class="btn btn-outline-primary btn-sm" style="margin-top: 5px;"><span class="spinner-border spinner-border-sm visually-hidden" role="status" aria-hidden="true"></span>\r\n        Data Scan\r\n      </button><table class="table"><tr><td><div class="form-check"><input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/><label class="form-check-label" for="flexRadioDefault1">\r\n            表示切替\r\n          </label></div></td><td><div><button expr53="expr53" class="btn btn-outline-primary btn-sm" value="Setting">Setting</button></div></td></tr><tr><td class="itemname-width">表示切替</td><td><div><button type="button" class="btn btn-primary btn-sm">Small button</button><input class="btn btn-primary btn-sm" type="reset" value="Reset"/><button expr54="expr54" class="btn btn-outline-primary btn-sm" value="Setting">Setting</button></div></td></tr><tr><td class="itemname-width">再起動</td><td><div><button expr55="expr55" class="btn btn-outline-primary btn-sm" value="Setting">Setting</button></div></td></tr><tr><td class="itemname-width">EEROM 初期化</td><td><div><button expr56="expr56" class="btn btn-outline-primary btn-sm" value="Setting">Setting</button></div></td></tr><tr><td class="itemname-width">内部情報初期化</td><td><div><button expr57="expr57" class="btn btn-outline-primary btn-sm" value="Setting">Setting</button></div></td></tr></table></div></p><p><div id="irSetRadioButton"></div></p></div></div>',
+    '<h1>デバイス設定</h1><div class="row"><div class="col-md-6"><div class="card h-100"><div class="card-header">\r\n\t\t\tシステム設定\r\n\t\t</div><div class="card-body"><p class="card-text"><div class="col-sm-11 offset-sm-1"><div expr65="expr65" class="form-check form-switch"><input expr66="expr66" class="form-check-input" type="checkbox" type="checkbox"/> </div><div></div><table class="table"><tr><td class="itemname-width">WiFi切断</td><td><div><button expr67="expr67" class="btn btn-outline-primary btn-sm" value="Setting">Execute Action</button></div></td></tr><tr><td class="itemname-width">再起動</td><td><div><button expr68="expr68" class="btn btn-outline-primary btn-sm" value="Setting">Execute Action</button></div></td></tr><tr><td class="itemname-width">EEROM 初期化</td><td><div><button expr69="expr69" class="btn btn-outline-primary btn-sm" value="Setting">Execute Action</button></div></td></tr><tr><td class="itemname-width">内部情報初期化</td><td><div><button expr70="expr70" class="btn btn-outline-primary btn-sm" value="Setting">Execute Action</button></div></td></tr></table></div></p></div></div></div><div class="col-md-6"><div class="card h-100"><div class="card-header">\r\n\t\t\tデバイス状態\r\n\t\t</div><div class="card-body"><h5 class="card-title">i2c接続デバイス</h5><p class="card-text"><div class="col-sm-11 offset-sm-1"><table class="table"><tr><td class="itemname-width">WiFi切断</td><td><div><button type="button" class="btn btn-primary btn-sm">Small button</button><input class="btn btn-primary btn-sm" type="reset" value="Reset"/><button expr71="expr71" class="btn btn-outline-primary btn-sm" value="Setting">Setting</button></div></td></tr><tr><td class="itemname-width">再起動</td><td><div><button expr72="expr72" class="btn btn-outline-primary btn-sm" value="Setting">Setting</button></div></td></tr><tr><td class="itemname-width">EEROM 初期化</td><td><div><button expr73="expr73" class="btn btn-outline-primary btn-sm" value="Setting">Setting</button></div></td></tr><tr><td class="itemname-width">内部情報初期化</td><td><div><button expr74="expr74" class="btn btn-outline-primary btn-sm" value="Setting">Setting</button></div></td></tr></table></div></p><h5 class="card-title">DC-DCコンバータ</h5></div></div></div></div><div class="card"><div class="card-header">\r\n\t\t\tIR機能設定\r\n\t\t</div><div class="card-body"><h5 class="card-title">赤外線リモコン 使用</h5><p class="card-text"><div class="col-sm-11 offset-sm-1"><div expr75="expr75" class="form-check form-switch"><input expr76="expr76" class="form-check-input" type="checkbox" type="checkbox"/> </div></div></p><h5 class="card-title">受信データ</h5><p class="card-text"><div class="col-sm-11 offset-sm-1"><div id="logNtpSetting" style="overflow-y: scroll; height: 100px; border: 1px solid #ccc;padding: 10px;"></div></div></p><h5 class="card-title">機能設定</h5><p class="card-text"><div class="col-sm-11 offset-sm-1"><button expr77="expr77" type="submit" id="ssidSubmit" class="btn btn-outline-primary btn-sm" style="margin-top: 5px;"><span class="spinner-border spinner-border-sm visually-hidden" role="status" aria-hidden="true"></span>\r\n        Data Scan\r\n      </button><table class="table"><tr><td><div class="form-check"><input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/><label class="form-check-label" for="flexRadioDefault1">\r\n            表示切替\r\n          </label></div></td><td><div><button expr78="expr78" class="btn btn-outline-primary btn-sm" value="Setting">Setting</button></div></td></tr><tr><td class="itemname-width">表示切替</td><td><div><button type="button" class="btn btn-primary btn-sm">Small button</button><input class="btn btn-primary btn-sm" type="reset" value="Reset"/><button expr79="expr79" class="btn btn-outline-primary btn-sm" value="Setting">Setting</button></div></td></tr><tr><td class="itemname-width">再起動</td><td><div><button expr80="expr80" class="btn btn-outline-primary btn-sm" value="Setting">Setting</button></div></td></tr><tr><td class="itemname-width">EEROM 初期化</td><td><div><button expr81="expr81" class="btn btn-outline-primary btn-sm" value="Setting">Setting</button></div></td></tr><tr><td class="itemname-width">内部情報初期化</td><td><div><button expr82="expr82" class="btn btn-outline-primary btn-sm" value="Setting">Setting</button></div></td></tr></table></div></p><p><div id="irSetRadioButton"></div></p></div></div>',
     [
       {
-        redundantAttribute: 'expr40',
-        selector: '[expr40]',
+        redundantAttribute: 'expr65',
+        selector: '[expr65]',
 
         expressions: [
           {
@@ -3798,8 +3798,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr41',
-        selector: '[expr41]',
+        redundantAttribute: 'expr66',
+        selector: '[expr66]',
 
         expressions: [
           {
@@ -3815,8 +3815,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr42',
-        selector: '[expr42]',
+        redundantAttribute: 'expr67',
+        selector: '[expr67]',
 
         expressions: [
           {
@@ -3832,8 +3832,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr43',
-        selector: '[expr43]',
+        redundantAttribute: 'expr68',
+        selector: '[expr68]',
 
         expressions: [
           {
@@ -3849,8 +3849,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr44',
-        selector: '[expr44]',
+        redundantAttribute: 'expr69',
+        selector: '[expr69]',
 
         expressions: [
           {
@@ -3866,8 +3866,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr45',
-        selector: '[expr45]',
+        redundantAttribute: 'expr70',
+        selector: '[expr70]',
 
         expressions: [
           {
@@ -3883,8 +3883,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr46',
-        selector: '[expr46]',
+        redundantAttribute: 'expr71',
+        selector: '[expr71]',
 
         expressions: [
           {
@@ -3900,8 +3900,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr47',
-        selector: '[expr47]',
+        redundantAttribute: 'expr72',
+        selector: '[expr72]',
 
         expressions: [
           {
@@ -3917,8 +3917,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr48',
-        selector: '[expr48]',
+        redundantAttribute: 'expr73',
+        selector: '[expr73]',
 
         expressions: [
           {
@@ -3934,8 +3934,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr49',
-        selector: '[expr49]',
+        redundantAttribute: 'expr74',
+        selector: '[expr74]',
 
         expressions: [
           {
@@ -3951,8 +3951,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr50',
-        selector: '[expr50]',
+        redundantAttribute: 'expr75',
+        selector: '[expr75]',
 
         expressions: [
           {
@@ -3968,8 +3968,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr51',
-        selector: '[expr51]',
+        redundantAttribute: 'expr76',
+        selector: '[expr76]',
 
         expressions: [
           {
@@ -3985,8 +3985,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr52',
-        selector: '[expr52]',
+        redundantAttribute: 'expr77',
+        selector: '[expr77]',
 
         expressions: [
           {
@@ -4003,8 +4003,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr53',
-        selector: '[expr53]',
+        redundantAttribute: 'expr78',
+        selector: '[expr78]',
 
         expressions: [
           {
@@ -4020,8 +4020,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr54',
-        selector: '[expr54]',
+        redundantAttribute: 'expr79',
+        selector: '[expr79]',
 
         expressions: [
           {
@@ -4037,8 +4037,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr55',
-        selector: '[expr55]',
+        redundantAttribute: 'expr80',
+        selector: '[expr80]',
 
         expressions: [
           {
@@ -4054,8 +4054,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr56',
-        selector: '[expr56]',
+        redundantAttribute: 'expr81',
+        selector: '[expr81]',
 
         expressions: [
           {
@@ -4071,8 +4071,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr57',
-        selector: '[expr57]',
+        redundantAttribute: 'expr82',
+        selector: '[expr82]',
 
         expressions: [
           {
@@ -5008,11 +5008,11 @@ const MSTPackage = __webpack_require__(/*! ../../package.json */ "./package.json
     bindingTypes,
     getComponent
   ) => template(
-    '<h1>Help</h1><div class="card"><div class="card-header">\r\n      ようこそ\r\n    </div><div class="card-body"><h5 class="card-title">バージョン</h5><p class="card-text"><div class="col-sm-11 offset-sm-1"><span expr37="expr37"> <br/></span><span expr38="expr38"> <br/></span><span expr39="expr39"> <br/></span></div></p><h5 class="card-title">使い方</h5><p class="card-text"><div class="col-sm-11 offset-sm-1"><span><a href="./help/index.html">操作方法</a></span></div></p><h5 class="card-title">システム更新</h5><p class="card-text"><div class="col-sm-11 offset-sm-1"><span><a href="./update.html">システム更新リンク</a></span></div></p></div></div>',
+    '<h1>Help</h1><div class="card"><div class="card-header">\r\n      ようこそ\r\n    </div><div class="card-body"><h5 class="card-title">バージョン</h5><p class="card-text"><div class="col-sm-11 offset-sm-1"><span expr83="expr83"> <br/></span><span expr84="expr84"> <br/></span><span expr85="expr85"> <br/></span></div></p><h5 class="card-title">使い方</h5><p class="card-text"><div class="col-sm-11 offset-sm-1"><span><a href="./help/index.html">操作方法</a></span></div></p><h5 class="card-title">システム更新</h5><p class="card-text"><div class="col-sm-11 offset-sm-1"><span><a href="./update.html">システム更新リンク</a></span></div></p></div></div>',
     [
       {
-        redundantAttribute: 'expr37',
-        selector: '[expr37]',
+        redundantAttribute: 'expr83',
+        selector: '[expr83]',
 
         expressions: [
           {
@@ -5029,8 +5029,8 @@ const MSTPackage = __webpack_require__(/*! ../../package.json */ "./package.json
         ]
       },
       {
-        redundantAttribute: 'expr38',
-        selector: '[expr38]',
+        redundantAttribute: 'expr84',
+        selector: '[expr84]',
 
         expressions: [
           {
@@ -5047,8 +5047,8 @@ const MSTPackage = __webpack_require__(/*! ../../package.json */ "./package.json
         ]
       },
       {
-        redundantAttribute: 'expr39',
-        selector: '[expr39]',
+        redundantAttribute: 'expr85',
+        selector: '[expr85]',
 
         expressions: [
           {
@@ -5220,11 +5220,11 @@ function brdig(item){
     bindingTypes,
     getComponent
   ) => template(
-    '<h1 expr79="expr79"> </h1><h1 expr80="expr80"> </h1><h1 expr81="expr81"> </h1><div class="form-group"><label for="select1">Select:</label><select id="select1" class="form-control"><option expr82="expr82"></option></select></div><hr/><div id="div1"></div><hr/><table class="table"><tr><th class="itemname-width">Display digit</th><th>Brightness setting</th></tr><tr><td>Dig.9</td><td><div class="input-group"><button expr83="expr83" type="button" class="btn btn-primary btn-dispconf-number" id="brDig9Minus" data-type="minus" data-field="brDig9Unit" pear-button="brDig9Plus">-</button><input expr84="expr84" type="number" class="form-control input-sm no-spin" name="brightDig9" id="brDig9Unit" min="1" max="15" placeholder="1-15"/><button expr85="expr85" type="button" class="btn btn-primary btn-dispconf-number" id="brDig9Plus" data-type="plus" data-field="brDig9Unit" pear-button="brDig9Minus">+</button></div></td></tr></table><div id="brDigSetting"></div><p><button type="button" class="btn btn-primary">Primary</button><button type="button" class="btn btn-secondary">Secondary</button><button type="button" class="btn btn-success">Success</button><button type="button" class="btn btn-danger">Danger</button><button type="button" class="btn btn-warning">Warning</button><button type="button" class="btn btn-info">Info</button></p><div class="accordion" id="accordionExample"><div class="accordion-item"><h2 class="accordion-header" id="headingOne"><button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">\r\n        Accordion Item #1\r\n      </button></h2><div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample"><div class="accordion-body"><strong>This is the first item\'s accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It\'s also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.\r\n      </div></div></div><div class="accordion-item"><h2 class="accordion-header" id="headingTwo"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">\r\n        Accordion Item #2\r\n      </button></h2><div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample"><div class="accordion-body"><strong>This is the second item\'s accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It\'s also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.\r\n      </div></div></div><div class="accordion-item"><h2 class="accordion-header" id="headingThree"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">\r\n        Accordion Item #3\r\n      </button></h2><div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample"><div class="accordion-body"><strong>This is the third item\'s accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It\'s also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.\r\n      </div></div></div><p><a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">\r\n      Link with href\r\n    </a><button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">\r\n      Button with data-bs-target\r\n    </button></p><div class="collapse" id="collapseExample"><div class="card card-body">\r\n      Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.\r\n    </div></div></div>',
+    '<h1 expr25="expr25"> </h1><h1 expr26="expr26"> </h1><h1 expr27="expr27"> </h1><div class="form-group"><label for="select1">Select:</label><select id="select1" class="form-control"><option expr28="expr28"></option></select></div><hr/><div id="div1"></div><hr/><table class="table"><tr><th class="itemname-width">Display digit</th><th>Brightness setting</th></tr><tr><td>Dig.9</td><td><div class="input-group"><button expr29="expr29" type="button" class="btn btn-primary btn-dispconf-number" id="brDig9Minus" data-type="minus" data-field="brDig9Unit" pear-button="brDig9Plus">-</button><input expr30="expr30" type="number" class="form-control input-sm no-spin" name="brightDig9" id="brDig9Unit" min="1" max="15" placeholder="1-15"/><button expr31="expr31" type="button" class="btn btn-primary btn-dispconf-number" id="brDig9Plus" data-type="plus" data-field="brDig9Unit" pear-button="brDig9Minus">+</button></div></td></tr></table><div id="brDigSetting"></div><p><button type="button" class="btn btn-primary">Primary</button><button type="button" class="btn btn-secondary">Secondary</button><button type="button" class="btn btn-success">Success</button><button type="button" class="btn btn-danger">Danger</button><button type="button" class="btn btn-warning">Warning</button><button type="button" class="btn btn-info">Info</button></p><div class="accordion" id="accordionExample"><div class="accordion-item"><h2 class="accordion-header" id="headingOne"><button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">\r\n        Accordion Item #1\r\n      </button></h2><div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample"><div class="accordion-body"><strong>This is the first item\'s accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It\'s also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.\r\n      </div></div></div><div class="accordion-item"><h2 class="accordion-header" id="headingTwo"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">\r\n        Accordion Item #2\r\n      </button></h2><div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample"><div class="accordion-body"><strong>This is the second item\'s accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It\'s also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.\r\n      </div></div></div><div class="accordion-item"><h2 class="accordion-header" id="headingThree"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">\r\n        Accordion Item #3\r\n      </button></h2><div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample"><div class="accordion-body"><strong>This is the third item\'s accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It\'s also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.\r\n      </div></div></div><p><a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">\r\n      Link with href\r\n    </a><button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">\r\n      Button with data-bs-target\r\n    </button></p><div class="collapse" id="collapseExample"><div class="card card-body">\r\n      Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.\r\n    </div></div></div>',
     [
       {
-        redundantAttribute: 'expr79',
-        selector: '[expr79]',
+        redundantAttribute: 'expr25',
+        selector: '[expr25]',
 
         expressions: [
           {
@@ -5235,8 +5235,8 @@ function brdig(item){
         ]
       },
       {
-        redundantAttribute: 'expr80',
-        selector: '[expr80]',
+        redundantAttribute: 'expr26',
+        selector: '[expr26]',
 
         expressions: [
           {
@@ -5247,8 +5247,8 @@ function brdig(item){
         ]
       },
       {
-        redundantAttribute: 'expr81',
-        selector: '[expr81]',
+        redundantAttribute: 'expr27',
+        selector: '[expr27]',
 
         expressions: [
           {
@@ -5278,15 +5278,15 @@ function brdig(item){
           ]
         ),
 
-        redundantAttribute: 'expr82',
-        selector: '[expr82]',
+        redundantAttribute: 'expr28',
+        selector: '[expr28]',
         itemName: 'tz',
         indexName: null,
         evaluate: _scope => _scope.tzlist
       },
       {
-        redundantAttribute: 'expr83',
-        selector: '[expr83]',
+        redundantAttribute: 'expr29',
+        selector: '[expr29]',
 
         expressions: [
           {
@@ -5297,8 +5297,8 @@ function brdig(item){
         ]
       },
       {
-        redundantAttribute: 'expr84',
-        selector: '[expr84]',
+        redundantAttribute: 'expr30',
+        selector: '[expr30]',
 
         expressions: [
           {
@@ -5308,8 +5308,8 @@ function brdig(item){
         ]
       },
       {
-        redundantAttribute: 'expr85',
-        selector: '[expr85]',
+        redundantAttribute: 'expr31',
+        selector: '[expr31]',
 
         expressions: [
           {
@@ -5368,11 +5368,11 @@ __webpack_require__.r(__webpack_exports__);
     bindingTypes,
     getComponent
   ) => template(
-    '<nav class="navbar navbar-expand-lg bg-body-tertiary"><div class="container-fluid"><a expr22="expr22" class="navbar-brand" href="#"> </a><div><span expr23="expr23" class="navbar-text"> </span></div><div class="collapse navbar-collapse" id="navbarNav"><ul class="navbar-nav"></ul></div></div></nav>',
+    '<nav class="navbar navbar-expand-lg bg-body-tertiary"><div class="container-fluid"><a expr15="expr15" class="navbar-brand" href="#"> </a><div><span expr16="expr16" class="navbar-text"> </span></div><div class="collapse navbar-collapse" id="navbarNav"><ul class="navbar-nav"></ul></div></div></nav>',
     [
       {
-        redundantAttribute: 'expr22',
-        selector: '[expr22]',
+        redundantAttribute: 'expr15',
+        selector: '[expr15]',
 
         expressions: [
           {
@@ -5383,8 +5383,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr23',
-        selector: '[expr23]',
+        redundantAttribute: 'expr16',
+        selector: '[expr16]',
 
         expressions: [
           {
@@ -5895,11 +5895,11 @@ __webpack_require__.r(__webpack_exports__);
     bindingTypes,
     getComponent
   ) => template(
-    '<h1>設定</h1><div class="card"><div class="card-header">\r\n    LED表示設定\r\n  </div><div class="card-body"><h5 class="card-title">LED 表示輝度</h5><p class="card-text"><div class="col-sm-11 offset-sm-1">\r\n        Bright : <span id="glowInTheBrightId">5</span><input expr58="expr58" type="range" class="form-range" id="glowInTheBright" min="1" max="15" step="1"/></div></p><h5 class="card-title">LED 表示方向</h5><p class="card-text"><div class="col-sm-11 offset-sm-1"><div expr59="expr59" class="form-check form-switch"><input expr60="expr60" class="form-check-input" type="checkbox" type="checkbox"/> </div></div></p></div></div><div class="card"><div class="card-header">\r\n    ドット絵エディタ 設定\r\n  </div><div class="card-body"><h5 class="card-title">色設定</h5><div class="card-text"><div class="col-sm-11 offset-sm-1"><div class="form-check form-check-inline"><input class="form-check-input" type="radio" id="redRadio" name="color" value="1"/><label class="form-check-label" for="redRadio">Red</label></div><div class="form-check form-check-inline"><input class="form-check-input" type="radio" id="blueRadio" name="color" value="4"/><label class="form-check-label" for="blueRadio">Blue</label></div><div class="form-check form-check-inline"><input class="form-check-input" type="radio" id="greenRadio" name="color" value="2"/><label class="form-check-label" for="greenRadio">Green</label></div><div class="form-check form-check-inline"><input class="form-check-input" type="radio" id="yellowRadio" name="color" value="3"/><label class="form-check-label" for="yellowRadio">Yellow</label></div></div></div></div></div><div class="card"><div class="card-header">\r\n    データファイル設定\r\n  </div><div class="card-body"><h5 class="card-title">サンプルファイル有効</h5><p class="card-text"><div class="col-sm-11 offset-sm-1"><div expr61="expr61" class="form-check form-switch"><input expr62="expr62" class="form-check-input" type="checkbox" type="checkbox"/> </div></div></p></div></div><div class="card"><div class="card-header">\r\n    サウンド設定\r\n  </div><div class="card-body"><h5 class="card-title">サウンド出力有効</h5><p class="card-text"><div class="col-sm-11 offset-sm-1"><div expr63="expr63" class="form-check form-switch"><input expr64="expr64" class="form-check-input" type="checkbox" type="checkbox"/> </div></div></p></div></div><div class="card"><div class="card-header">\r\n    時計設定\r\n  </div><div class="card-body"><h5 class="card-title">スクロール表示</h5><p class="card-text"><div class="col-sm-11 offset-sm-1">\r\n        Scroll speed : <span id="clockScrollTimeSetId">10</span><input expr65="expr65" type="range" class="form-range" id="clockScrollTimeSet" min="10" max="1000" step="10"/></div></p><h5 class="card-title">ネットワーク時刻同期</h5><p class="card-text"><div expr66="expr66" class="col-sm-11 offset-sm-1 form-check form-switch form-label"><input expr67="expr67" class="form-check-input" type="checkbox" type="checkbox"/> </div><div class="col-sm-11 offset-sm-1"><label for="autoConnectInterval" class="form-label">自動接続間隔 (時間)</label><select expr68="expr68" class="form-select form-select-sm" id="autoConnectInterval"><option value="0">No Reconnect</option><option value="1">1</option><option value="2">2</option><option value="4">4</option><option value="8">8</option><option value="12">12</option><option value="24">24</option></select></div></p></div></div><div class="row"><div class="col-md-6"><div class="card h-100"><div class="card-header">\r\n\t\t\t\tネットワーク接続設定\r\n\t\t\t</div><div class="card-body"><h5 class="card-title">Current Settings</h5><p class="card-text"><div class="col-sm-11 offset-sm-1"><table class="table"><tr><td>STAモード SSID</td><td expr69="expr69"> </td></tr><tr><td>STAモード IP Adress</td><td expr70="expr70"> </td></tr><tr><td>APモード SSID</td><td expr71="expr71"> </td></tr><tr><td>APモード IP Adress</td><td expr72="expr72"> </td></tr></table></div></p></div></div></div><div class="col-md-6"><div class="card h-100"><div class="card-header">\r\n\t\t\t\tWiFi Station 設定\r\n\t\t\t</div><div class="card-body"><h5 class="card-title">WiFi Station Setting</h5><p class="card-text"><div class="col-sm-11 offset-sm-1"><table class="table"><tr><td class="itemname-width"><div class="col-sm-4">\r\n                WiFi SSID 検索\r\n                </div><div class="col-sm-8" offset-sm-1><button expr73="expr73" type="submit" id="getWiFiListButton" class="btn btn-outline-primary btn-sm" style="margin-top: 5px;"><span class="spinner-border spinner-border-sm visually-hidden" role="status" aria-hidden="true"></span>\r\n                  Scan SSID\r\n                  </button></div></td></tr><tr><td class="itemname-width"><label for="selectSSID" class="form-label">SSID 選択</label><select expr74="expr74" class="form-select form-select-sm" aria-label="WiFiStationList" name="WiFiStationList" id="WiFiStationList"></select><label for="inputSSIDPassword" class="form-label">Password</label><input expr75="expr75" type="password" class="form-control" id="inputSSIDPassword"/><div expr76="expr76" class="form-check form-switch"><input expr77="expr77" class="form-check-input" type="checkbox"/> </div><button expr78="expr78" type="submit" id="ssidSubmit" class="btn btn-outline-primary btn-sm" style="margin-top: 5px;"><span class="spinner-border spinner-border-sm visually-hidden" role="status" aria-hidden="true"></span>\r\n                  Connection\r\n                </button></td></tr></table></div></p></div></div></div></div>',
+    '<h1>設定</h1><div class="card"><div class="card-header">\r\n    LED表示設定\r\n  </div><div class="card-body"><h5 class="card-title">LED 表示輝度</h5><p class="card-text"><div class="col-sm-11 offset-sm-1">\r\n        Bright : <span id="glowInTheBrightId">5</span><input expr44="expr44" type="range" class="form-range" id="glowInTheBright" min="1" max="15" step="1"/></div></p><h5 class="card-title">LED 表示方向</h5><p class="card-text"><div class="col-sm-11 offset-sm-1"><div expr45="expr45" class="form-check form-switch"><input expr46="expr46" class="form-check-input" type="checkbox" type="checkbox"/> </div></div></p></div></div><div class="card"><div class="card-header">\r\n    ドット絵エディタ 設定\r\n  </div><div class="card-body"><h5 class="card-title">色設定</h5><div class="card-text"><div class="col-sm-11 offset-sm-1"><div class="form-check form-check-inline"><input class="form-check-input" type="radio" id="redRadio" name="color" value="1"/><label class="form-check-label" for="redRadio">Red</label></div><div class="form-check form-check-inline"><input class="form-check-input" type="radio" id="blueRadio" name="color" value="4"/><label class="form-check-label" for="blueRadio">Blue</label></div><div class="form-check form-check-inline"><input class="form-check-input" type="radio" id="greenRadio" name="color" value="2"/><label class="form-check-label" for="greenRadio">Green</label></div><div class="form-check form-check-inline"><input class="form-check-input" type="radio" id="yellowRadio" name="color" value="3"/><label class="form-check-label" for="yellowRadio">Yellow</label></div></div></div></div></div><div class="card"><div class="card-header">\r\n    データファイル設定\r\n  </div><div class="card-body"><h5 class="card-title">サンプルファイル有効</h5><p class="card-text"><div class="col-sm-11 offset-sm-1"><div expr47="expr47" class="form-check form-switch"><input expr48="expr48" class="form-check-input" type="checkbox" type="checkbox"/> </div></div></p></div></div><div class="card"><div class="card-header">\r\n    サウンド設定\r\n  </div><div class="card-body"><h5 class="card-title">サウンド出力有効</h5><p class="card-text"><div class="col-sm-11 offset-sm-1"><div expr49="expr49" class="form-check form-switch"><input expr50="expr50" class="form-check-input" type="checkbox" type="checkbox"/> </div></div></p></div></div><div class="card"><div class="card-header">\r\n    時計設定\r\n  </div><div class="card-body"><h5 class="card-title">スクロール表示</h5><p class="card-text"><div class="col-sm-11 offset-sm-1">\r\n        Scroll speed : <span id="clockScrollTimeSetId">10</span><input expr51="expr51" type="range" class="form-range" id="clockScrollTimeSet" min="10" max="1000" step="10"/></div></p><h5 class="card-title">ネットワーク時刻同期</h5><p class="card-text"><div expr52="expr52" class="col-sm-11 offset-sm-1 form-check form-switch form-label"><input expr53="expr53" class="form-check-input" type="checkbox" type="checkbox"/> </div><div class="col-sm-11 offset-sm-1"><label for="autoConnectInterval" class="form-label">自動接続間隔 (時間)</label><select expr54="expr54" class="form-select form-select-sm" id="autoConnectInterval"><option value="0">No Reconnect</option><option value="1">1</option><option value="2">2</option><option value="4">4</option><option value="8">8</option><option value="12">12</option><option value="24">24</option></select></div></p></div></div><div class="row"><div class="col-md-6"><div class="card h-100"><div class="card-header">\r\n\t\t\t\tネットワーク接続設定\r\n\t\t\t</div><div class="card-body"><h5 class="card-title">Current Settings</h5><p class="card-text"><div class="col-sm-11 offset-sm-1"><table class="table"><tr><td>STAモード SSID</td><td expr55="expr55"> </td></tr><tr><td>STAモード IP Adress</td><td expr56="expr56"> </td></tr><tr><td>APモード SSID</td><td expr57="expr57"> </td></tr><tr><td>APモード IP Adress</td><td expr58="expr58"> </td></tr></table></div></p></div></div></div><div class="col-md-6"><div class="card h-100"><div class="card-header">\r\n\t\t\t\tWiFi Station 設定\r\n\t\t\t</div><div class="card-body"><h5 class="card-title">WiFi Station Setting</h5><p class="card-text"><div class="col-sm-11 offset-sm-1"><table class="table"><tr><td class="itemname-width"><div class="col-sm-4">\r\n                WiFi SSID 検索\r\n                </div><div class="col-sm-8" offset-sm-1><button expr59="expr59" type="submit" id="getWiFiListButton" class="btn btn-outline-primary btn-sm" style="margin-top: 5px;"><span class="spinner-border spinner-border-sm visually-hidden" role="status" aria-hidden="true"></span>\r\n                  Scan SSID\r\n                  </button></div></td></tr><tr><td class="itemname-width"><label for="selectSSID" class="form-label">SSID 選択</label><select expr60="expr60" class="form-select form-select-sm" aria-label="WiFiStationList" name="WiFiStationList" id="WiFiStationList"></select><label for="inputSSIDPassword" class="form-label">Password</label><input expr61="expr61" type="password" class="form-control" id="inputSSIDPassword"/><div expr62="expr62" class="form-check form-switch"><input expr63="expr63" class="form-check-input" type="checkbox"/> </div><button expr64="expr64" type="submit" id="ssidSubmit" class="btn btn-outline-primary btn-sm" style="margin-top: 5px;"><span class="spinner-border spinner-border-sm visually-hidden" role="status" aria-hidden="true"></span>\r\n                  Connection\r\n                </button></td></tr></table></div></p></div></div></div></div>',
     [
       {
-        redundantAttribute: 'expr58',
-        selector: '[expr58]',
+        redundantAttribute: 'expr44',
+        selector: '[expr44]',
 
         expressions: [
           {
@@ -5914,8 +5914,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr59',
-        selector: '[expr59]',
+        redundantAttribute: 'expr45',
+        selector: '[expr45]',
 
         expressions: [
           {
@@ -5931,8 +5931,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr60',
-        selector: '[expr60]',
+        redundantAttribute: 'expr46',
+        selector: '[expr46]',
 
         expressions: [
           {
@@ -5948,8 +5948,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr61',
-        selector: '[expr61]',
+        redundantAttribute: 'expr47',
+        selector: '[expr47]',
 
         expressions: [
           {
@@ -5965,8 +5965,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr62',
-        selector: '[expr62]',
+        redundantAttribute: 'expr48',
+        selector: '[expr48]',
 
         expressions: [
           {
@@ -5982,8 +5982,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr63',
-        selector: '[expr63]',
+        redundantAttribute: 'expr49',
+        selector: '[expr49]',
 
         expressions: [
           {
@@ -5999,8 +5999,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr64',
-        selector: '[expr64]',
+        redundantAttribute: 'expr50',
+        selector: '[expr50]',
 
         expressions: [
           {
@@ -6016,8 +6016,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr65',
-        selector: '[expr65]',
+        redundantAttribute: 'expr51',
+        selector: '[expr51]',
 
         expressions: [
           {
@@ -6032,8 +6032,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr66',
-        selector: '[expr66]',
+        redundantAttribute: 'expr52',
+        selector: '[expr52]',
 
         expressions: [
           {
@@ -6049,8 +6049,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr67',
-        selector: '[expr67]',
+        redundantAttribute: 'expr53',
+        selector: '[expr53]',
 
         expressions: [
           {
@@ -6066,8 +6066,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr68',
-        selector: '[expr68]',
+        redundantAttribute: 'expr54',
+        selector: '[expr54]',
 
         expressions: [
           {
@@ -6083,8 +6083,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr69',
-        selector: '[expr69]',
+        redundantAttribute: 'expr55',
+        selector: '[expr55]',
 
         expressions: [
           {
@@ -6095,8 +6095,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr70',
-        selector: '[expr70]',
+        redundantAttribute: 'expr56',
+        selector: '[expr56]',
 
         expressions: [
           {
@@ -6107,8 +6107,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr71',
-        selector: '[expr71]',
+        redundantAttribute: 'expr57',
+        selector: '[expr57]',
 
         expressions: [
           {
@@ -6119,8 +6119,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr72',
-        selector: '[expr72]',
+        redundantAttribute: 'expr58',
+        selector: '[expr58]',
 
         expressions: [
           {
@@ -6131,8 +6131,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr73',
-        selector: '[expr73]',
+        redundantAttribute: 'expr59',
+        selector: '[expr59]',
 
         expressions: [
           {
@@ -6143,8 +6143,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr74',
-        selector: '[expr74]',
+        redundantAttribute: 'expr60',
+        selector: '[expr60]',
 
         expressions: [
           {
@@ -6155,8 +6155,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr75',
-        selector: '[expr75]',
+        redundantAttribute: 'expr61',
+        selector: '[expr61]',
 
         expressions: [
           {
@@ -6167,8 +6167,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr76',
-        selector: '[expr76]',
+        redundantAttribute: 'expr62',
+        selector: '[expr62]',
 
         expressions: [
           {
@@ -6184,8 +6184,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr77',
-        selector: '[expr77]',
+        redundantAttribute: 'expr63',
+        selector: '[expr63]',
 
         expressions: [
           {
@@ -6196,8 +6196,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr78',
-        selector: '[expr78]',
+        redundantAttribute: 'expr64',
+        selector: '[expr64]',
 
         expressions: [
           {
@@ -7217,11 +7217,11 @@ return rtn;
     bindingTypes,
     getComponent
   ) => template(
-    '<h1>時刻設定</h1><div class="row"><div class="col-md-6"><div class="card h-100"><div class="card-header">\r\n\t\t\t\t\tSNTP設定\r\n\t\t\t\t</div><div class="card-body"><h5 class="card-title">SNTP 使用</h5><p class="card-text"><div class="col-sm-11 offset-sm-1"><div expr7="expr7" class="form-check form-switch"><input expr8="expr8" class="form-check-input" type="checkbox" type="checkbox"/> </div></div></p><h5 expr9="expr9" class="card-title"> </h5><p class="card-text"><div class="col-sm-11 offset-sm-1"><div><select expr10="expr10" class="form-select form-select-sm" aria-label="Time Zone Area" name="timeZoneDataArea" id="timeZoneDataArea"></select></div><div><select expr11="expr11" class="form-select form-select-sm" aria-label="Time Zone2" name="timeZoneData" id="timeZoneData"></select></div></div></p><h5 class="card-title">SNTP auto update time</h5><p class="card-text"><div expr12="expr12" class="col-sm-11 offset-sm-1"> <form expr13="expr13"><div class="mb-3"><input expr14="expr14" type="time" class="form-control form-control-sm" id="ntpUpTime" name="ntpUpTime"/></div><div class="form-group row"><div><button expr15="expr15" class="btn btn-outline-primary btn-sm" value="Setting">Setting</button></div></div></form></div></p><h5 class="card-title">SNTP manual connection</h5><p class="card-text"><div class="col-sm-11 offset-sm-1"><div><button expr16="expr16" type="submit" id="ntpConnectButton" class="btn btn-outline-primary btn-sm"><span class="spinner-border spinner-border-sm visually-hidden" role="status" aria-hidden="true"></span>\r\n\t\t\t\t\t\t\t\tConnection\r\n\t\t\t\t\t\t\t\t</button></div></div></p><h5 class="card-title">SNTP Log message</h5><p class="card-text"><div class="col-sm-11 offset-sm-1"><div id="logNtpSetting" style="overflow-y: scroll; height: 100px; border: 1px solid #ccc;padding: 10px;"></div></div></p></div></div></div><div class="col-md-6"><div class="card h-100"><div class="card-header">\r\n    \t\t\tRTC設定\r\n    \t\t</div><div class="card-body"><h5 class="card-title">手動時刻設定</h5><p class="card-text"><div class="col-sm-11 offset-sm-1"><div expr17="expr17" class> </div><div class="mb-3"><label for="dateInput1" class="form-label">日付</label><input expr18="expr18" type="date" class="form-control form-control-sm" id="dateInput1" name="rtcDateVal"/></div><div class="mb-3"><label for="timeInput1" class="form-label">時刻</label><input expr19="expr19" type="time" class="form-control form-control-sm" id="timeInput1" name="rtcTimeVal"/></div><div class><div class="btn-group" role="group" aria-label="Basic example"><button expr20="expr20" type="button" class="btn btn-outline-primary btn-sm">ブラウザの時間をセットする</button><button expr21="expr21" type="button" class="btn btn-outline-primary btn-sm">更新</button></div></div></div></p></div></div></div></div>',
+    '<h1>時刻設定</h1><div class="row"><div class="col-md-6"><div class="card h-100"><div class="card-header">\r\n\t\t\t\t\tSNTP設定\r\n\t\t\t\t</div><div class="card-body"><h5 class="card-title">SNTP 使用</h5><p class="card-text"><div class="col-sm-11 offset-sm-1"><div expr0="expr0" class="form-check form-switch"><input expr1="expr1" class="form-check-input" type="checkbox" type="checkbox"/> </div></div></p><h5 expr2="expr2" class="card-title"> </h5><p class="card-text"><div class="col-sm-11 offset-sm-1"><div><select expr3="expr3" class="form-select form-select-sm" aria-label="Time Zone Area" name="timeZoneDataArea" id="timeZoneDataArea"></select></div><div><select expr4="expr4" class="form-select form-select-sm" aria-label="Time Zone2" name="timeZoneData" id="timeZoneData"></select></div></div></p><h5 class="card-title">SNTP auto update time</h5><p class="card-text"><div expr5="expr5" class="col-sm-11 offset-sm-1"> <form expr6="expr6"><div class="mb-3"><input expr7="expr7" type="time" class="form-control form-control-sm" id="ntpUpTime" name="ntpUpTime"/></div><div class="form-group row"><div><button expr8="expr8" class="btn btn-outline-primary btn-sm" value="Setting">Setting</button></div></div></form></div></p><h5 class="card-title">SNTP manual connection</h5><p class="card-text"><div class="col-sm-11 offset-sm-1"><div><button expr9="expr9" type="submit" id="ntpConnectButton" class="btn btn-outline-primary btn-sm"><span class="spinner-border spinner-border-sm visually-hidden" role="status" aria-hidden="true"></span>\r\n\t\t\t\t\t\t\t\tConnection\r\n\t\t\t\t\t\t\t\t</button></div></div></p><h5 class="card-title">SNTP Log message</h5><p class="card-text"><div class="col-sm-11 offset-sm-1"><div id="logNtpSetting" style="overflow-y: scroll; height: 100px; border: 1px solid #ccc;padding: 10px;"></div></div></p></div></div></div><div class="col-md-6"><div class="card h-100"><div class="card-header">\r\n    \t\t\tRTC設定\r\n    \t\t</div><div class="card-body"><h5 class="card-title">手動時刻設定</h5><p class="card-text"><div class="col-sm-11 offset-sm-1"><div expr10="expr10" class> </div><div class="mb-3"><label for="dateInput1" class="form-label">日付</label><input expr11="expr11" type="date" class="form-control form-control-sm" id="dateInput1" name="rtcDateVal"/></div><div class="mb-3"><label for="timeInput1" class="form-label">時刻</label><input expr12="expr12" type="time" class="form-control form-control-sm" id="timeInput1" name="rtcTimeVal"/></div><div class><div class="btn-group" role="group" aria-label="Basic example"><button expr13="expr13" type="button" class="btn btn-outline-primary btn-sm">ブラウザの時間をセットする</button><button expr14="expr14" type="button" class="btn btn-outline-primary btn-sm">更新</button></div></div></div></p></div></div></div></div>',
     [
       {
-        redundantAttribute: 'expr7',
-        selector: '[expr7]',
+        redundantAttribute: 'expr0',
+        selector: '[expr0]',
 
         expressions: [
           {
@@ -7237,8 +7237,8 @@ return rtn;
         ]
       },
       {
-        redundantAttribute: 'expr8',
-        selector: '[expr8]',
+        redundantAttribute: 'expr1',
+        selector: '[expr1]',
 
         expressions: [
           {
@@ -7254,8 +7254,8 @@ return rtn;
         ]
       },
       {
-        redundantAttribute: 'expr9',
-        selector: '[expr9]',
+        redundantAttribute: 'expr2',
+        selector: '[expr2]',
 
         expressions: [
           {
@@ -7266,8 +7266,8 @@ return rtn;
         ]
       },
       {
-        redundantAttribute: 'expr10',
-        selector: '[expr10]',
+        redundantAttribute: 'expr3',
+        selector: '[expr3]',
 
         expressions: [
           {
@@ -7283,8 +7283,8 @@ return rtn;
         ]
       },
       {
-        redundantAttribute: 'expr11',
-        selector: '[expr11]',
+        redundantAttribute: 'expr4',
+        selector: '[expr4]',
 
         expressions: [
           {
@@ -7300,8 +7300,8 @@ return rtn;
         ]
       },
       {
-        redundantAttribute: 'expr12',
-        selector: '[expr12]',
+        redundantAttribute: 'expr5',
+        selector: '[expr5]',
 
         expressions: [
           {
@@ -7317,8 +7317,8 @@ return rtn;
         ]
       },
       {
-        redundantAttribute: 'expr13',
-        selector: '[expr13]',
+        redundantAttribute: 'expr6',
+        selector: '[expr6]',
 
         expressions: [
           {
@@ -7329,8 +7329,8 @@ return rtn;
         ]
       },
       {
-        redundantAttribute: 'expr14',
-        selector: '[expr14]',
+        redundantAttribute: 'expr7',
+        selector: '[expr7]',
 
         expressions: [
           {
@@ -7345,8 +7345,8 @@ return rtn;
         ]
       },
       {
-        redundantAttribute: 'expr15',
-        selector: '[expr15]',
+        redundantAttribute: 'expr8',
+        selector: '[expr8]',
 
         expressions: [
           {
@@ -7362,8 +7362,8 @@ return rtn;
         ]
       },
       {
-        redundantAttribute: 'expr16',
-        selector: '[expr16]',
+        redundantAttribute: 'expr9',
+        selector: '[expr9]',
 
         expressions: [
           {
@@ -7379,8 +7379,8 @@ return rtn;
         ]
       },
       {
-        redundantAttribute: 'expr17',
-        selector: '[expr17]',
+        redundantAttribute: 'expr10',
+        selector: '[expr10]',
 
         expressions: [
           {
@@ -7396,8 +7396,8 @@ return rtn;
         ]
       },
       {
-        redundantAttribute: 'expr18',
-        selector: '[expr18]',
+        redundantAttribute: 'expr11',
+        selector: '[expr11]',
 
         expressions: [
           {
@@ -7408,8 +7408,8 @@ return rtn;
         ]
       },
       {
-        redundantAttribute: 'expr19',
-        selector: '[expr19]',
+        redundantAttribute: 'expr12',
+        selector: '[expr12]',
 
         expressions: [
           {
@@ -7420,8 +7420,8 @@ return rtn;
         ]
       },
       {
-        redundantAttribute: 'expr20',
-        selector: '[expr20]',
+        redundantAttribute: 'expr13',
+        selector: '[expr13]',
 
         expressions: [
           {
@@ -7437,8 +7437,8 @@ return rtn;
         ]
       },
       {
-        redundantAttribute: 'expr21',
-        selector: '[expr21]',
+        redundantAttribute: 'expr14',
+        selector: '[expr14]',
 
         expressions: [
           {
@@ -7763,11 +7763,11 @@ __webpack_require__.r(__webpack_exports__);
     bindingTypes,
     getComponent
   ) => template(
-    '<h1>Wifi設定</h1><div class="row"><div class="col-md-6"><div class="card h-100"><div class="card-header">\r\n\t\t\t\tネットワーク接続設定\r\n\t\t\t</div><div class="card-body"><h5 class="card-title">Current Settings</h5><p class="card-text"><div class="col-sm-11 offset-sm-1"><table class="table"><tr><td>STAモード SSID</td><td expr25="expr25"> </td></tr><tr><td>STAモード IP Adress</td><td expr26="expr26"> </td></tr><tr><td>APモード SSID</td><td expr27="expr27"> </td></tr><tr><td>APモード IP Adress</td><td expr28="expr28"> </td></tr></table></div></p></div></div></div><div class="col-md-6"><div class="card h-100"><div class="card-header">\r\n\t\t\t\tWiFi Station 設定\r\n\t\t\t</div><div class="card-body"><h5 class="card-title">WiFi Station Setting</h5><p class="card-text"><div class="col-sm-11 offset-sm-1"><table class="table"><tr><td class="itemname-width"><div class="col-sm-4">\r\n                WiFi SSID 検索\r\n                </div><div class="col-sm-8" offset-sm-1><button expr29="expr29" type="submit" id="getWiFiListButton" class="btn btn-outline-primary btn-sm" style="margin-top: 5px;"><span class="spinner-border spinner-border-sm visually-hidden" role="status" aria-hidden="true"></span>\r\n                  Scan SSID\r\n                  </button></div></td></tr><tr><td class="itemname-width"><label for="selectSSID" class="form-label">SSID 選択</label><select expr30="expr30" class="form-select form-select-sm" aria-label="WiFiStationList" name="WiFiStationList" id="WiFiStationList"></select><label for="inputSSIDPassword" class="form-label">Password</label><input expr31="expr31" type="password" class="form-control" id="inputSSIDPassword"/><div expr32="expr32" class="form-check form-switch"><input expr33="expr33" class="form-check-input" type="checkbox"/> </div><button expr34="expr34" type="submit" id="ssidSubmit" class="btn btn-outline-primary btn-sm" style="margin-top: 5px;"><span class="spinner-border spinner-border-sm visually-hidden" role="status" aria-hidden="true"></span>\r\n                  Connection\r\n                </button></td></tr></table></div><h5 class="card-title">STA 自動接続</h5><p class="card-text"><div expr35="expr35" class="col-sm-11 offset-sm-1 form-check form-switch"><input expr36="expr36" class="form-check-input" type="checkbox" type="checkbox"/> </div></p></p></div></div></div><div class="col-md-12"><div class="card h-100"><div class="card-header">\r\n      WiFi Log message\r\n    </div><div class="card-body"><div id="logWiFi" style="overflow-y: scroll; height: 200px; border: 1px solid #ccc;padding: 10px;"></div></div></div></div></div>',
+    '<h1>Wifi設定</h1><div class="row"><div class="col-md-6"><div class="card h-100"><div class="card-header">\r\n\t\t\t\tネットワーク接続設定\r\n\t\t\t</div><div class="card-body"><h5 class="card-title">Current Settings</h5><p class="card-text"><div class="col-sm-11 offset-sm-1"><table class="table"><tr><td>STAモード SSID</td><td expr32="expr32"> </td></tr><tr><td>STAモード IP Adress</td><td expr33="expr33"> </td></tr><tr><td>APモード SSID</td><td expr34="expr34"> </td></tr><tr><td>APモード IP Adress</td><td expr35="expr35"> </td></tr></table></div></p></div></div></div><div class="col-md-6"><div class="card h-100"><div class="card-header">\r\n\t\t\t\tWiFi Station 設定\r\n\t\t\t</div><div class="card-body"><h5 class="card-title">WiFi Station Setting</h5><p class="card-text"><div class="col-sm-11 offset-sm-1"><table class="table"><tr><td class="itemname-width"><div class="col-sm-4">\r\n                WiFi SSID 検索\r\n                </div><div class="col-sm-8" offset-sm-1><button expr36="expr36" type="submit" id="getWiFiListButton" class="btn btn-outline-primary btn-sm" style="margin-top: 5px;"><span class="spinner-border spinner-border-sm visually-hidden" role="status" aria-hidden="true"></span>\r\n                  Scan SSID\r\n                  </button></div></td></tr><tr><td class="itemname-width"><label for="selectSSID" class="form-label">SSID 選択</label><select expr37="expr37" class="form-select form-select-sm" aria-label="WiFiStationList" name="WiFiStationList" id="WiFiStationList"></select><label for="inputSSIDPassword" class="form-label">Password</label><input expr38="expr38" type="password" class="form-control" id="inputSSIDPassword"/><div expr39="expr39" class="form-check form-switch"><input expr40="expr40" class="form-check-input" type="checkbox"/> </div><button expr41="expr41" type="submit" id="ssidSubmit" class="btn btn-outline-primary btn-sm" style="margin-top: 5px;"><span class="spinner-border spinner-border-sm visually-hidden" role="status" aria-hidden="true"></span>\r\n                  Connection\r\n                </button></td></tr></table></div><h5 class="card-title">STA 自動接続</h5><p class="card-text"><div expr42="expr42" class="col-sm-11 offset-sm-1 form-check form-switch"><input expr43="expr43" class="form-check-input" type="checkbox" type="checkbox"/> </div></p></p></div></div></div><div class="col-md-12"><div class="card h-100"><div class="card-header">\r\n      WiFi Log message\r\n    </div><div class="card-body"><div id="logWiFi" style="overflow-y: scroll; height: 200px; border: 1px solid #ccc;padding: 10px;"></div></div></div></div></div>',
     [
       {
-        redundantAttribute: 'expr25',
-        selector: '[expr25]',
+        redundantAttribute: 'expr32',
+        selector: '[expr32]',
 
         expressions: [
           {
@@ -7778,8 +7778,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr26',
-        selector: '[expr26]',
+        redundantAttribute: 'expr33',
+        selector: '[expr33]',
 
         expressions: [
           {
@@ -7790,8 +7790,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr27',
-        selector: '[expr27]',
+        redundantAttribute: 'expr34',
+        selector: '[expr34]',
 
         expressions: [
           {
@@ -7802,8 +7802,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr28',
-        selector: '[expr28]',
+        redundantAttribute: 'expr35',
+        selector: '[expr35]',
 
         expressions: [
           {
@@ -7814,8 +7814,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr29',
-        selector: '[expr29]',
+        redundantAttribute: 'expr36',
+        selector: '[expr36]',
 
         expressions: [
           {
@@ -7826,8 +7826,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr30',
-        selector: '[expr30]',
+        redundantAttribute: 'expr37',
+        selector: '[expr37]',
 
         expressions: [
           {
@@ -7838,8 +7838,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr31',
-        selector: '[expr31]',
+        redundantAttribute: 'expr38',
+        selector: '[expr38]',
 
         expressions: [
           {
@@ -7850,8 +7850,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr32',
-        selector: '[expr32]',
+        redundantAttribute: 'expr39',
+        selector: '[expr39]',
 
         expressions: [
           {
@@ -7867,8 +7867,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr33',
-        selector: '[expr33]',
+        redundantAttribute: 'expr40',
+        selector: '[expr40]',
 
         expressions: [
           {
@@ -7879,8 +7879,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr34',
-        selector: '[expr34]',
+        redundantAttribute: 'expr41',
+        selector: '[expr41]',
 
         expressions: [
           {
@@ -7896,8 +7896,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr35',
-        selector: '[expr35]',
+        redundantAttribute: 'expr42',
+        selector: '[expr42]',
 
         expressions: [
           {
@@ -7913,8 +7913,8 @@ __webpack_require__.r(__webpack_exports__);
         ]
       },
       {
-        redundantAttribute: 'expr36',
-        selector: '[expr36]',
+        redundantAttribute: 'expr43',
+        selector: '[expr43]',
 
         expressions: [
           {
@@ -8452,7 +8452,7 @@ var DotMatrixUI = /*#__PURE__*/function () {
     this.rows = 8;
     this.cols = 16;
     this.dotcolor = 'rgb(255, 0, 0)';
-    this.bgcolor = 'rgb(0, 0, 0)';
+    this.bgcolor = 'rgb(255, 255, 255)';
 
     // ドットマトリクス編集領域情報初期化
     this.colorMatrix = [];
@@ -8559,6 +8559,9 @@ var DotMatrixUI = /*#__PURE__*/function () {
       }
       if (rgbArray[2] != 0) {
         colorCode += 4;
+      }
+      if (colorCode == 7) {
+        colorCode = 0;
       }
       //      console.log(colorCode + "\n");
       var colorObject = {

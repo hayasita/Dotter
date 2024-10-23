@@ -62,6 +62,17 @@ void jsonData::wifiPSet(WiFiConnect* pWifiCon)
 }
 
 /**
+ * @brief I2C制御ポインタ設定
+ * 
+ * @param pI2cCtrl I2C制御ポインタ
+ */
+void jsonData::i2cPSet(i2cCtrl* pI2cCtrl)
+{
+  pI2cCtrl_ = pI2cCtrl;
+  return;
+}
+
+/**
  * @brief IMUキャリブレーション要求
  * 
  */
@@ -239,6 +250,7 @@ bool jsonData::parseJson(String readStr ,bool dataWrite ,bool online)
     if(!jsondata.isNull()){
       const uint8_t tmp = jsondata.as<const uint8_t>();
       glowInTheBright = tmp;
+      pI2cCtrl_->setBrightness(glowInTheBright);    // 表示輝度設定
 //      std::string str = "{\"glowInTheBright\":" + std::to_string(tmp) + "}";
 //      Serial.println(str.c_str());
     }

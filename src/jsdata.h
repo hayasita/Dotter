@@ -4,6 +4,7 @@
 #include "wifi_ctrl.h"
 #include "display_ctrl.h"
 #include "imu.h"
+#include "i2c_driver.h"
 
 #ifdef GLOBAL_VAL_DEF
 #define GLOBAL
@@ -83,6 +84,9 @@ class jsonData{
 
     void wifiPSet(WiFiConnect* pWifiCon);   // WiFi接続設定ポインタ設定
     WiFiConnect *pWifiConnect_  = nullptr;  // WiFi接続制御ポインタ
+
+    void i2cPSet(i2cCtrl* pI2cCtrl);        // I2C制御ポインタ設定
+    i2cCtrl *pI2cCtrl_  = nullptr;          // I2C制御ポインタ
 
     modeCtrl dispMode;            // 表示モード制御
     displayTitle dispTitle;       // タイトル表示制御

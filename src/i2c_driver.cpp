@@ -121,6 +121,19 @@ void i2cCtrl::matrixInit(uint8_t col,uint8_t row)
   return;
 }
 
+/**
+ * @brief   LED輝度設定
+ * 
+ * @param brightness 設定輝度（0-15）
+ */
+void i2cCtrl::setBrightness(uint8_t brightness)
+{
+  // 輝度設定
+  matrix.setBrightness((unsigned char)(brightness & 0x0F));
+
+  return;
+}
+
  /**
   * @brief VK16K33 Matrix Driver
   * 

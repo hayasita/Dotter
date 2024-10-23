@@ -64,6 +64,7 @@ class i2cCtrl{
     void matrixInit(uint8_t col,uint8_t row);
     void matrixset(std::vector<uint8_t> data);
     void matrixsetHexdata(std::vector<uint8_t> data);
+    void setBrightness(uint8_t brightness);
 
   private:
     uint8_t _col;

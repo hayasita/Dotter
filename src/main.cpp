@@ -65,6 +65,7 @@ void taskDeviceCtrl(void *Parameters){
   // i2cCtrl
   i2cCtrl _i2cCtrl;
   _i2cCtrl.init();
+  jsData.i2cPSet(&_i2cCtrl);            // I2C制御ポインタ設定
 
   // I2C Device Check
   DeviceChk deviceChk;

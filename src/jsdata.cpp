@@ -173,6 +173,7 @@ bool jsonData::parseJson(String readStr ,bool dataWrite ,bool online)
       portEXIT_CRITICAL(&jsonMutex);
       Serial.println((char*)dat);
       Serial.printf("dataType : %d\n",dataType);
+      dispMode.setCurrentOperationMode(OperationMode::MODE_DOTTER);     // 動作モード：ドットマトリクス表示)
     }
 
     jsondata = jsonDocument["websocket"];

@@ -10,8 +10,10 @@
       <p class="card-text">
         <div class="col-sm-11 offset-sm-1">
           <span>System : { state.name }<BR></span>
-          <span>Version : { state.version }<BR></span>
+          <span>Web Interface Version : { state.version }<BR></span>
           <span>description : { state.description }<BR></span>
+
+          <span>Dotter Version : { dotterVersion }<BR></span>
         </div>
       </p>
 
@@ -25,7 +27,7 @@
       <h5 class="card-title">システム更新</h5>
       <p class="card-text">
         <div class="col-sm-11 offset-sm-1">
-          <span><a href="./update.html">システム更新リンク</a></span>
+          <span><a href="./update.html">On The Air Update</a></span>
         </div>
       </p>
 
@@ -34,11 +36,15 @@
 
 
   <script>
+//    import {vfdControllerUI} from '../viewmodel/vmapp.js'
     const MSTPackage = require('../../package.json');
 
     export default {
-      onBeforeMount() {
+      onBeforeMount(props, state) {
+        let vmUI = props.vmUI;
         console.log('help onBeforeMount');
+        this.dotterVersion = vmUI.getDisplaySetting("swVersion");
+        console.log('dotterVersion : ' + this.dotterVersion);
       },
       onMounted(props, state){
         let vmUI = props.vmUI;

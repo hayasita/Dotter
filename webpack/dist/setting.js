@@ -1,4 +1,5 @@
 const _initial_setting_ = '{\
+"swVersion" : "v0.1.0",\
 "stamodeSSID" : "aterm-748f7b-g",\
 "stamodeIP" : "192.168.3.20",\
 "atmodeSSID" : "Dotter",\

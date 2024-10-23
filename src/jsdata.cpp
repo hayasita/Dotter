@@ -18,6 +18,7 @@
 #include "jsdata.h"
 #include "timeCtrl.h"
 //#include "display_ctrl.h"
+#include "ver.h"
 
 jsonData::jsonData(void)
 {
@@ -885,6 +886,7 @@ void jsonData::writeJsonFile(void){
 
   String configData = "";
 
+  configData = configData + makeJsonPiece("swVersion", (String)SW_VERSION_STR, true);             // SW Version
   configData = configData + makeJsonPiece("glowInTheBright", jsData.glowInTheBright, true);       // 表示輝度
   configData = configData + makeJsonPiece("rotatePosition", jsData.rotatePosition, true);         // 表示方向
   configData = configData + makeJsonPiece("dotColor", dotColor, true);                            // WebIFマトリクスエディタ表示色設定
@@ -1009,6 +1011,8 @@ String makeSettingjs(void){
   String stringTmp;
 
   html_tmp = html_tmp + (String)"var _initial_setting_ = \'{\\\n";
+
+  html_tmp = html_tmp + (String)"\"swVersion\" : \"" + (String)SW_VERSION_STR + (String)"\",\\\n";
 
   // ネットワーク情報は接続状態によるので、値のチェックを行う。
   // StationMode SSID

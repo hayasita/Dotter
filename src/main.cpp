@@ -74,6 +74,7 @@ void taskDeviceCtrl(void *Parameters){
   IMU _imu(deviceChk.imu());
   _imu.whoAmI();
   _imu.init();
+  jsData.imuPSet(&_imu);                // IMU制御ポインタ設定
 
   // I2C OLED Display
   M5OLED m5Oled(deviceChk.m5oled());

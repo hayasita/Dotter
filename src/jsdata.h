@@ -88,6 +88,9 @@ class jsonData{
     void i2cPSet(i2cCtrl* pI2cCtrl);        // I2C制御ポインタ設定
     i2cCtrl *pI2cCtrl_  = nullptr;          // I2C制御ポインタ
 
+    void imuPSet(IMU* pImu);                // IMU制御ポインタ設定
+    IMU *pImu_  = nullptr;                  // IMU制御ポインタ
+
     modeCtrl dispMode;            // 表示モード制御
     displayTitle dispTitle;       // タイトル表示制御
 

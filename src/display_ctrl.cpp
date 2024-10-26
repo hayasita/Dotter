@@ -110,8 +110,14 @@ void modeCtrl::modeChange(uint8_t keydata)
       currentOperationMode = OperationMode::MODE_TIMER;   // 時計表示 -> タイマー表示
       break;
     case OperationMode::MODE_TIMER:
+      if(jsData.pImu_->isReady()){
+        currentOperationMode = OperationMode::MODE_IMU;   // タイマー表示 -> IMU表示
+      }
+      else{
+        currentOperationMode = OperationMode::MODE_DOTTER;  // タイマー表示 -> ドットマトリクス表示
+      }
 //      currentOperationMode = OperationMode::MODE_DOTTER;  // タイマー表示 -> ドットマトリクス表示
-      currentOperationMode = OperationMode::MODE_IMU;     // タイマー表示 -> IMU表示
+//      currentOperationMode = OperationMode::MODE_IMU;     // タイマー表示 -> IMU表示
       break;
     case OperationMode::MODE_IMU:
       currentOperationMode = OperationMode::MODE_DOTTER;  // IMU表示 -> ドットマトリクス表示

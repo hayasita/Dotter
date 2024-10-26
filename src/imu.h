@@ -83,7 +83,8 @@ class IMU{
   public:
     IMU(bool ready);        // コンストラクタ
 
-    void init(void);                                // IMU初期化  
+    void init(void);                                // IMU初期化
+    bool isReady(void){return ready;}               // IMUデバイスの有無
     void writeImu(uint8_t reg, uint8_t data);       // IMU I2C書き込み
     uint8_t readImu(uint8_t reg);                   // IMU I2C読み込み
 

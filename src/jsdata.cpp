@@ -72,6 +72,12 @@ void jsonData::i2cPSet(i2cCtrl* pI2cCtrl)
   return;
 }
 
+void jsonData::imuPSet(IMU* pImu)        // I2C制御ポインタ設定
+{
+  pImu_ = pImu;
+  return;
+}
+
 /**
  * @brief IMUキャリブレーション要求
  * 

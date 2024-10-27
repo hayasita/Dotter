@@ -23,6 +23,10 @@
   #define BUTTON_1 1
   #define SOUND_PIN 9
   #define SD_TRUE
+#elif defined (M5STACK_CORE_ESP32_Tester)
+  #define BUTTON_0 18
+  #define BUTTON_1 19
+  #define SOUND_PIN 23
 #endif
 
 class ITM{

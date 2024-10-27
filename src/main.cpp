@@ -11,6 +11,7 @@
 
 #include <M5Unified.h>
 #include <SPIFFS.h>
+#include <Wire.h>
 
 #include "dotserver.h"
 #include <ArduinoJson.h>
@@ -30,6 +31,14 @@
 #include "wifi_real.h"
 #include "wifi_ctrl.h"
 #include "sand.h"
+
+#if defined (M5STACK_CORE_ESP32_Tester)
+  #include <M5GFX.h>
+  M5GFX display;
+  //M5Canvas canvas(&display);
+
+  void allScan(void);
+#endif
 
 /**
  * @brief デバイス制御タスク
@@ -135,8 +144,39 @@ void taskDeviceCtrl(void *Parameters){
 
     timetmp = millis();               // 処理間隔確認用基本時刻
 
+#if defined (M5STACK_CORE_ESP32_Tester)
+    M5.update();
+    if (M5.BtnA.wasSingleClicked()) {
+      allScan();              // I2Cデバイス全検索
+      _imu.displayWhoAmI();    // IMUの識別情報表示
+    }
+    else if (M5.BtnB.wasSingleClicked()) {
+      Serial.println("M5.BtnB.wasSingleClicked()");
+      _imu.displayWhoAmI();    // IMUの識別情報表示
+    }
+    else if (M5.BtnC.wasSingleClicked()) {
+      itmKeyCode = 0x01;
+      Serial.println("M5.BtnC.wasSingleClicked()");
+    }
+    else if(M5.BtnC.wasDoubleClicked()){
+      itmKeyCode = 0x81;
+      Serial.println("M5.BtnC.wasDoubleClicked()");
+    }
+    else{
+      itmKeyCode = itm.man();
+      if(itmKeyCode == 0x02){
+        Serial.println("SW1:ON");
+        SoundReqPr keyData;    // SoundTaskへのタスク間通信データ
+        if(uxQueueSpacesAvailable(xQueueSoundPlay) != 0){             // キューの追加可能数が0ではない
+          keyData = SoundReqPr::SOUND_PLAY3;
+          xQueueSend(xQueueSoundPlay, &keyData, 0);
+        }
+      }
+    }
+#else
     // 端子入力・表示制御
     itmKeyCode = itm.man();
+#endif
 
     if(itmKeyCode == 0x01){   // 表示モード変更
       itmKeyCode = 0x00;
@@ -365,8 +405,14 @@ void taskDeviceCtrl(void *Parameters){
     // M5ATOM Matrix LED 
     if(wifiConnect.getWiFiConSts() == WiFiConSts::NOCONNECTION){           // WiFi接続なし
       led.set(0, CRGB::Red, LEDPATTERN_ALLON);
-
+#if defined (M5STACK_ATOMS3)
       M5.Display.clear(BLACK);
+/*
+      M5.Display.setCursor(0, 0);
+      M5.Display.setTextSize(1.5);
+      M5.Display.print("                   ");
+*/
+#endif
 //      M5.Display.setCursor(0, 0);
 //      M5.Display.setTextSize(1.5);
 //      M5.Display.print("WiFi Disconnection.");
@@ -417,9 +463,13 @@ void setup() {
   Serial.begin(115200);
 //  while (!Serial);
 
+#if defined (M5STACK_CORE_ESP32_Tester)
+
+#else
   // ATOMS3 Display
   M5.Display.setRotation(2);
   M5.Display.clear(BLACK);
+#endif
 
   // Initialize SPIFFS
   if(!SPIFFS.begin()){
@@ -455,6 +505,54 @@ void setup() {
 void loop() {
   // WebSocketのクライアントをクリーンアップ
   wsCleanupClients();
-  
+
   delay(1);
 }
+
+#if defined (M5STACK_CORE_ESP32_Tester)
+/**
+ * @brief I2Cデバイス全検索
+ * 
+ */
+void allScan(void)
+{
+  display.begin();
+  display.setRotation(3);
+  display.fillScreen(BLACK);
+  display.setCursor(0, 8);
+  display.setTextSize(1);
+
+  display.printf("I2C Scan\n");
+  Serial.printf("===================\n");
+  Serial.printf("I2C Scan\n");
+
+  display.println();
+  display.printf("SDA:%2d SCL:%2d\n", (uint8_t)SDA, (uint8_t)SCL);
+  Serial.println();
+  Serial.printf("SDA:%2d SCL:%2d\n", (uint8_t)SDA, (uint8_t)SCL);
+
+  for (byte address = 0; address <= 127; address++) {
+    Wire.beginTransmission(address);
+    byte error = Wire.endTransmission();
+
+    if (error == 0) {
+      display.printf("%02X ", address);
+      Serial.printf("%02X ", address);
+    } else {
+      if (240 <= display.width()) {
+        display.print(".. ");
+        if (address % 16 == 15) {
+          display.println();
+        }
+      }
+    }
+    delay(1);
+  }
+
+  display.println();
+  Serial.println();
+  display.endWrite();
+  return;
+
+}
+#endif

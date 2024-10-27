@@ -69,6 +69,16 @@ void taskSoundCtrl(void *pvParameters) {
         }
       }
     }
+    else if(req == SoundReqPr::SOUND_PLAY3){
+      Serial.println("SoundReqPr::SOUND_PLAY3");
+      if(jsData.soundEnable == 1){
+        setToneChannel(0);
+        tone(soundPin, 2000, 100);
+        tone(soundPin, 1000, 100);
+        noTone(soundPin);
+        req = SoundReqPr::SOUND_STOP;     // サウンド再生停止
+      }
+    }
     else{
 //      noTone(soundPin);
     }

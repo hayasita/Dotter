@@ -9,7 +9,7 @@
 #elif defined (M5STAMP_S3)
    #define LED_DATA_PIN  21  // LED Data Pin
 #elif defined (M5STACK_CORE_ESP32_Tester)
-   #define LED_DATA_PIN  3  // Dummy LED Data Pin
+   #define LED_DATA_PIN  5  // Dummy LED Data Pin
 #endif
 
 //==========================================

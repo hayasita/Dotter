@@ -195,7 +195,7 @@ M5OLED::M5OLED(bool m5OledDeviceChk)
 
   if(ready){
     init();
-    clear();
+  //  clear();
   }
 
   return;
@@ -213,7 +213,7 @@ void M5OLED::init(void)
   oled.setTextSize(1);
   oled.setCursor(0, 0);           // テキストのカーソル位置を左上に設定。
   oled.startWrite();
-  oled.print("hello world!!");
+  oled.print("hello OLED!!");
   oled.endWrite();
 
   return;

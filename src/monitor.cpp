@@ -8,6 +8,7 @@
  * @copyright Copyright (c) 2024
  * 
  */
+
 #include <iostream>
 #include <algorithm>
 #include "monitor.h"
@@ -16,6 +17,7 @@
 #include <FS.h>
 #include <esp_task_wdt.h>
 #include "jsdata.h"
+#include "ver.h"
 
 /**
  * @brief Destroy the Serial Monitor I O:: Serial Monitor I O object
@@ -42,6 +44,7 @@ void SerialMonitor::init(void)
   codeArray.push_back({"datalist"   ,[&](){return opecodedatalist(command);}  ,"datalist\tDisplays Matrix data file list."});
   codeArray.push_back({"env"        ,[&](){return opecodeenv(command);}  ,"env\tconfig data list."});
   codeArray.push_back({"imucal"     ,[&](){return opecodeImuCalib(command);}  ,"imucal\tIMU calibration."});
+  codeArray.push_back({"ver"        ,[&](){return opecodeVer(command);}  ,"ver\tVersion."});
   codeArray.push_back({"command2"   ,[&](){return dummyExec(command);}  ,"command Help."});
 
   return;
@@ -251,5 +254,29 @@ bool SerialMonitor::opecodeImuCalib(std::vector<std::string> command)
   Serial.println("opecodeImuCalib");
 
   jsData.imuCalibrateRq();
+  return true;
+}
+
+bool SerialMonitor::opecodeVer(std::vector<std::string> command)        // バージョン表示
+{
+  Serial.println("opecodeVer");
+
+//  Serial.println("Version: 0.1\n");
+
+  // M5Stackのバージョン情報を表示
+//  Serial.printf("Dotter Version: %s\n", DOTTER_VERSION);
+  Serial.printf("Dotter Version: %s\n", SW_VERSION_STR);
+
+  uint8_t mac[6];
+  esp_read_mac(mac, ESP_MAC_WIFI_STA);
+  Serial.printf("MAC Address: %02X:%02X:%02X:%02X:%02X:%02X\n", mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
+
+  // M5Stackのシリアル番号（チップID）を表示
+  uint32_t chipId = 0;
+  for(int i=0; i<17; i=i+8) {
+    chipId |= ((ESP.getEfuseMac() >> (40 - i)) & 0xff) << i;
+  }
+  Serial.printf("M5Stack Serial Number: %08X\n", chipId);
+
   return true;
 }

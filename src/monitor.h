@@ -62,6 +62,7 @@ class SerialMonitor{
     bool opecodedatalist(std::vector<std::string> command);   // datalist
     bool opecodeenv(std::vector<std::string> command);        // env　設定値表示
     bool opecodeImuCalib(std::vector<std::string> command);   // imuキャリブレーション実行
+    bool opecodeVer(std::vector<std::string> command);        // バージョン表示
 
     MonitorDeviseIo *monitorIo_ = nullptr;    // シリアル入出力処理ポインタ
     std::vector<std::string> command;         // シリアルモニタコマンド

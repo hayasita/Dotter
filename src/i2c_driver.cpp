@@ -16,6 +16,9 @@
 #elif defined (M5STAMP_S3)
   #define SDA_PIN 13
   #define SCL_PIN 15
+#elif defined (M5STACK_CORE_ESP32_Tester)
+  #define SDA_PIN 21
+  #define SCL_PIN 22
 #endif
 
 #define I2C_ADDRESS_M5OLED    0x3C    //I2C address for M5 OLED Display SH1107
@@ -192,7 +195,7 @@ M5OLED::M5OLED(bool m5OledDeviceChk)
 
   if(ready){
     init();
-    clear();
+  //  clear();
   }
 
   return;
@@ -210,7 +213,7 @@ void M5OLED::init(void)
   oled.setTextSize(1);
   oled.setCursor(0, 0);           // テキストのカーソル位置を左上に設定。
   oled.startWrite();
-  oled.print("hello world!!");
+  oled.print("hello OLED!!");
   oled.endWrite();
 
   return;

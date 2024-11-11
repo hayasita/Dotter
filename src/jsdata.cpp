@@ -32,7 +32,7 @@ jsonData::jsonData(void)
   dotColor = 1;                     // WebIFマトリクスエディタ表示色設定
   showSampleData = 1;               // サンプルデータ表示
   dataNumber = 0;                   // 表示データ番号
-  staStartupConnect = 1;            // STA起動時接続設定
+  staStartupConnect = 0;            // STA起動時接続設定
   staReConnectInterval = 4;         // STA再接続間隔
   soundEnable = 1;                  // サウンド有効設定
   clockScrollTime = 160;            // 時計スクロール時間

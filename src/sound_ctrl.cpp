@@ -23,7 +23,7 @@ void taskSoundCtrl(void *pvParameters) {
   while (1) {
     ret = xQueueReceive(xQueueSoundPlay, &reqData, 0);
     if(ret){
-      Serial.printf("%d = xQueueReceive() : ret = %d\n", reqData, ret);
+//      Serial.printf("%d = xQueueReceive() : ret = %d\n", reqData, ret);
       req = reqData;
       if(reqData == SoundReqPr::SOUND_PLAY1){
     //    req = SoundReqPr::SOUND_PLAY1;
@@ -67,6 +67,16 @@ void taskSoundCtrl(void *pvParameters) {
           tone(soundPin, 250, 100);
           noTone(soundPin);
         }
+      }
+    }
+    else if(req == SoundReqPr::SOUND_PLAY3){
+//      Serial.println("SoundReqPr::SOUND_PLAY3");
+      if(jsData.soundEnable == 1){
+        setToneChannel(0);
+        tone(soundPin, 2000, 100);
+        tone(soundPin, 1000, 100);
+        noTone(soundPin);
+        req = SoundReqPr::SOUND_STOP;     // サウンド再生停止
       }
     }
     else{

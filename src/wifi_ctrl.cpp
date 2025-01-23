@@ -248,6 +248,8 @@ void WiFiConnect::staConnectionWait(WiFiConSts nextSqf,WiFiConSts errSqf)
     staConCount = 0;
 //    setStaStatus(STA_CONNECTED);  // STA接続情報設定：接続完了
     websocketSend(str);           // WebSocket送信
+    websocketSend(String(wsStaConpDataMake().c_str()));      // WebSocket送信 SSID,IPアドレス
+
     wifiConSts = nextSqf;         // 接続完了時シーケンスに移行
   }
   else{
@@ -276,12 +278,43 @@ void WiFiConnect::staConnectionWait(WiFiConSts nextSqf,WiFiConSts errSqf)
     }
 
     websocketSend(str);     // WebSocket送信
+    websocketSend(String(wsStaConpDataMake().c_str()));      // WebSocket送信 SSID,IPアドレス
 
     staConCount = 0;
     wifiConSts = errSqf;    //接続失敗時シーケンスに移行
   }
 
   return;
+}
+
+/**
+ * @brief WebSocket STA接続完了情報作成
+ * STA接続完了時に、SSIDとIPアドレスをWebSocket送信するためのデータを作成する。
+ * 
+ * @return std::string 
+ */
+std::string WiFiConnect::wsStaConpDataMake(void)
+{
+  // StationMode SSID
+  std::string html_tmp = "";
+  std::string stringTmp = pWiFi_->_staSSID();
+  if(stringTmp.length() != 0){
+    html_tmp = html_tmp + (std::string)"{\"staSsid\" : \"" + stringTmp + (std::string)"\",\n";
+  }
+  else{
+    html_tmp = html_tmp + (std::string)"{\"staSsid\" : \"\",\n";
+  }
+
+  // StationMode IP Adress
+  stringTmp = pWiFi_->_staIP();
+  if(stringTmp.length() != 0){    // todo. 0.0.0.0を検出して分岐するように修正必要。
+    html_tmp = html_tmp + (std::string)"\"staIpadr\" : \"" + stringTmp + (std::string)"\"}";
+  }
+  else{
+    html_tmp = html_tmp + (std::string)"\"staIpadr\" : \"\"}";
+  }
+
+  return html_tmp;
 }
 
 /**

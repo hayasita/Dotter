@@ -38,6 +38,7 @@ class WiFi_{
     virtual bool _softAPdisconnect(bool wifioff) = 0;
     virtual std::string _softAPIP(void) = 0;
     virtual std::string _staIP(void) = 0;
+    virtual std::string _staSSID(void) = 0;
     virtual bool _MDNS_begin(const char* hostName) = 0;
 
     virtual std::string _getSsid(void) = 0;
@@ -151,6 +152,8 @@ class WiFiConnect{
 
     bool wifiApStop;                    // AP切断コールバックフラグ
     unsigned long sntpTimeoutChk;       // SNTP接続タイムアウトチェック
+
+    std::string wsStaConpDataMake(void);     // WebSocket STA接続完了情報作成
     
     // WiFi接続シーケンス処理
     bool noConnection(void);            // WiFi接続待機

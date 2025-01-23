@@ -151,6 +151,19 @@ std::string WiFi_real::_staIP(void)
 }
 
 /**
+ * @brief STAモード SSIDをstd::stringで返す
+ * 
+ * @return std::string 
+ */
+std::string WiFi_real::_staSSID(void)
+{
+  String ssidStr = WiFi.SSID();
+  std::string stdSsid = ssidStr.c_str();
+
+  return stdSsid;
+}
+
+/**
  * @brief MDNS起動
  * 
  * @param hostName MDNS名称

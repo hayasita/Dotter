@@ -274,7 +274,8 @@
         // WiFi EventLog 更新コールバック設定
         vmUI.updateEventLogCallback(this.setEventLog.bind(this));
         // WiFi STA接続更新完了コールバック設定
-        vmUI.clearStaReConnectionCallback(this.clearStaConnectionSpinner.bind(this));
+//        vmUI.clearStaReConnectionCallback(this.clearStaConnectionSpinner.bind(this));
+        vmUI.clearStaReConnectionCallback(this.staConnectionComplete.bind(this));
 
         // STA自動接続　チェックボックス初期値設定
 				if(vmUI.getNetworkSetting("staStartupConnect") == 1){
@@ -683,10 +684,17 @@
       //STA Connection Button spinner clear
       clearStaConnectionSpinner(){
         // ボタン内スピナー削除
+        console.log("clearStaConnectionSpinner");
         var Button = document.getElementById('ssidSubmit');
         var spinner = Button.querySelector('.spinner-border');
         spinner.classList.add('visually-hidden');
         Button.classList.remove('disabled'); // ボタンを再度有効化する（オプション）
+        this.update();
+      },
+      // WiFi Station 接続情報更新
+      staConnectionComplete(){
+        console.log("staConnectionComplete");
+        this.clearStaConnectionSpinner();   // ボタン内スピナー削除
         this.update();
       },
       // WiFi EventLog 取得・表示

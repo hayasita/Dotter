@@ -34,6 +34,7 @@ class WiFi_real : public WiFi_
 
     unsigned long _millis(void) override;
     bool _print(std::string data) override;
+    void _websocketSend(std::string sendData) override;
 
     void _startWebserver(void) override;
 };

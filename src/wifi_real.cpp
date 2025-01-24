@@ -233,6 +233,21 @@ bool WiFi_real::_print(std::string data) {
 }
 
 /**
+ * @brief WebSocket送信
+ * 
+ * @param sendData 
+ */
+void WiFi_real::_websocketSend(std::string sendData)
+{
+  Serial.println("websocketSend");
+  Serial.println(sendData.c_str());
+
+  websocketSend(sendData.c_str());     // WebSocket送信
+
+  return;
+}
+
+/**
  * @brief Webサーバ起動
  * 
  */

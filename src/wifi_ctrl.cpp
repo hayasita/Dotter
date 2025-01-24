@@ -224,7 +224,7 @@ bool WiFiConnect::staConnect(char *ssid,char *pass,WiFiConSts nextSqf)
  */
 void WiFiConnect::staConnectionWait(WiFiConSts nextSqf,WiFiConSts errSqf)
 {
-  String str = "{\"eventLog\":[{\"event\":140,\"data\":[0,0,0,0]}]}";
+  std::string str = "{\"eventLog\":[{\"event\":140,\"data\":[0,0,0,0]}]}";
 
   static uint8_t staConCount = 0;
   bool connectionFale = 0;
@@ -247,8 +247,8 @@ void WiFiConnect::staConnectionWait(WiFiConSts nextSqf,WiFiConSts errSqf)
     }
     staConCount = 0;
 //    setStaStatus(STA_CONNECTED);  // STA接続情報設定：接続完了
-    websocketSend(str);           // WebSocket送信
-    websocketSend(String(wsStaConpDataMake().c_str()));      // WebSocket送信 SSID,IPアドレス
+    pWiFi_->_websocketSend(str);                      // WebSocket送信 再接続完了
+    pWiFi_->_websocketSend(wsStaConpDataMake());      // WebSocket送信 SSID,IPアドレス
 
     wifiConSts = nextSqf;         // 接続完了時シーケンスに移行
   }
@@ -277,8 +277,8 @@ void WiFiConnect::staConnectionWait(WiFiConSts nextSqf,WiFiConSts errSqf)
       ntpAutoSetSqf = SntpAutoSts::SNTPAUTO_STANDBY;  // SSID無効で、自動接続は待機に遷移
     }
 
-    websocketSend(str);     // WebSocket送信
-    websocketSend(String(wsStaConpDataMake().c_str()));      // WebSocket送信 SSID,IPアドレス
+    pWiFi_->_websocketSend(str);                      // WebSocket送信 再接続完了
+    pWiFi_->_websocketSend(wsStaConpDataMake());      // WebSocket送信 SSID,IPアドレス
 
     staConCount = 0;
     wifiConSts = errSqf;    //接続失敗時シーケンスに移行

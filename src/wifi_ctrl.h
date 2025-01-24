@@ -47,6 +47,7 @@ class WiFi_{
 
     virtual unsigned long _millis(void) = 0;
     virtual bool _print(std::string data) = 0;
+    virtual void _websocketSend(std::string sendData) = 0;
 
     virtual void _startWebserver(void) = 0;
 };

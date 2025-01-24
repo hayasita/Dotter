@@ -592,18 +592,36 @@
       },
       // WiFiネットワーク情報設定（SSID,IPアドレス,設定ボタン）
       getStaSsid(vmUI){
-        this.stamodeSsid = vmUI.getNetworkSetting("stamodeSSID");
-        this.stamodeIp = vmUI.getNetworkSetting("stamodeIP");
+        this.stamodeSsid = this.makeSsid(vmUI.getNetworkSetting("stamodeSSID"));  // SSID設定
+        this.stamodeIp = this.makeIpAdress(vmUI.getNetworkSetting("stamodeIP"));  // IP Adress設定
         this.apmodeSsid = vmUI.getNetworkSetting("atmodeSSID");
         this.apmodeIp = vmUI.getNetworkSetting("atmodeIP");
       },
       // WiFi Station 接続情報更新
       updateStaConnSts(objData){
-        this.stamodeSsid = objData.staSsid;     // SSID設定
-        this.stamodeIp = objData.staIpadr;      // IP Adress設定
+        this.stamodeSsid = this.makeSsid(objData.staSsid);      // SSID設定
+        this.stamodeIp = this.makeIpAdress(objData.staIpadr);   // IP Adress設定
 //        this.stamodeStatus = objData.staStatus  // Status設定
         this.setSsidSubmitEnable();             // SSID,Password設定ボタン有効・無効設定
         this.update();
+      },
+      // SSID表示設定
+      makeSsid(ssid){
+        if(ssid == ""){
+          return "SSID not set";
+        }
+        else{
+          return ssid;
+        }
+      },
+      // IP Adress表示設定
+      makeIpAdress(ip){
+        if(ip == "0.0.0.0"){
+          return "IP Adress not set";
+        }
+        else{
+          return ip;
+        }
       },
       makeWiFiListElement(){
         this.setWiFiStationList("WiFiStationList",this.wiFiStationList);

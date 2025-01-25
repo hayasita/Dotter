@@ -215,8 +215,7 @@
                 <input type="password" class="form-control" id="inputSSIDPassword" disabled="{wifiSsidPassDisable}">
 
                 <div class="form-check form-switch">
-                  <input class="form-check-input" type="checkbox"
-                  onclick={ wifiConectToggle } />
+                  <input class="form-check-input" type="checkbox" id="wifiCheckbox" onclick={ wifiConectToggle } />
                   { tWifiConectCheck }
                 </div>
 
@@ -303,15 +302,7 @@
 
         // WiFi Connect button EnableToggleSW
         this.wifiConectToggle = (e) => {
-          this.wifiConectCheck = !this.wifiConectCheck;
-          if(this.wifiConectCheck){
-            this.tWifiConectCheck = "接続ボタンが有効です。";
-          }
-          else{
-            this.tWifiConectCheck = "接続ボタンが無効になっています。";
-          }
-          console.log(this.wifiConectCheck);
-          this.update();
+          this.staConnectionToggle();        // チェックボックスのON/OFF切り替え
         }
         /*
           WiFiアクセスポイントのリストを取得する
@@ -709,12 +700,35 @@
         Button.classList.remove('disabled'); // ボタンを再度有効化する（オプション）
         this.update();
       },
-      // WiFi Station 接続情報更新
+      // チェックボックスをOFFにするメソッド
+      offWifiCheckbox() {
+        const wifiCheckbox = document.getElementById('wifiCheckbox');
+        if (wifiCheckbox) {
+          wifiCheckbox.checked = false;
+        } else {
+          console.error("wifiCheckbox element is not found");
+        }
+      },      // WiFi Station 接続情報更新
       staConnectionComplete(){
         console.log("staConnectionComplete");
         this.clearStaConnectionSpinner();   // ボタン内スピナー削除
+        this.offWifiCheckbox();             // チェックボックスをOFFにする
+        this.staConnectionToggle();         // チェックボックスのON/OFF切り替え
         this.update();
       },
+      // WiFi Connect button EnableToggleSW
+      staConnectionToggle(){
+        console.log("staCinnectionToggle");
+        this.wifiConectCheck = !this.wifiConectCheck;
+        if(this.wifiConectCheck){
+          this.tWifiConectCheck = "接続ボタンが有効です。";
+        }
+        else{
+          this.tWifiConectCheck = "接続ボタンが無効になっています。";
+        }
+        this.update();
+      },
+
       // WiFi EventLog 取得・表示
       setEventLog(logMessage){
         console.log("-- setEventLog");

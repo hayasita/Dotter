@@ -151,6 +151,19 @@ std::string WiFi_real::_staIP(void)
 }
 
 /**
+ * @brief STAモード SSIDをstd::stringで返す
+ * 
+ * @return std::string 
+ */
+std::string WiFi_real::_staSSID(void)
+{
+  String ssidStr = WiFi.SSID();
+  std::string stdSsid = ssidStr.c_str();
+
+  return stdSsid;
+}
+
+/**
  * @brief MDNS起動
  * 
  * @param hostName MDNS名称
@@ -217,6 +230,21 @@ bool WiFi_real::_print(std::string data) {
   Serial.print(arduinoStr);
 
   return ret;
+}
+
+/**
+ * @brief WebSocket送信
+ * 
+ * @param sendData 
+ */
+void WiFi_real::_websocketSend(std::string sendData)
+{
+  Serial.println("websocketSend");
+  Serial.println(sendData.c_str());
+
+  websocketSend(sendData.c_str());     // WebSocket送信
+
+  return;
 }
 
 /**

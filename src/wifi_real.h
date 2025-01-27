@@ -25,6 +25,7 @@ class WiFi_real : public WiFi_
     bool _softAPdisconnect(bool wifioff) override;
     std::string _softAPIP(void) override;
     std::string _staIP(void) override;
+    std::string _staSSID(void) override;
     bool _MDNS_begin(const char* hostName) override;
 
     std::string _getSsid(void) override;
@@ -33,6 +34,7 @@ class WiFi_real : public WiFi_
 
     unsigned long _millis(void) override;
     bool _print(std::string data) override;
+    void _websocketSend(std::string sendData) override;
 
     void _startWebserver(void) override;
 };

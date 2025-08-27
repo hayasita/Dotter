@@ -155,6 +155,7 @@ void taskDeviceCtrl(void *Parameters){
     static unsigned long ledLasttime = millis(); 
     static unsigned long clockDisptLasttime = millis(); 
     static unsigned long sandLasttime = millis();
+    static unsigned long pongWarsLasttime = millis();
     unsigned long timetmp;      // millis()tmp
     uint8_t itmKeyCode;
 
@@ -419,6 +420,17 @@ void taskDeviceCtrl(void *Parameters){
           _i2cCtrl.matrixsetHexdata(pageData);
           // IMUデータ表示
 //          m5Oled.printSandData(sand);
+        }
+      }
+      else if(_dispMode->getCurrentOperationMode() == OperationMode::MODE_PONGWARS){   // PONG WARS表示
+        // PONG WARS表示データ作成
+        if(timetmp - pongWarsLasttime > 100){      // 更新時間確認
+          pongWarsLasttime = timetmp;             // 更新時間設定
+          // PONG WARS表示データ作成
+//          std::vector<uint8_t> pageData = pongWars.makeData();
+          std::vector<uint8_t> pageData = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x7F, 0x00};
+          // LEDマトリクスデータ転送
+          _i2cCtrl.matrixsetHexdata(pageData);
         }
       }
     }

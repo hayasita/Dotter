@@ -24,6 +24,7 @@ enum class OperationMode{
   MODE_CLOCK,     // 時計表示
   MODE_TIMER,     // タイマー表示
   MODE_IMU,       // IMU表示
+  MODE_PONGWARS,  // PONG WARS表示
   MODE_TEST,      // テスト表示
   MODE_UNDEFINED  // 不明または無効なデータタイプ
 };
@@ -100,6 +101,7 @@ class displayTitle{
     void makeTitleClock(ClockDispMode clockDispMode);   // 時計タイトル作成
     void makeTitleTimer(TimerDispMode timerDispMode);   // タイマータイトル作成
     void makeTitleIMU(void);                            // IMUタイトル作成
+    void makeTitlePongWars(void);                       // PONG WARSタイトル作成
     void makeTitleTest(void);                           // テストタイトル作成
 
     DisplayTitleSq displayTitleSq;    // タイトル表示状態

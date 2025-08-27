@@ -114,13 +114,16 @@ void modeCtrl::modeChange(uint8_t keydata)
         currentOperationMode = OperationMode::MODE_IMU;   // タイマー表示 -> IMU表示
       }
       else{
-        currentOperationMode = OperationMode::MODE_DOTTER;  // タイマー表示 -> ドットマトリクス表示
+        currentOperationMode = OperationMode::MODE_PONGWARS;  // タイマー表示 -> ドットマトリクス表示
       }
 //      currentOperationMode = OperationMode::MODE_DOTTER;  // タイマー表示 -> ドットマトリクス表示
 //      currentOperationMode = OperationMode::MODE_IMU;     // タイマー表示 -> IMU表示
       break;
     case OperationMode::MODE_IMU:
-      currentOperationMode = OperationMode::MODE_DOTTER;  // IMU表示 -> ドットマトリクス表示
+      currentOperationMode = OperationMode::MODE_PONGWARS;  // IMU表示 -> ドットマトリクス表示
+      break;
+    case OperationMode::MODE_PONGWARS:
+      currentOperationMode = OperationMode::MODE_DOTTER;  // PONG WARS表示 -> ドットマトリクス表示
       break;
     case OperationMode::MODE_TEST:
       currentOperationMode = OperationMode::MODE_DOTTER;  // -> ドットマトリクス表示
@@ -248,6 +251,9 @@ void displayTitle::makeTitle(uint8_t dataNumber, modeCtrl dispMode)
       break;
     case OperationMode::MODE_IMU:     // IMU表示
       makeTitleIMU();
+      break;
+    case OperationMode::MODE_PONGWARS: // PONG WARS表示
+      makeTitlePongWars();
       break;
     case OperationMode::MODE_TEST:
       makeTitleTest();
@@ -411,6 +417,18 @@ void displayTitle::makeTitleIMU(void)
 {
   std::vector<uint8_t> vec;
   vec.assign({0x1C, 0x22, 0x41, 0x49, 0x3A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00});
+  titleData = vec;
+
+  return;
+}
+
+/**
+ * @brief PONG WARSタイトル作成
+ */
+void displayTitle::makeTitlePongWars(void)
+{
+  std::vector<uint8_t> vec;
+  vec.assign({0x7F, 0x09, 0x06, 0x00, 0x3E, 0x41, 0x3E, 0x00, 0x40, 0x00, 0x7F, 0x10, 0x08, 0x10, 0x7F, 0x00});
   titleData = vec;
 
   return;

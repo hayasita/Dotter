@@ -41,7 +41,6 @@ void PongWars::reset() {
   balls_[1] = Ball{ kInitNightX, kInitY, kInitNightDX, kInitNightDY, Cell::Night };
 }
 
-/*
 void PongWars::tick() {
   constexpr float EPS = 1e-4f;
 
@@ -134,7 +133,6 @@ void PongWars::tick() {
 //    clampSpeed(b.dx, b.dy, kMinSpeed, kMaxSpeed);   // 反射角45度、速度は常に初期値としたので不要？
   }
 }
-*/
 
 std::vector<uint8_t> PongWars::makeData() const {
   std::vector<uint8_t> out(WIDTH, 0);

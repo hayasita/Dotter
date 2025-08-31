@@ -32,6 +32,7 @@
 #include "wifi_real.h"
 #include "wifi_ctrl.h"
 #include "sand.h"
+#include "pongWars.h"
 
 #if defined (M5STACK_CORE_ESP32_Tester)
   #include <M5GFX.h>
@@ -135,6 +136,9 @@ void taskDeviceCtrl(void *Parameters){
 
   // 砂表示
   Sand sand;
+
+  // PongWars表示
+  PongWars pongWars(/*dayLitOn=*/true, /*bit0Top=*/true);
 
 #ifndef M5STACK_CORE_ESP32_Tester   //M5.Display.print()は、ここがあると出力されない
   // 起動音PiPo
@@ -427,8 +431,9 @@ void taskDeviceCtrl(void *Parameters){
         if(timetmp - pongWarsLasttime > 100){      // 更新時間確認
           pongWarsLasttime = timetmp;             // 更新時間設定
           // PONG WARS表示データ作成
-//          std::vector<uint8_t> pageData = pongWars.makeData();
-          std::vector<uint8_t> pageData = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x7F, 0x00};
+          pongWars.tick();                        // 状態更新（2つのボールが進む）
+          auto pageData = pongWars.makeData();       // 長さ16の列データ（bit0=上）
+
           // LEDマトリクスデータ転送
           _i2cCtrl.matrixsetHexdata(pageData);
         }

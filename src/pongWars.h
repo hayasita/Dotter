@@ -30,6 +30,9 @@ public:
   /** 盤面/ボールを初期化（左=Day, 右=Night / 2ボール配置） */
   void reset();
 
+  /** ボール個数変更 */
+  void ballsSet(void);
+
   /** 1ステップ進める（速度はpx/stepの固定ステップ） */
   void tick();
 
@@ -49,7 +52,7 @@ public:
   void setBit0Top(bool top);
 
   /** Day/Night の占有数（デバッグ用） */
-  void getScores(int& dayCount, int& nightCount) const;
+  void getScores(uint8_t& dayCount, uint8_t& nightCount) const;
 
 private:
   struct Ball {
@@ -59,10 +62,14 @@ private:
   };
 
   Cell grid_[WIDTH][HEIGHT];
-  Ball balls_[2];
+//  Ball balls_[4];
+  std::vector<Ball> balls_;
+  uint8_t ballsNum_;
   bool dayLitOn_;
   bool bit0Top_;
   uint32_t rng_;
+
+  uint8_t dayCount, nightCount;
 
   // 乱数: [-1, +1) の擬似乱数
   float randMinus1to1();

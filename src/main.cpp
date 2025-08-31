@@ -248,8 +248,8 @@ void taskDeviceCtrl(void *Parameters){
         sand.addGrainRequest();
       }
       else if(_dispMode->getCurrentOperationMode() == OperationMode::MODE_PONGWARS){
-        // PongWarsモードの場合は、リセット
-        pongWars.reset();
+        // PongWarsモードの場合は、ボール個数変更
+        pongWars.ballsSet();
       }
       else{
         // 動作モードがタイマー表示以外の場合は、表示データ切り替え

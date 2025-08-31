@@ -25,6 +25,7 @@ namespace {
 
 PongWars::PongWars(bool dayLitOn, bool bit0Top)
   : dayLitOn_(dayLitOn), bit0Top_(bit0Top), rng_(0x12345678u) {
+  ballsNum_ = 2;
   reset();
 }
 
@@ -37,8 +38,40 @@ void PongWars::reset() {
   }
 
   // 2ボール初期化
-  balls_[0] = Ball{ kInitDayX,   kInitY, kInitDayDX,   kInitDayDY,   Cell::Day   };
-  balls_[1] = Ball{ kInitNightX, kInitY, kInitNightDX, kInitNightDY, Cell::Night };
+  balls_.clear();
+
+  if(ballsNum_ == 1){
+    balls_.push_back(Ball{ kInitDayX,   kInitY, kInitDayDX,   kInitDayDY,   Cell::Day   });
+  }
+  else if((ballsNum_ == 2)){
+    balls_.push_back(Ball{ kInitDayX,   kInitY, kInitDayDX,   kInitDayDY,   Cell::Day   });
+    balls_.push_back(Ball{ kInitNightX, kInitY, kInitNightDX, kInitNightDY, Cell::Night });
+  }
+  else if(ballsNum_ == 4){
+    balls_.push_back(Ball{ kInitDayX,   kInitY, kInitDayDX,     kInitDayDY,     Cell::Day   });
+    balls_.push_back(Ball{ kInitNightX, kInitY, kInitNightDX,   kInitNightDY,   Cell::Night });
+    balls_.push_back(Ball{ kInitDayX,   kInitY, -kInitDayDX,    -kInitDayDY,    Cell::Day   });
+    balls_.push_back(Ball{ kInitNightX, kInitY, -kInitNightDX,  -kInitNightDY,  Cell::Night });
+  }
+
+  return;
+}
+
+/** ボール個数変更 */
+void PongWars::ballsSet(void){
+
+  if(ballsNum_ == 2){
+    ballsNum_ = 4;
+  }
+  else if(ballsNum_ == 4){
+    ballsNum_ = 1;
+  }
+  else{
+    ballsNum_ = 2;
+  }
+  reset();
+
+  return;
 }
 
 void PongWars::tick() {
@@ -131,6 +164,12 @@ void PongWars::tick() {
     // ノイズ＆速度レンジ（任意・従来通り）
     addRandomness(b.dx, b.dy, kRandAmplitude);
 //    clampSpeed(b.dx, b.dy, kMinSpeed, kMaxSpeed);   // 反射角45度、速度は常に初期値としたので不要？
+
+    getScores(dayCount, nightCount);
+    if(dayCount == 0 || nightCount == 0) {
+      // ゲームオーバー処理
+      reset();
+    }
   }
 }
 
@@ -178,7 +217,7 @@ void PongWars::setBallSpeed(float day_dx, float day_dy, float night_dx, float ni
 void PongWars::setDayLitOn(bool on) { dayLitOn_ = on; }
 void PongWars::setBit0Top(bool top) { bit0Top_ = top; }
 
-void PongWars::getScores(int& dayCount, int& nightCount) const {
+void PongWars::getScores(uint8_t& dayCount, uint8_t& nightCount) const {
   dayCount = nightCount = 0;
   for (int x = 0; x < WIDTH; ++x) {
     for (int y = 0; y < HEIGHT; ++y) {

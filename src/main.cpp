@@ -428,11 +428,10 @@ void taskDeviceCtrl(void *Parameters){
       }
       else if(_dispMode->getCurrentOperationMode() == OperationMode::MODE_PONGWARS){   // PONG WARS表示
         // PONG WARS表示データ作成
-        if(timetmp - pongWarsLasttime > 100){      // 更新時間確認
+        if(timetmp - pongWarsLasttime > 10){      // 更新時間確認
           pongWarsLasttime = timetmp;             // 更新時間設定
           // PONG WARS表示データ作成
-          pongWars.tick();                        // 状態更新（2つのボールが進む）
-          auto pageData = pongWars.makeData();       // 長さ16の列データ（bit0=上）
+          auto pageData = pongWars.makeData();
 
           // LEDマトリクスデータ転送
           _i2cCtrl.matrixsetHexdata(pageData);

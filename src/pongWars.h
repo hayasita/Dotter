@@ -37,7 +37,7 @@ public:
    * 表示用データ（列0→15、各列8bit）を返す
    * 既定: bit0=上。setBit0Top(false)でbit0=下に切替
    */
-  std::vector<uint8_t> makeData() const;
+  std::vector<uint8_t> makeData();
 
   /** スピード調整（px/step）。負値で方向反転 */
   void setBallSpeed(float day_dx, float day_dy, float night_dx, float night_dy);

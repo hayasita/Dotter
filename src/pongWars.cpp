@@ -134,8 +134,11 @@ void PongWars::tick() {
   }
 }
 
-std::vector<uint8_t> PongWars::makeData() const {
+std::vector<uint8_t> PongWars::makeData() {
   std::vector<uint8_t> out(WIDTH, 0);
+
+  tick();   // 状態更新
+
   for (int x = 0; x < WIDTH; ++x) {
     uint8_t col = 0;
     for (int y = 0; y < HEIGHT; ++y) {

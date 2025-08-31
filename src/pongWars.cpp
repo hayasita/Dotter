@@ -7,10 +7,13 @@ namespace {
   constexpr float kInitDayX      = PongWars::WIDTH - 4.0f;
   constexpr float kInitNightX    = 3.5f;
   constexpr float kInitY         = PongWars::HEIGHT * 0.5f;
-  constexpr float kInitDayDX     = +0.60f;
-  constexpr float kInitDayDY     = -0.45f;
-  constexpr float kInitNightDX   = -0.60f;
-  constexpr float kInitNightDY   = +0.45f;
+
+  constexpr float kInitDX        = 0.60f;
+  constexpr float kInitDY        = 0.45f;
+  constexpr float kInitDayDX     = kInitDX;
+  constexpr float kInitDayDY     = -kInitDY;
+  constexpr float kInitNightDX   = -kInitDX;
+  constexpr float kInitNightDY   = kInitDY;
 
   constexpr float kRandAmplitude = 0.01f;  // 微小ランダム性（0で無効）
   constexpr float kMinSpeed      = 0.35f;
@@ -307,8 +310,7 @@ void PongWars::tick() {
         grid_[toX][toY] = (toColor == Cell::Day) ? Cell::Night : Cell::Day;
 
         // 3) 反射（角なら両軸）
-        if (crossX) dx = -dx;
-        if (crossY) dy = -dy;
+        applyReflection(crossX, crossY, dx, dy);
 
         // 4) めり込み防止に微小押し戻し
         x += dx * EPS;
@@ -437,3 +439,25 @@ void PongWars::reflectOnWalls(float& x, float& y, float& dx, float& dy) {
   reflectOneAxis(y, dy, 0.0f, float(HEIGHT - 1));
 }
 
+/**
+ * ボールの反射処理。
+ * 反射方向で速度を反転する。
+ * @param crossX X軸境界を跨いだか
+ * @param crossY Y軸境界を跨いだか
+ */
+void PongWars::applyReflection(bool crossX, bool crossY, float& dx, float& dy) {
+  if (crossX) {
+    if (dx < 0) {
+      dx = kInitDX;
+    } else {
+      dx = -kInitDX;
+    }
+  }
+  if (crossY) {
+    if (dy < 0) {
+      dy = kInitDY;
+    } else {
+      dy = -kInitDY;
+    }
+  }
+}

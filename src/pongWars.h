@@ -77,5 +77,7 @@ private:
   void         addRandomness(float& dx, float& dy, float amplitude);
   static void  reflectOneAxis(float& pos, float& d, float min, float max);
   static void  reflectOnWalls(float& x, float& y, float& dx, float& dy);
+  static void  applyReflection(bool crossX, bool crossY, float& dx, float& dy);
 };
 
+  

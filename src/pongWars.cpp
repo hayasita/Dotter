@@ -130,7 +130,7 @@ void PongWars::tick() {
 
     // ノイズ＆速度レンジ（任意・従来通り）
     addRandomness(b.dx, b.dy, kRandAmplitude);
-    clampSpeed(b.dx, b.dy, kMinSpeed, kMaxSpeed);
+//    clampSpeed(b.dx, b.dy, kMinSpeed, kMaxSpeed);   // 反射角45度、速度は常に初期値としたので不要？
   }
 }
 

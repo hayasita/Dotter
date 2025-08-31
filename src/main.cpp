@@ -247,6 +247,10 @@ void taskDeviceCtrl(void *Parameters){
         // 砂追加
         sand.addGrainRequest();
       }
+      else if(_dispMode->getCurrentOperationMode() == OperationMode::MODE_PONGWARS){
+        // PongWarsモードの場合は、リセット
+        pongWars.reset();
+      }
       else{
         // 動作モードがタイマー表示以外の場合は、表示データ切り替え
         if(_dispMode->displaySelect()){
@@ -278,6 +282,10 @@ void taskDeviceCtrl(void *Parameters){
       else if(_dispMode->getCurrentOperationMode() == OperationMode::MODE_IMU){
         // 砂一行削除
         sand.removeGrainRequest();
+      }
+      else if(_dispMode->getCurrentOperationMode() == OperationMode::MODE_PONGWARS){
+        // PongWarsモードの場合は、リセット
+        pongWars.reset();
       }
       else{
         // 動作テスト

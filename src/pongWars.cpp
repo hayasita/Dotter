@@ -40,7 +40,7 @@ void PongWars::reset() {
   balls_[0] = Ball{ kInitDayX,   kInitY, kInitDayDX,   kInitDayDY,   Cell::Day   };
   balls_[1] = Ball{ kInitNightX, kInitY, kInitNightDX, kInitNightDY, Cell::Night };
 }
-/*
+
 void PongWars::tick() {
   constexpr float EPS = 1e-4f;          // 境界めり込み・ループ貼り付き回避
   constexpr float EQ  = 1e-7f;          // tX と tY の同時判定しきい値
@@ -197,7 +197,7 @@ void PongWars::tick() {
         const Cell toColor = grid_[toX][toY];   // これから入ろうとしているセルの色の取得
 
         // ===== 色境界の衝突判定：敵色 → 自分色に入る瞬間 =====
-        if (curColor != b.team && toColor == b.team) {
+        if (toColor == b.team) {
           // (1) 交差点まで進める
           x += vx * (tCross - tAdvance);
           y += vy * (tCross - tAdvance);
@@ -244,8 +244,8 @@ void PongWars::tick() {
 
   return;
 }
-*/
 
+/*
 void PongWars::tick() {
   constexpr float EPS = 1e-4f;
 
@@ -338,6 +338,7 @@ void PongWars::tick() {
     clampSpeed(b.dx, b.dy, kMinSpeed, kMaxSpeed);
   }
 }
+*/
 
 std::vector<uint8_t> PongWars::makeData() const {
   std::vector<uint8_t> out(WIDTH, 0);

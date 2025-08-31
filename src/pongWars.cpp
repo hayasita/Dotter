@@ -155,12 +155,11 @@ std::vector<uint8_t> PongWars::makeData() const {
     const int by  = clampInt(static_cast<int>(std::lround(b.y)), 0, HEIGHT - 1);
     const int bit = bit0Top_ ? by : (HEIGHT - 1 - by);
 
-    if (ballXorOverlay_) {
-      // 背景が点いていても消えていても「見える」ようにXORで反転表示（表示専用）
-      out[bx] ^= static_cast<uint8_t>(1u << bit);
-    } else {
-      // 反転を避けたい場合：常に点灯で上書き（明るい面では目立ちにくい）
+    if(b.team == Cell::Day) {
       out[bx] |= static_cast<uint8_t>(1u << bit);
+    }
+    else{
+      out[bx] &= ~static_cast<uint8_t>(1u << bit);
     }
 
   }

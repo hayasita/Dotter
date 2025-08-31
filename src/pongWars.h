@@ -51,8 +51,6 @@ public:
   /** Day/Night の占有数（デバッグ用） */
   void getScores(int& dayCount, int& nightCount) const;
 
-  void setBallOverlayXor(bool enable) { ballXorOverlay_ = enable; }
-
 private:
   struct Ball {
     float x, y;
@@ -65,8 +63,6 @@ private:
   bool dayLitOn_;
   bool bit0Top_;
   uint32_t rng_;
-
-  bool ballXorOverlay_ = true; // true: XOR描画で必ず見える / false: OR描画(点灯上書き)
 
   // 乱数: [-1, +1) の擬似乱数
   float randMinus1to1();

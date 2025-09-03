@@ -36,6 +36,7 @@ jsonData::jsonData(void)
   staReConnectInterval = 4;         // STA再接続間隔
   soundEnable = 1;                  // サウンド有効設定
   clockScrollTime = 160;            // 時計スクロール時間
+  pongWarsBallSpeed = 10;           // PONG WARS ボール速度設定
 
   animationTime = 500;              // アニメーション間隔
 
@@ -915,6 +916,7 @@ void jsonData::writeJsonFile(void){
   configData = configData + makeJsonPiece("staReConnectInterval", staReConnectInterval, true);    // STA再接続間隔
   configData = configData + makeJsonPiece("soundEnable", soundEnable, true);                      // サウンド有効設定
   configData = configData + makeJsonPiece("clockScrollTime", clockScrollTime, true);             // 時計スクロール時間
+  configData = configData + makeJsonPiece("pongWarsBallSpeed", pongWarsBallSpeed, true);             // 時計スクロール時間
 
   configData = configData + makeJsonPiece("imuOffsetX", imuCalibrateData.offsetX, true);            // IMU X軸オフセット値
   configData = configData + makeJsonPiece("imuOffsetY", imuCalibrateData.offsetY, true);            // IMU Y軸オフセット値
@@ -1090,7 +1092,10 @@ String makeSettingjs(void){
   html_tmp = html_tmp + (String)"\"soundEnable\" : " + jsData.soundEnable + ",\\\n";
 
   // 時計スクロール時間
-  html_tmp = html_tmp + (String)"\"clockScrollTime\" : " + jsData.clockScrollTime + "\\\n";
+  html_tmp = html_tmp + (String)"\"clockScrollTime\" : " + jsData.clockScrollTime + ",\\\n";
+
+  // PONG WARS ボール速度設定
+  html_tmp = html_tmp + (String)"\"pongWarsBallSpeed\" : " + jsData.pongWarsBallSpeed + "\\\n";
 
   html_tmp = html_tmp + String("}\';");
 

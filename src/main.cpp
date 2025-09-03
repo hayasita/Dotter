@@ -436,7 +436,7 @@ void taskDeviceCtrl(void *Parameters){
       }
       else if(_dispMode->getCurrentOperationMode() == OperationMode::MODE_PONGWARS){   // PONG WARS表示
         // PONG WARS表示データ作成
-        if(timetmp - pongWarsLasttime > 10){      // 更新時間確認
+        if(timetmp - pongWarsLasttime > jsData.pongWarsBallSpeed){      // 更新時間確認
           pongWarsLasttime = timetmp;             // 更新時間設定
           // PONG WARS表示データ作成
           auto pageData = pongWars.makeData();

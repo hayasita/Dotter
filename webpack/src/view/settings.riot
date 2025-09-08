@@ -144,6 +144,22 @@
   </div>
 </div>
 
+<div class="card">
+  <div class="card-header">
+    Pong Wars
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">PongWars ボール速度</h5>
+    <p class="card-text">
+      <div class="col-sm-11 offset-sm-1">
+        Speed : <span id="pongWarsBallSpeedSetId">5</span>
+        <input type="range" class="form-range" id="pongWarsBallSpeedSet" min="1" max="10" step="1" value={pongWarsBallSpeed} onchange={ pongWarsBallSpeedChange.bind(this,"pongWarsBallSpeedChangeSet") }>
+      </div>
+    </p>
+
+  </div>
+</div>
+
 <div class="row">
   <div class="col-md-6">
     <div class="card h-100">
@@ -446,6 +462,16 @@
           vmUI.submitDisplaySetting(item, 1);
         }
 
+        // Pong Wars ボール速度設定
+        this.pongWarsBallSpeed = vmUI.getDisplaySetting("pongWarsBallSpeed");
+        console.log("vmUI.getDisplaySetting(pongWarsBallSpeed)");
+        console.log(vmUI.getDisplaySetting("pongWarsBallSpeed"));
+        // ボール速度設定スライダー値設定処理
+        this.pongWarsBallSpeedChange = (item,e) =>{   // このタイミングでeerom書き込み
+          console.log(item);
+          vmUI.setDisplaySetting(item, 1);
+          vmUI.submitDisplaySetting(item, 1);
+        }
       },
       onMounted(props, state){
         let vmUI = props.vmUI;
@@ -489,6 +515,13 @@
         sliderelem2.addEventListener('input', rangeValue(sliderelem2, slidertarget2));
         // --- 時計スクロール表示速度設定スライダー初期値設定 ---
         slidertarget2.innerHTML = vmUI.getDisplaySetting("clockScrollTime");    // 初期値設定
+
+        // --- Pong Wars ボール速度設定スライダー処理設定 ---
+        let sliderelem3 = document.getElementById('pongWarsBallSpeedSet');
+        let slidertarget3 = document.getElementById('pongWarsBallSpeedSetId');
+        sliderelem3.addEventListener('input', rangeValue(sliderelem3, slidertarget3));
+        // --- Pong Wars ボール速度設定スライダー初期値設定 ---
+        slidertarget3.innerHTML = vmUI.getDisplaySetting("pongWarsBallSpeed");    // 初期値設定
 
         console.log("-- DotEditor Coloe set menu make");
         this.dotColor = vmUI.getDisplaySetting("dotColor");     // 初期値設定

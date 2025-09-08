@@ -36,7 +36,7 @@ jsonData::jsonData(void)
   staReConnectInterval = 4;         // STA再接続間隔
   soundEnable = 1;                  // サウンド有効設定
   clockScrollTime = 160;            // 時計スクロール時間
-  pongWarsBallSpeed = 10;           // PONG WARS ボール速度設定
+  pongWarsBallSpeed = 5;            // PONG WARS ボール速度設定
 
   animationTime = 500;              // アニメーション間隔
 
@@ -446,6 +446,31 @@ bool jsonData::parseJson(String readStr ,bool dataWrite ,bool online)
     if(!jsondata.isNull()){
       if(dataWrite){writeJsonFile();}       // 設定値書き込み
       Serial.println("clockScrollTimeChangeSet");
+    }
+
+    // PongWars ボール速度設定
+    jsondata = jsonDocument["pongWarsBallSpeed"];
+    if(!jsondata.isNull()){
+      Serial.println("pongWarsBallSpeed");
+      uint16_t pongWarsBallSpeedValue = jsondata.as<uint16_t>(); // キーの値を uint16_t 型で取得
+      pongWarsBallSpeed = pongWarsBallSpeedValue;
+      Serial.print("pongWarsBallSpeed Value: ");
+      Serial.println(pongWarsBallSpeedValue); // 取得した値をシリアルモニターに出力
+    }
+    // PongWars ボール速度設定スライダー更新
+    jsondata = jsonDocument["pongWarsBallSpeedSet"];
+    if(!jsondata.isNull()){
+      Serial.println("pongWarsBallSpeedSet");
+      uint16_t pongWarsBallSpeedValue = jsondata.as<uint16_t>(); // キーの値を uint16_t 型で取得
+      pongWarsBallSpeed = (100 / pongWarsBallSpeedValue);
+      Serial.print("pongWarsBallSpeed Value: ");
+      Serial.println(pongWarsBallSpeedValue); // 取得した値をシリアルモニターに出力
+    }
+    // PongWars ボール速度設定確定
+    jsondata = jsonDocument["pongWarsBallSpeedChangeSet"];
+    if(!jsondata.isNull()){
+      if(dataWrite){writeJsonFile();}       // 設定値書き込み
+      Serial.println("pongWarsBallSpeedChangeSet");
     }
 
     // IMU X軸オフセット値
@@ -916,7 +941,7 @@ void jsonData::writeJsonFile(void){
   configData = configData + makeJsonPiece("staReConnectInterval", staReConnectInterval, true);    // STA再接続間隔
   configData = configData + makeJsonPiece("soundEnable", soundEnable, true);                      // サウンド有効設定
   configData = configData + makeJsonPiece("clockScrollTime", clockScrollTime, true);             // 時計スクロール時間
-  configData = configData + makeJsonPiece("pongWarsBallSpeed", pongWarsBallSpeed, true);             // 時計スクロール時間
+  configData = configData + makeJsonPiece("pongWarsBallSpeed", pongWarsBallSpeed, true);          // Pong Wars ボール速度
 
   configData = configData + makeJsonPiece("imuOffsetX", imuCalibrateData.offsetX, true);            // IMU X軸オフセット値
   configData = configData + makeJsonPiece("imuOffsetY", imuCalibrateData.offsetY, true);            // IMU Y軸オフセット値
@@ -1095,7 +1120,7 @@ String makeSettingjs(void){
   html_tmp = html_tmp + (String)"\"clockScrollTime\" : " + jsData.clockScrollTime + ",\\\n";
 
   // PONG WARS ボール速度設定
-  html_tmp = html_tmp + (String)"\"pongWarsBallSpeed\" : " + jsData.pongWarsBallSpeed + "\\\n";
+  html_tmp = html_tmp + (String)"\"pongWarsBallSpeed\" : " + (100 / jsData.pongWarsBallSpeed) + "\\\n";
 
   html_tmp = html_tmp + String("}\';");
 

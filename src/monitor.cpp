@@ -238,6 +238,9 @@ bool SerialMonitor::opecodeenv(std::vector<std::string> command)
   Serial.printf("showSampleData: %d\n", jsData.showSampleData);
   Serial.printf("dataNumber: %d\n", jsData.getDataNumber());
 
+  Serial.printf("clockScrollTime: %d\n", jsData.clockScrollTime);
+  Serial.printf("pongWarsBallSpeed: %d\n", jsData.pongWarsBallSpeed);
+
   return true;
 }
 

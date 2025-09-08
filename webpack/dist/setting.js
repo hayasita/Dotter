@@ -13,6 +13,6 @@ const _initial_setting_ = '{\
 "staReConnectInterval" : 12,\
 "soundEnable" : 1,\
 "clockScrollTime" : 1000,\
-\
+"pongWarsBallSpeed" : 5,\
     "end" : ""\
 }';

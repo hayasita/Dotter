@@ -15,32 +15,12 @@
       <li class="nav-item" role="presentation">
         <button class="nav-link" id="tab1-tab" data-bs-toggle="tab" data-bs-target="#tab1" type="button" role="tab" aria-controls="tab1" aria-selected="true">ドット絵作製</button>
       </li>
-      <!--
-      <li class="nav-item" role="presentation">
-        <button class="nav-link" id="tab2-tab" data-bs-toggle="tab" data-bs-target="#tab2" type="button" role="tab" aria-controls="tab2" aria-selected="false">{dashbordKey}</button>
-      </li>
-      -->
-      <!--
-      <li class="nav-item" role="presentation">
-        <button class="nav-link" id="tab3-tab" data-bs-toggle="tab" data-bs-target="#tab3" type="button" role="tab" aria-controls="tab3" aria-selected="false">TimeConf</button>
-      </li>
-      <li class="nav-item" role="presentation">
-        <button class="nav-link" id="tab4-tab" data-bs-toggle="tab" data-bs-target="#tab4" type="button" role="tab" aria-controls="tab4" aria-selected="false">DispConf</button>
-      </li>
-      -->
       <li class="nav-item" role="presentation">
         <button class="nav-link" id="tab5-tab" data-bs-toggle="tab" data-bs-target="#tab5" type="button" role="tab" aria-controls="tab5" aria-selected="false">設定</button>
       </li>
-      <!--
-      <li class="nav-item" role="presentation">
-        <button class="nav-link" id="tab6-tab" data-bs-toggle="tab" data-bs-target="#tab6" type="button" role="tab" aria-controls="tab6" aria-selected="false">DeviceConf</button>
-      </li>
-      -->
-      
       <li class="nav-item" role="presentation">
         <button class="nav-link" id="tab7-tab" data-bs-toggle="tab" data-bs-target="#tab7" type="button" role="tab" aria-controls="tab7" aria-selected="false">Help</button>
       </li>
-      
     </ul>
   </div>
 
@@ -49,32 +29,12 @@
       <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
         <div id="dotmaker"></div>
       </div>
-      <!--
-      <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
-        <div id="dashbord"></div>
-      </div>
-      -->
-      <!--
-      <div class="tab-pane fade" id="tab3" role="tabpanel" aria-labelledby="tab3-tab">
-        <div id="timeconf"></div>
-      </div>
-      <div class="tab-pane fade" id="tab4" role="tabpanel" aria-labelledby="tab4-tab">
-        <div id="dispconf"></div>
-      </div>
-      -->
       <div class="tab-pane fade" id="tab5" role="tabpanel" aria-labelledby="tab5-tab">
         <div id="settings"></div>
       </div>
-      <!--
-      <div class="tab-pane fade" id="tab6" role="tabpanel" aria-labelledby="tab6-tab">
-        <div id="deviceconf"></div>
-      </div>
-      -->
-      
       <div class="tab-pane fade" id="tab7" role="tabpanel" aria-labelledby="tab7-tab">
         <div id="help"></div>
       </div>
-      
     </div>
   </div>
 
@@ -88,13 +48,7 @@
     import i18next from 'i18next'
     import navigation from './navbar.riot'
     import dotmaker from './dotmaker.riot'
-    import dashbord from './dashbord.riot'
-    import timeconf from './timeconf.riot'
-    import dispconf from './dispconf.riot'
-    import wificonf from './wificonf.riot'
     import settings from './settings.riot'
-    import deviceconf from './deviceconf.riot'
-    import mytag from './my-tag.riot'
     import help from './help.riot'
     import Footer from './footer.riot'
 
@@ -137,14 +91,8 @@
         }.bind(this))
 
         component(navigation)(document.getElementById('navigation'), {vmUI,obs})
-//        component(dotmaker)(document.getElementById('dotmaker'), {vmUI,obs})
         component(dotmaker)(document.getElementById('dotmaker'), {vmUI,dotMatrixUI,obs})
-//        component(dashbord)(document.getElementById('dashbord'), {vmUI,obs})
-//        component(timeconf)(document.getElementById('timeconf'), {vmUI,obs})
-//        component(dispconf)(document.getElementById('dispconf'), {vmUI,obs})
         component(settings)(document.getElementById('settings'), {vmUI,dotMatrixUI,obs})
-//        component(deviceconf)(document.getElementById('deviceconf'), {vmUI,obs})
-//        component(mytag)(document.getElementById('mytag'), {vmUI,obs})
         component(help)(document.getElementById('help'), {vmUI,obs})
         component(Footer)(document.getElementById('Footer'), {vmUI,obs})
 

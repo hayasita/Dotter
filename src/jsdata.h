@@ -121,6 +121,7 @@ class jsonData{
     String makeJsonPiece(String key, uint8_t value ,bool connma);   // jsonデータ作成:uint8_t
     String makeJsonPiece(String key, uint16_t value ,bool connma);  // jsonデータ作成:uint16_t
     String makeJsonPiece(String key, float value ,bool connma);     // jsonデータ作成:float
+    String makeJsonPiece(String key, bool value, bool connma);      // jsonデータ作成:bool
 
     bool containsSample(const std::string& path);     // ファイル名に "sample" を含むかどうかを判定する関数
     void removeSampleFiles(void);                     // "sample" を含むパスを削除するメンバ関数

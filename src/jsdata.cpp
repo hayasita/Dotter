@@ -476,6 +476,17 @@ bool jsonData::parseJson(String readStr ,bool dataWrite ,bool online)
       Serial.println("pongWarsBallSpeedChangeSet");
     }
 
+    // モードデモンストレーション設定
+    jsondata = jsonDocument["modeDemonstration"];
+    if(!jsondata.isNull()){
+      Serial.println("modeDemonstration");
+      uint8_t modeDemonstrationValue = jsondata.as<uint8_t>(); // キーの値を uint8_t 型で取得
+      modeDemonstration = (modeDemonstrationValue != 0);
+      if(dataWrite){writeJsonFile();}       // 設定値書き込み
+      Serial.print("modeDemonstration Value: ");
+      Serial.println(modeDemonstrationValue); // 取得した値をシリアルモニターに出力
+    }
+
     // IMU X軸オフセット値
     jsondata = jsonDocument["imuOffsetX"];
     if(!jsondata.isNull()){
@@ -945,6 +956,7 @@ void jsonData::writeJsonFile(void){
   configData = configData + makeJsonPiece("soundEnable", soundEnable, true);                      // サウンド有効設定
   configData = configData + makeJsonPiece("clockScrollTime", clockScrollTime, true);             // 時計スクロール時間
   configData = configData + makeJsonPiece("pongWarsBallSpeed", pongWarsBallSpeed, true);          // Pong Wars ボール速度
+  configData = configData + makeJsonPiece("modeDemonstration", modeDemonstration, true);          // モードデモンストレーション設定
 
   configData = configData + makeJsonPiece("imuOffsetX", imuCalibrateData.offsetX, true);            // IMU X軸オフセット値
   configData = configData + makeJsonPiece("imuOffsetY", imuCalibrateData.offsetY, true);            // IMU Y軸オフセット値
@@ -1047,6 +1059,24 @@ String jsonData::makeJsonPiece(String key, float value ,bool connma)
   return ret;
 }
 
+/**
+ * @brief jsonデータ作成:bool
+ * 
+ * @param key     jsonのキー
+ * @param value   jsonの値
+ * @param connma  true:データの最後に「.」を追加する
+ *                false:追加しない
+ * @return String 
+ */
+String jsonData::makeJsonPiece(String key, bool value, bool connma)
+{
+  String ret = "{\"" + key + "\":" + (value ? "1" : "0") + "}";
+  if(connma){
+    ret += ",";
+  }
+  ret += "\n";
+  return ret;
+}
 
 //=====
 /**
@@ -1123,8 +1153,12 @@ String makeSettingjs(void){
   html_tmp = html_tmp + (String)"\"clockScrollTime\" : " + jsData.clockScrollTime + ",\\\n";
 
   // PONG WARS ボール速度設定
-  html_tmp = html_tmp + (String)"\"pongWarsBallSpeed\" : " + (100 / jsData.pongWarsBallSpeed) + "\\\n";
+  html_tmp = html_tmp + (String)"\"pongWarsBallSpeed\" : " + (100 / jsData.pongWarsBallSpeed) + ",\\\n";
 
+  // モードデモンストレーション設定
+  html_tmp = html_tmp + (String)"\"modeDemonstration\" : " + (jsData.modeDemonstration ? 1 : 0) + ",\\\n";
+
+  html_tmp = html_tmp + (String)"\"End\" : \"0\"\\\n";
   html_tmp = html_tmp + String("}\';");
 
   Serial.println(html_tmp);

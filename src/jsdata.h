@@ -82,6 +82,8 @@ class jsonData{
     uint8_t soundEnable;          // サウンド有効設定
     uint16_t clockScrollTime;     // 時計スクロール時間
     uint8_t pongWarsBallSpeed;    // PONG WARS ボール速度設定
+    bool modeDemonstration;       // モードデモンストレーション設定
+    uint16_t modeDemoChangeTime = 60000;    // モードデモンストレーション切り替え時間
 
     void wifiPSet(WiFiConnect* pWifiCon);   // WiFi接続設定ポインタ設定
     WiFiConnect *pWifiConnect_  = nullptr;  // WiFi接続制御ポインタ

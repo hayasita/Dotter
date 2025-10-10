@@ -48,6 +48,9 @@ jsonData::jsonData(void)
 
   modeWriteSq = ModeWriteSQ::WAIT;          // 動作モード書き込み要求状態 初期化
 
+//  modeDemonstration = true;       // モードデモンストレーション設定　有効
+  modeDemonstration = false;       // モードデモンストレーション設定　無効
+
   return;
 }
 

@@ -14,5 +14,6 @@ const _initial_setting_ = '{\
 "soundEnable" : 1,\
 "clockScrollTime" : 1000,\
 "pongWarsBallSpeed" : 5,\
+"modeDemonstration" : 0,\
     "end" : ""\
 }';

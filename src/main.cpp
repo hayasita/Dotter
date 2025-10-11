@@ -160,6 +160,7 @@ void taskDeviceCtrl(void *Parameters){
     static unsigned long clockDisptLasttime = millis(); 
     static unsigned long sandLasttime = millis();
     static unsigned long pongWarsLasttime = millis();
+    static unsigned long modeDemoLasttime = millis();
     unsigned long timetmp;      // millis()tmp
     uint8_t itmKeyCode;
 
@@ -203,6 +204,13 @@ void taskDeviceCtrl(void *Parameters){
     // 端子入力・表示制御
     itmKeyCode = itm.man();
 #endif
+
+    if(timetmp - modeDemoLasttime > jsData.modeDemoChangeTime){      // 更新時間確認
+      modeDemoLasttime = timetmp;             // 更新時間設定
+      if(jsData.modeDemonstration){           // モードデモンストレーション設定が有効の場合
+        itmKeyCode = 0x01;                    // 表示モード変更要求
+      }
+    }
 
     if(itmKeyCode == 0x01){   // 表示モード変更
       itmKeyCode = 0x00;

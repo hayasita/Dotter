@@ -107,7 +107,12 @@
 
     bindEvents() {
       document.getElementById('addButton').addEventListener('click', () => this.addMiniImage());
-      document.getElementById('clearButton').addEventListener('click', () => this.clearMatrix());
+//      document.getElementById('clearButton').addEventListener('click', () => this.clearMatrix());
+      document.getElementById('clearButton').addEventListener('click', () => {
+        if (confirm("本当に削除してよいですか？")) {
+          this.clearMatrix();
+        }
+      });
       document.getElementById('startButton').addEventListener('click', () => this.animationTest());
       document.getElementById('submitButton').addEventListener('click', () => this.animationDataSubmit());
       // 他のイベントバインディングもここに追加...

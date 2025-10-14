@@ -36,8 +36,7 @@ jsonData::jsonData(void)
   staReConnectInterval = 4;         // STA再接続間隔
   soundEnable = 1;                  // サウンド有効設定
   clockScrollTime = 160;            // 時計スクロール時間
-  pongWarsBallSpeed = 5;            // PONG WARS ボール速度設定
-
+  pongWarsBallSpeed = (100/5);      // PONG WARS ボール速度設定
   animationTime = 500;              // アニメーション間隔
 
   pageCount =0;                     // ページ位置
